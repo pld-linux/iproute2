@@ -1,0 +1,24 @@
+diff -urN iproute2-2.6.7.org/Makefile iproute2-2.6.7/Makefile
+--- iproute2-2.6.7.org/Makefile	2004-06-09 01:43:55.300417880 +0200
++++ iproute2-2.6.7/Makefile	2004-06-09 01:48:54.879874880 +0200
+@@ -29,7 +29,7 @@
+   endif
+ endif
+ ifeq ($(LIBC_INCLUDE)/bits/socket.h,$(wildcard $(LIBC_INCLUDE)/bits/socket.h))
+-  GLIBCFIX=-I../include-glibc -I/usr/include/db3 -include ../include-glibc/glibc-bugs.h
++  GLIBCFIX=-I../include-glibc -include ../include-glibc/glibc-bugs.h
+ endif
+ 
+ 
+diff -urN iproute2-2.6.7.org/misc/arpd.c iproute2-2.6.7/misc/arpd.c
+--- iproute2-2.6.7.org/misc/arpd.c	2004-06-09 01:43:55.298418184 +0200
++++ iproute2-2.6.7/misc/arpd.c	2004-06-09 01:45:45.426676144 +0200
+@@ -16,7 +16,7 @@
+ #include <unistd.h>
+ #include <stdlib.h>
+ #include <netdb.h>
+-#include <db41/db_185.h>
++#include <db_185.h>
+ #include <sys/ioctl.h>
+ #include <sys/poll.h>
+ #include <errno.h>
