@@ -36,7 +36,7 @@ make -C doc
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT{%{_sbindir},{_sysconfdir}}
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir}}
 
 install -s ip/ip ip/rtmon ip/rtacct tc/tc $RPM_BUILD_ROOT%{_sbindir}
 install    ip/routel $RPM_BUILD_ROOT%{_sbindir}
