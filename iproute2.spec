@@ -65,8 +65,6 @@ Group(pl):	Sieciowe/Administracyjne
 	ADDLIB="inet_ntop.o inet_pton.o dnet_ntop.o dnet_pton.o ipx_ntop.o ipx_pton.o" \
 	SUBDIRS="lib ip"
 
-	LDLIBS="/usr/lib/libresolv.a %{_libdir}/bootdisk%{_libdir}/crt0.o %{_libdir}/bootdisk%{_libdir}/libc.a -lgcc" \
-
 # there are some problems compiling with uClibc, falling back to simple glibc-static
 %{__make} SUBDIRS="lib ip" OPT="-Os" LDFLAGS="-static -s" 
 mv -f ip/ip ip-BOOT
