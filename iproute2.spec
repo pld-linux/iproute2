@@ -1,5 +1,6 @@
 # conditional build
-# --without tex
+# --with db3
+# --without tex	# with tetex-2 there shuld be BR tetex-tex-babel
 # --without tc (don't build tc program, it break static linkage)
 # --without dist_kernel
 
@@ -25,8 +26,11 @@ Patch2:		%{name}-fix-2_2.patch
 Patch6:		wrr-iproute2-2.2.4.patch
 Patch7:		htb3.6_tc.patch
 Patch8:		%{name}-no_libresolv.patch
+%{?_with_db3:BuildRequires: db3-devel}
+%{!?_with_db3:BuildRequires: db-devel}
 %{!?_without_tex:BuildRequires:	tetex-dvips}
 %{!?_without_tex:BuildRequires:	tetex-latex}
+%{!?_without_tex:BuildRequires: latex2html}
 %{!?_without_tex:BuildRequires:	psutils}
 Obsoletes:	iproute
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
