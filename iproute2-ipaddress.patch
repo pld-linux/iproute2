@@ -1,0 +1,20 @@
+--- iproute2/ip/ipaddress.orig.c	Sat Feb 21 00:29:56 2004
++++ iproute2/ip/ipaddress.c	Sat Feb 21 00:30:42 2004
+@@ -222,7 +222,7 @@
+ 		fprintf(fp, "%s", _SL_);
+ 		fprintf(fp, "    RX: bytes      packets  errors  dropped overrun mcast   %s%s",
+ 			s->rx_compressed ? "compressed" : "", _SL_);
+-		fprintf(fp, "    %-14llu %-8lu %-7lu %-7lu %-7lu %-7lu",
++		fprintf(fp, "    %-14lu %-8lu %-7lu %-7lu %-7lu %-7lu",
+ 			s->rx_bytes, s->rx_packets, s->rx_errors,
+ 			s->rx_dropped, s->rx_over_errors,
+ 			s->multicast
+@@ -243,7 +243,7 @@
+ 		fprintf(fp, "%s", _SL_);
+ 		fprintf(fp, "    TX: bytes      packets  errors  dropped carrier collsns %s%s",
+ 			s->tx_compressed ? "compressed" : "", _SL_);
+-		fprintf(fp, "    %-14llu %-8lu %-7lu %-7lu %-7lu %-7lu",
++		fprintf(fp, "    %-14lu %-8lu %-7lu %-7lu %-7lu %-7lu",
+ 			s->tx_bytes, s->tx_packets, s->tx_errors,
+ 			s->tx_dropped, s->tx_carrier_errors, s->collisions);
+ 		if (s->tx_compressed)
