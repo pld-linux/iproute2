@@ -1,21 +1,12 @@
 diff -urN iproute2-2.6.8.org/Makefile iproute2-2.6.8/Makefile
 --- iproute2-2.6.8.org/Makefile	2004-07-16 21:49:23.066528064 +0200
 +++ iproute2-2.6.8/Makefile	2004-07-16 21:50:01.491686552 +0200
-@@ -10,7 +10,7 @@
- DEFINES= -DRESOLVE_HOSTNAMES
- 
- #options if you have a bind>=4.9.4 libresolv (or, maybe, glibc)
--LDLIBS=-lresolv
-+LDLIBS=
- ADDLIB=
- 
- #options for decnet
 @@ -21,7 +21,7 @@
  
  CC = gcc
  HOSTCC = gcc
--CCOPTS = -D_GNU_SOURCE -O2 -Wstrict-prototypes -Wall -g
-+CCOPTS = -D_GNU_SOURCE $(OPT) -Wstrict-prototypes -Wall
+-CCOPTS = -D_GNU_SOURCE -O2 -Wstrict-prototypes -Wall
++CCOPTS = -D_GNU_SOURCE $(OPT) -O2 -Wstrict-prototypes -Wall
  CFLAGS = $(CCOPTS) -I../include $(DEFINES)
  
  LDLIBS += -L../lib -lnetlink -lutil
