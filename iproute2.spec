@@ -23,6 +23,13 @@ Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-ss%{
 # Source0-md5:	28196897deb1a45295cd606bd911a33d
 Patch0:		%{name}-db.patch
 Patch1:		%{name}-arp.patch
+Patch2:         %{name}-diffserv-config.patch
+Patch3:         %{name}-ipaddress.patch
+# extensions
+Patch10:        %{name}-2.2.4-wrr.patch
+Patch11:        %{name}-2.2.4-esfq.patch
+Patch12:        %{name}-hfsc.patch
+Patch13:        %{name}-rates-1024-fix.patch
 URL:		http://developer.osdl.org/dev/iproute2/
 BuildRequires:	bison
 BuildRequires:	linux-libc-headers >= 7:2.6.6.0-2
@@ -78,6 +85,13 @@ a przestrzeni± u¿ytkownika.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%{?with_iec_complaint:%patch13 -p1}
 
 %build
 %{__make} \
