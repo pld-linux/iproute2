@@ -58,6 +58,13 @@ configuração da rede, mas novos utilitários são necessários para fazer
 uso das características e recursos da nova kernel. This package
 includes the new utilities.
 
+%package -n libnetlink-devel
+Summary:	Library for the netlink interface
+Group:		Development/Libraries
+
+%description -n libnetlink-devel
+This library provides an interface for kernel-user netlink interface.
+
 %prep
 %setup -q -n %{name} -a1
 %patch0 -p1
@@ -86,7 +93,7 @@ grep -q tc_wrr_class_weight /usr/include/linux/pkt_sched.h || WRRDEF="-DNEED_WRR
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man8}
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man8,%{_libdir},%{_includedir}}
 
 install ip/{ip,rtmon,rtacct,routel} %{!?_without_tc:tc/tc} $RPM_BUILD_ROOT%{_sbindir}
 install etc/iproute2/rt_protos \
@@ -95,6 +102,8 @@ install etc/iproute2/rt_protos \
 	etc/iproute2/rt_tables \
 	$RPM_BUILD_ROOT%{_sysconfdir}
 install man/*	$RPM_BUILD_ROOT%{_mandir}/man8
+install lib/libnetlink.a $RPM_BUILD_ROOT%{_libdir}
+install include/libnetlink.h $RPM_BUILD_ROOT%{_includedir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -107,3 +116,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/*
 %{_mandir}/man8/*
+
+%files -n libnetlink-devel
+%defattr(644,root,root,755)
+%{_libdir}/*
+%{_includedir}/*
