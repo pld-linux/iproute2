@@ -5,7 +5,7 @@
 # _without_tc_esfq	- build tc without esfq support (requires patched headers)
 # _without_tc_wrr	- build tc without wrr support
 
-%define		_kernel24	%(echo %{_kernel_ver} | grep -q '2\.[012]\.' ; echo $?)
+%define		_kernel24	%(echo %{_kernel_ver} | grep -qv '2\.4\.' ; echo $?)
 
 %define mainver		2.4.7
 %define snapshot	ss020116
