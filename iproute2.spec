@@ -29,9 +29,10 @@ Patch5:		%{name}-iprule.patch
 # uClibc hacks
 Patch6:		%{name}-uClibc.patch
 # extensions
-Patch10:	htb3.6_tc.patch
-Patch11:	wrr-iproute2-2.2.4.patch
-Patch12:	%{name}-2.2.4-now-ss001007-esfq.diff
+Patch10:	%{name}-htb3.6_tc.patch
+Patch11:	%{name}-2.2.4-wrr.patch
+Patch12:	%{name}-2.2.4-esfq.patch
+Patch13:	%{name}-hfsc.patch
 BuildRequires:	bison
 BuildRequires:	linux-libc-headers >= 7:2.6.4.0-3
 %if %{with doc}
@@ -94,6 +95,7 @@ rm -rf include-glibc
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 %build
 %{__make} \
