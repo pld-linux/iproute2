@@ -1,65 +1,58 @@
-Summary:     Utility to control Networking behavior in 2.2.X kernels
-Name:	     iproute2
-Version:     2.1.99
-Release:     3d
-Vendor:	     Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
-Copyright:   GPL
-Group:	     Networking/Admin
-Group(pl):   Sieæ/Administracja
-URL:	     ftp://ftp.inr.ac.ru/ip-routing
-Source:      %{name}-%{version}-now-ss990203.tar.gz
-Patch:	     %{name}.make.diff
-Patch1:	     %{name}.readme.patch
-BuildRoot:   /var/tmp/%{name}-buildroot
-Summary(pl): Narzêdzie do kontrolowania Sieci w kernelach 2.2
+Summary:	Utility to control Networking behavior in 2.2.X kernels
+Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
+Name:		iproute2
+Version:	2.2.4
+Release:	2
+Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
+Copyright:	GPL
+Group:		Networking/Admin
+Group(pl):	Sieciowe/Administracja
+Source:		ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{version}-now-ss990630.tar.gz
+Patch:		iproute2-make.patch
+BuildRequires:	tetex-dvips
+BuildRequires:	psutils
+BuildRoot:	/tmp/%{name}-%{version}-root
 
 %description
-This package contains the ip and the rtmon tool that allow control of
+This package contains the ip, tc and the rtmon tool that allow control of
 routing and other aspects of networking.
   
 %description -l pl
-Ten pakiet zawiera programy pozwalaj±ce na kontrolê routingu i innych
+Ten pakiet zawiera programy pozwalaj±ce na kontrolê routingu i innych 
 aspektów dotycz±cych sieci.
   
 %prep
 %setup -q -n %{name}
-%patch  -p1
-%patch1 -p1
+%patch -p1
 
 %build
 make OPT="$RPM_OPT_FLAGS"
+make -C doc
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/sbin
-install -s ip/ip ip/rtmon tc/tc $RPM_BUILD_ROOT/sbin
+install -d $RPM_BUILD_ROOT%{_sbindir}
+install -d $RPM_BUILD_ROOT/etc/iproute2
 
-gzip -9nf READ*
+install -s ip/ip ip/rtmon ip/rtacct tc/tc $RPM_BUILD_ROOT%{_sbindir}
+install    ip/routel $RPM_BUILD_ROOT%{_sbindir}
+
+install etc/iproute2/rt_protos \
+	etc/iproute2/rt_realms \
+	etc/iproute2/rt_scopes \
+	etc/iproute2/rt_tables \
+	$RPM_BUILD_ROOT/etc/iproute2
+
+gzip -9nf READ* RELNOTES doc/*.ps
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.gz README.ip-sysctl.gz
-%doc README.iproute2+tc.gz README.multidomain-httpd.gz
-%doc README.policy-routing.gz
+%doc {README,README.iproute2+tc,RELNOTES}.gz
+%doc doc/*.ps.gz
 
-%attr(755,root,root) /sbin/*
-
-%changelog
-* Fri Feb 19 1999 Arkadiusz Mi¶kiewicz <misiek@misiek.eu.org>
-- new upstream release
-- gzipping instead bzipping
-
-* Fri Jan 01 1999 Arkadiusz Mi¶kiewicz <misiek@misiek.eu.org>
-- new upstream release (981220).
-- docs are now compressed
-
-* Sat Nov 07 1998 Arkadiusz Mi¶kiewicz <misiek@misiek.eu.org>
-- new upstream release (981101),
-- corrected patch.
-
-* Wed Oct 14 1998 Arkadiusz Mi¶kiewicz <misiek@zsz2.starachowice.pl>
-- initial rpm release.
+%attr(755,root,root) %{_sbindir}/*
+/etc/iproute2
