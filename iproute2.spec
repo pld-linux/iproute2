@@ -13,27 +13,25 @@ Summary(es):	Herramientas para encaminamiento avanzado y configuración de interf
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-%define	sdate	040608
-Version:	2.6.7
-Release:	0.1
+%define	sdate	040702
+# do not use ,,2.6.X'' as version here, put whole number like 2.6.8
+Version:	2.6.8
+Release:	1
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
-Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-ss%{sdate}.tar.gz
-# Source0-md5:	28196897deb1a45295cd606bd911a33d
+Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-2.6.X-ss%{sdate}.tar.gz
+# Source0-md5:	cecf5ee39e8d9033ad0a6f6af274cdab
 Patch0:         %{name}-build.patch
-Patch1:		%{name}-db.patch
 Patch2:		%{name}-arp.patch
-Patch3:         %{name}-diffserv-config.patch
 Patch4:         %{name}-ipaddress.patch
 # extensions
 Patch10:        %{name}-2.2.4-wrr.patch
 Patch11:        %{name}-2.2.4-esfq.patch
-Patch12:        %{name}-hfsc.patch
 Patch13:        %{name}-rates-1024-fix.patch
 URL:		http://developer.osdl.org/dev/iproute2/
 BuildRequires:	bison
-BuildRequires:	linux-libc-headers >= 7:2.6.6.0-2
+BuildRequires:	linux-libc-headers >= 7:2.7.0.0
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
@@ -86,14 +84,11 @@ a przestrzeni± u¿ytkownika.
 %setup -q
 rm -rf include-glibc
 %patch0 -p1
-%patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch4 -p1
 
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
 %{?with_iec_complaint:%patch13 -p1}
 
 %build
