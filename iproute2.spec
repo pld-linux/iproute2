@@ -5,7 +5,7 @@
 
 %define		_kernel24	%(echo %{_kernel_ver} | grep -q '2\.[012]\.' ; echo $?)
 %define mainver		2.4.7
-%define snapshot	ss010803
+%define snapshot	ss020116
 Summary:	Utility to control Networking behavior in 2.2.X kernels
 Summary(es):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
@@ -76,8 +76,8 @@ a przestrzeni± u¿ytkownika.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
+#%%patch3 -p1
+#%%patch4 -p1
 %if %{_kernel24}
 %patch7 -p1
 %else
@@ -101,7 +101,7 @@ grep -q tc_wrr_class_weight /usr/include/linux/pkt_sched.h || WRRDEF="-DNEED_WRR
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man8,%{_libdir},%{_includedir}}
 
-install ip/{ip,rtmon,rtacct,routel} %{!?_without_tc:tc/tc} $RPM_BUILD_ROOT%{_sbindir}
+install ip/{ip,rtmon,routel} %{!?_without_tc:tc/tc} $RPM_BUILD_ROOT%{_sbindir}
 install etc/iproute2/rt_protos \
 	etc/iproute2/rt_realms \
 	etc/iproute2/rt_scopes \
