@@ -1,0 +1,12 @@
+diff -urN iproute2.org/ip/ipaddress.c iproute2/ip/ipaddress.c
+--- iproute2.org/ip/ipaddress.c	2004-03-04 23:00:41.050515248 +0100
++++ iproute2/ip/ipaddress.c	2004-03-04 23:08:08.810575433 +0100
+@@ -603,7 +603,7 @@
+ 				fprintf(stderr, "Flush terminated\n");
+ 				exit(1);
+ 			}
+-			if (filter.flushed == 0) {
++			if (filter.flushed == 0 || round > 10000) {
+ 				if (round == 0) {
+ 					fprintf(stderr, "Nothing to flush.\n");
+ 				} else if (show_stats)
