@@ -15,18 +15,17 @@ Summary(es):	Herramientas para encaminamiento avanzado y configuración de interf
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-%define	sdate	040823
+%define	sdate	041019
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
-Version:	2.6.8
-Release:	3
+Version:	2.6.9
+Release:	0.1
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
-Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-2.6.8-%{sdate}.tar.gz
-# Source0-md5:	dab25877d70f132dcfeaba373805d867
+Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-%{sdate}.tar.gz
+# Source0-md5:	4b3f335b0139cb909c6a2ae8bf72e548
 Patch0:         %{name}-build.patch
-Patch2:		%{name}-arp.patch
-Patch4:         %{name}-ipaddress.patch
+Patch1:		%{name}-arp.patch
 # extensions
 Patch10:        %{name}-2.2.4-wrr.patch
 Patch11:        %{name}-2.2.4-esfq.patch
@@ -92,8 +91,7 @@ a przestrzeni± u¿ytkownika.
 %setup -q
 rm -rf include-glibc
 %patch0 -p1
-%patch2 -p1
-%patch4 -p1
+%patch1 -p1
 
 %patch10 -p1
 %patch11 -p1
@@ -113,7 +111,7 @@ rm -rf include/linux
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man8,%{_libdir},%{_includedir}}
 
-install ip/{ip,rtmon,routel} %{?with_tc:tc/tc} misc/{rtacct,rtstat,ss,ifstat} $RPM_BUILD_ROOT%{_sbindir}
+install ip/{ip,rtmon,routel} %{?with_tc:tc/tc} misc/{ifstat,lnstat,nstat,rtacct,ss} $RPM_BUILD_ROOT%{_sbindir}
 install etc/iproute2/rt_protos \
 	etc/iproute2/rt_realms \
 	etc/iproute2/rt_scopes \
