@@ -19,13 +19,12 @@ License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
 Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.gz
-Source1:	%{name}-owl-man.tar.bz2
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-uClibc.patch
-Patch2:		%{name}-fix-2_2.patch
 Patch6:		wrr-iproute2-2.2.4.patch
 Patch7:		htb3.6_tc.patch
 Patch8:		%{name}-no_libresolv.patch
+BuildRequires:	kernel-headers
 %{?_with_db3:BuildRequires: db3-devel}
 %{!?_with_db3:BuildRequires: db-devel}
 %{!?_without_tex:BuildRequires:	tetex-dvips}
@@ -73,10 +72,9 @@ Ta biblioteka udostêpnia interfejs do interfejsu netlink miêdzy j±drem
 a przestrzeni± u¿ytkownika.
 
 %prep
-%setup -q -n %{name} -a1
+%setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 %patch7 -p1
 %patch6 -p1
 %patch8 -p1
