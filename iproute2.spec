@@ -12,8 +12,7 @@ Group(pl):	Sieciowe/Administracyjne
 Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.gz
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-ll_types.patch
-Patch2:		%{name}-rt_names_h.patch
-Patch3:		%{name}-utils_c.patch
+%{?BOOT:Patch2:		%{name}-uClibc.patch}
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	psutils
@@ -49,20 +48,25 @@ Group:		Networking/Admin
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 
 %if %{?BOOT:1}%{!?BOOT:0}
-#%{__make} \
-#	OPT="-Os" GLIBCFIX="" \
-#	KERNEL_INCLUDE="/usr/lib/bootdisk%{_includedir}" \
-#	LDFLAGS="-nostdlib -s" 	ADDLIB="inet_ntop.o inet_pton.o" \
-#	LDLIBS="%{_libdir}/bootdisk%{_libdir}/crt0.o %{_libdir}/bootdisk%{_libdir}/libc.a -lgcc"
+%{__make} \
+	OPT="-Os" GLIBCFIX="" \
+	KERNEL_INCLUDE="/usr/lib/bootdisk%{_includedir}" \
+	LDFLAGS="-nostdlib -static -s" \
+	LDLIBS="%{_libdir}/bootdisk%{_libdir}/crt0.o %{_libdir}/bootdisk%{_libdir}/libc.a -lgcc" \
+	ADDLIB="inet_ntop.o inet_pton.o dnet_ntop.o dnet_pton.o ipx_ntop.o ipx_pton.o" \
+	SUBDIRS="lib ip"
+
+	LDLIBS="/usr/lib/libresolv.a %{_libdir}/bootdisk%{_libdir}/crt0.o %{_libdir}/bootdisk%{_libdir}/libc.a -lgcc" \
 
 # there are some problems compiling with uClibc, falling back to simple glibc-static
 %{__make} SUBDIRS="lib ip" OPT="-Os" LDFLAGS="-static -s" 
 mv -f ip/ip ip-BOOT
+mv -f ip/rtacct rtacct-BOOT
+mv -f ip/rtmon rtmon-BOOT
 %{__make} clean
 %endif
 
@@ -75,6 +79,7 @@ mv -f ip/ip ip-BOOT
 rm -rf $RPM_BUILD_ROOT
 %if %{?BOOT:1}%{!?BOOT:0}
 install -d $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin
+# we need only 'ip' on bootdisk (don't we??)
 install -s ip-BOOT $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin/ip
 %endif
 
