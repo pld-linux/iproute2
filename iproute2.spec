@@ -59,7 +59,7 @@ Group(pl):	Sieciowe/Administracyjne
 %if %{?BOOT:1}%{!?BOOT:0}
 %{__make} \
 	OPT="-m386 -Os" GLIBCFIX="" \
-	KERNEL_INCLUDE="/usr/lib/bootdisk%{_includedir}" \
+	KERNEL_INCLUDE="/usr/src/linux/include -I%{_libdir}/bootdisk%{_includedir}" \
 	LDFLAGS="-nostdlib -static -s" \
 	LDLIBS="%{_libdir}/bootdisk%{_libdir}/crt0.o %{_libdir}/bootdisk%{_libdir}/libc.a -lgcc" \
 	ADDLIB="inet_ntop.o inet_pton.o dnet_ntop.o dnet_pton.o ipx_ntop.o ipx_pton.o" \
