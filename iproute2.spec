@@ -22,7 +22,7 @@ Patch2:		%{name}-fix-2_2.patch
 Patch3:		%{name}-label.patch
 Patch4:		%{name}-latest.patch
 Patch5:		%{name}-htb2_tc.patch
-%{!?_without_dist_kernel:Patch6:	wrr-iproute2-2.2.4.patch}
+Patch6:		wrr-iproute2-2.2.4.patch
 %{!?_without_tetex:BuildRequires:	tetex-dvips}
 %{!?_without_tetex:BuildRequires:	tetex-latex}
 %{!?_without_tetex:BuildRequires:	psutils}
@@ -62,13 +62,15 @@ includes the new utilities.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%{!?_without_dist_kernel:%patch6 -p1}
+%patch6 -p1
 
 %build
+WRRDEF=""
+grep -q tc_wrr_class_weight /usr/include/linux/pkt_sched.h || WRRDEF="-DNEED_WRR_DEFS"
 
 %{__make} \
 	CC="%{__cc}" \
-	OPT="%{rpmcflags}" \
+	OPT="%{rpmcflags} ${WRRDEF}" \
 	KERNEL_INCLUDE="%{_kernelsrcdir}/include" \
 	%{?_without_tc:SUBDIRS="lib ip" LDFLAGS="%{rpmldflags}"}
 %{!?_without_tetex:%{__make} -C doc}
@@ -85,15 +87,13 @@ install etc/iproute2/rt_protos \
 	$RPM_BUILD_ROOT%{_sysconfdir}
 install man/*	$RPM_BUILD_ROOT%{_mandir}/man8
 
-gzip -9nf READ* RELNOTES %{!?_without_tetex:doc/*.ps}
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc {README,README.iproute2+tc,RELNOTES}.gz
-%{!?_without_tetex:%doc doc/*.ps.gz}
+%doc README README.iproute2+tc RELNOTES
+%{!?_without_tetex:%doc doc/*.ps}
 %attr(755,root,root) %{_sbindir}/*
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/*
