@@ -26,12 +26,13 @@ Group:		Networking/Admin
 Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-%{sdate}.tar.gz
 # Source0-md5:	32dd8efe9b71200cd9bf43c8459f043e
 #Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{sdate}.tar.gz
-#Patch0:         %{name}-build.patch
-#Patch1:		%{name}-arp.patch
+Patch0:         %{name}-build.patch
+Patch1:		%{name}-arp.patch
 # extensions
 #Patch10:        %{name}-2.2.4-wrr.patch
-#Patch11:        %{name}-2.2.4-esfq.patch
+Patch11:        %{name}-2.2.4-esfq.patch
 #Patch13:        %{name}-rates-1024-fix.patch
+Patch14:	%{name}-tc-fix.patch
 URL:		http://developer.osdl.org/dev/iproute2/
 BuildRequires:	bison
 BuildRequires:	db-devel
@@ -90,14 +91,15 @@ Ta biblioteka udostêpnia interfejs do interfejsu netlink miêdzy j±drem
 a przestrzeni± u¿ytkownika.
 
 %prep
-%setup -q -n %{name}-%{version}-%{sdate}
+%setup -q 
 rm -rf include-glibc
-#%patch0 -p1
-#%patch1 -p1
+%patch0 -p1
+%patch1 -p1
 
 #%patch10 -p1
-#%patch11 -p1
+%patch11 -p1
 #%{?with_iec_complaint:%patch13 -p1}
+%patch14 -p1
 
 %build
 rm -rf include/linux
