@@ -35,7 +35,7 @@ aspektów dotycz±cych sieci.
 %patch1 -p1
 
 %build
-%{__make} OPT="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-g -O}"
+%{__make} OPT="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-g -O0}"
 %{__make} -C doc
 
 %install
