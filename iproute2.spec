@@ -16,7 +16,7 @@ Name:		iproute2
 %define	sdate	040702
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.8
-Release:	1
+Release:	2
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
@@ -42,7 +42,7 @@ BuildRequires:	tetex-metafont
 BuildRequires:	tetex-tex-babel
 %endif
 Obsoletes:	iproute
-Conflicts:	ifstat
+Obsoletes:	ifstat
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
