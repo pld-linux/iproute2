@@ -42,12 +42,4 @@
  				s->tx_aborted_errors,
  				s->tx_fifo_errors,
  				s->tx_window_errors,
-@@ -603,7 +603,7 @@
- 				fprintf(stderr, "Flush terminated\n");
- 				exit(1);
- 			}
--			if (filter.flushed == 0) {
-+			if (filter.flushed == 0 || round > 10000) {
- 				if (round == 0) {
- 					fprintf(stderr, "Nothing to flush.\n");
- 				} else if (show_stats)
+
