@@ -13,7 +13,7 @@ Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
-%define	_rel	2
+%define	_rel	3
 Release:	%{_rel}@%{_kernel_ver_str}
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
@@ -25,6 +25,7 @@ Patch1:		%{name}-uClibc.patch
 Patch6:		wrr-iproute2-2.2.4.patch
 Patch7:		htb3.6_tc.patch
 Patch8:		%{name}-no_libresolv.patch
+Patch9:        %{name}-2.2.4-esfq.patch
 BuildRequires:	kernel-headers
 BuildRequires:	bison
 %{?_with_db3:BuildRequires: db3-devel}
@@ -80,6 +81,7 @@ a przestrzeni± u¿ytkownika.
 %patch7 -p1
 %patch6 -p1
 %patch8 -p1
+%patch9 -p1 
 
 %build
 WRRDEF=""
