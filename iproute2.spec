@@ -14,8 +14,7 @@ Name:		iproute2
 %define mainver	2.4.7
 %define snapshot ss020116
 Version:	%{mainver}.%{snapshot}
-%define	_rel	13
-Release:	%{_rel}
+Release:	14
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
