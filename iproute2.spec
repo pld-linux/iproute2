@@ -37,6 +37,7 @@ BuildRequires:	psutils
 BuildRequires:	sgml-tools
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-format-latex
+BuildRequires:	tetex-metafont
 BuildRequires:	tetex-tex-babel
 %endif
 Obsoletes:	iproute
