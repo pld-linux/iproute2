@@ -1,0 +1,14 @@
+diff -ur iproute2.orig/lib/ll_proto.c iproute2/lib/ll_proto.c
+--- iproute2.orig/lib/ll_proto.c	Sun Apr 16 19:42:52 2000
++++ iproute2/lib/ll_proto.c	Sat Jun  2 22:43:35 2001
+@@ -33,8 +33,8 @@
+ 	char *name;
+ } llproto_names[] = {
+ __PF(LOOP,loop)
+-__PF(ECHO,echo)      
+-__PF(PUP,pup)     
++__PF(PUP,pup)
++__PF(PUPAT,pupat)
+ __PF(IP,ip)
+ __PF(X25,x25)
+ __PF(ARP,arp)
