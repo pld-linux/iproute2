@@ -7,9 +7,8 @@ Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Copyright:	GPL
 Group:		Networking/Admin
 Group(pl):	Sieciowe/Administracyjne
-Source:		ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{version}-now-ss990417.tar.gz
-Patch0:		iproute2-make.patch
-Patch1:		iproute2-readme.patch
+Source:		ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{version}-now-ss990630.tar.gz
+Patch:		iproute2-make.patch
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -22,18 +21,20 @@ aspektów dotycz±cych sieci.
   
 %prep
 %setup -q -n %{name}
-%patch0 -p1
-%patch1 -p1
+%patch -p1
 
 %build
 make OPT="$RPM_OPT_FLAGS"
+make -C doc
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/{sbin,etc/iproute2}
+install -d $RPM_BUILD_ROOT%{_sbindir}
+install -d $RPM_BUILD_ROOT/etc/iproute2
 
-install -s ip/ip ip/rtmon ip/rtacct tc/tc $RPM_BUILD_ROOT/sbin
+install -s ip/ip ip/rtmon ip/rtacct tc/tc $RPM_BUILD_ROOT%{_sbindir}
+install    ip/routel $RPM_BUILD_ROOT%{_sbindir}
 
 install etc/iproute2/rt_protos \
 	etc/iproute2/rt_realms \
@@ -41,21 +42,28 @@ install etc/iproute2/rt_protos \
 	etc/iproute2/rt_tables \
 	$RPM_BUILD_ROOT/etc/iproute2
 
-gzip -9nf READ* RELNOTES
+
+gzip -9nf READ* RELNOTES doc/*.ps
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc {README,README.ip-sysctl,README.iproute2+tc}.gz
-%doc {README.multidomain-httpd,README.policy-routing,RELNOTES}.gz
-%doc doc/flowlabels.tex doc/ip-tunnels.tex
+%doc {README,README.iproute2+tc,RELNOTES}.gz
+%doc doc/*.ps.gz
 
-%attr(755,root,root) /sbin/*
+%attr(755,root,root) %{_sbindir}/*
 /etc/iproute2
 
 %changelog
+* Sun Jul 11 1999 PLD Team <pld-list@pld.org.pl>
+ $Log: iproute2.spec,v $
+ Revision 1.5  1999-07-11 17:16:01  misiek
+ update && make doc
+
+
+
 * Sat May  1 1999 Piotr Czerwiñski <pius@pld.org.pl>
   [2.2.4-1]
 - new upstream release (990417),

@@ -1,44 +1,12 @@
---- iproute2/Makefile	Sat Mar 27 20:32:41 1999
-+++ iproute2.new/Makefile	Sun May  2 00:44:44 1999
-@@ -4,7 +4,7 @@
- #KERNEL_INCLUDE=/home1/root/vger-129/vger-mirror/linux/include
- KERNEL_INCLUDE=/usr/src/linux/include
- 
--DEFINES= #-DRESOLVE_HOSTNAMES
-+DEFINES= -DRESOLVE_HOSTNAMES
- 
- #options if you have a bind>=4.9.4 libresolv (or, maybe, glibc)
- LDLIBS=-lresolv
-@@ -24,7 +24,7 @@
+diff -urN iproute2.orig/Makefile iproute2/Makefile
+--- iproute2.orig/Makefile	Sun Jul 11 18:49:17 1999
++++ iproute2/Makefile	Sun Jul 11 18:49:31 1999
+@@ -27,7 +27,7 @@
  endif
  
  CC=gcc
--CFLAGS=-D_GNU_SOURCE -O2 -Wall -g $(GLIBCFIX) -I$(KERNEL_INCLUDE) -I../include $(DEFINES)
-+CFLAGS=-D_GNU_SOURCE $(OPT) -Wall -g $(GLIBCFIX) -I$(KERNEL_INCLUDE) -I../include $(DEFINES)
+-CFLAGS=-D_GNU_SOURCE -O2 -Wstrict-prototypes -Wall -g $(GLIBCFIX) -I$(KERNEL_INCLUDE) -I../include $(DEFINES)
++CFLAGS=-D_GNU_SOURCE $(OPT) -Wstrict-prototypes -Wall -g $(GLIBCFIX) -I$(KERNEL_INCLUDE) -I../include $(DEFINES)
  
  LDLIBS += -L../lib -lnetlink -lutil
  
---- iproute2/include/libnetlink.h	Tue Nov 17 20:15:02 1998
-+++ iproute2.new/include/libnetlink.h	Sun May  2 00:45:34 1999
-@@ -1,6 +1,10 @@
- #ifndef __LIBNETLINK_H__
- #define __LIBNETLINK_H__ 1
- 
-+#ifndef MSG_TRUNC
-+#define MSG_TRUNC 0x20
-+#endif
-+
- #include <asm/types.h>
- #include <linux/netlink.h>
- #include <linux/rtnetlink.h>
---- iproute2/ip/iptunnel.c	Thu Apr  8 19:45:55 1999
-+++ iproute2.new/ip/iptunnel.c	Sun May  2 00:46:29 1999
-@@ -33,6 +33,8 @@
- 
- #include "utils.h"
- 
-+#define __constant_htons(x) (x)
-+
- static void usage(void) __attribute__((noreturn));
- 
- static void usage(void)
