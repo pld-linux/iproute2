@@ -1,6 +1,6 @@
 #
 # Conditional build
-%bcond_without	tetex	# don't build documentation
+%bcond_without	doc	# don't build documentation
 %bcond_without	tc	# don't build tc program (it breaks static linkage)
 %bcond_without	tc_esfq	# build tc without esfq support (requires patched headers)
 %bcond_without	tc_wrr	# build tc without wrr support
@@ -40,11 +40,11 @@ Patch12:	%{name}-kernel_headers.patch
 Patch13:	%{name}-ipaddress.patch
 Patch14:	%{name}-a-flush-hack.patch
 BuildRequires:	bison
-%{?with_tetex:BuildRequires:	psutils}
-%{?with_tetex:BuildRequires:	sgml-tools}
-%{?with_tetex:BuildRequires:	tetex-dvips}
-%{?with_tetex:BuildRequires:	tetex-latex}
-%{?with_tetex:BuildRequires:	tetex-tex-babel}
+%{?with_doc:BuildRequires:	psutils}
+%{?with_doc:BuildRequires:	sgml-tools}
+%{?with_doc:BuildRequires:	tetex-dvips}
+%{?with_doc:BuildRequires:	tetex-latex}
+%{?with_doc:BuildRequires:	tetex-tex-babel}
 Obsoletes:	iproute
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -113,7 +113,7 @@ WRRDEF=""
 	KERNEL_INCLUDE="`pwd`/kernel-headers" \
 	%{!?with_tc:SUBDIRS="lib ip misc" LDFLAGS="%{rpmldflags}"}
 
-%{?with_tetex:%{__make} -C doc}
+%{?with_doc:%{__make} -C doc}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -134,7 +134,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README README.iproute2+tc RELNOTES %{?with_tetex:doc/*.ps}
+%doc README README.iproute2+tc RELNOTES %{?with_doc:doc/*.ps}
 %attr(755,root,root) %{_sbindir}/*
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/*
