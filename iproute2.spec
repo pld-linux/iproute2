@@ -18,8 +18,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_sysconfdir	/etc/iproute2
 
 %description
-This package contains the ip, tc and the rtmon tool that allow control of
-routing and other aspects of networking.
+This package contains the ip, tc and the rtmon tool that allow control
+of routing and other aspects of networking.
 
 %description -l pl
 Ten pakiet zawiera programy pozwalaj±ce na kontrolê routingu i innych
