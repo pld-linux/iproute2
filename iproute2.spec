@@ -13,14 +13,14 @@ Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interface
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
 %define _rel    10
-Release:        %{_rel}@%{_kernel_ver_str}
+Release:	%{_rel}@%{_kernel_ver_str}
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
 Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.gz
 # Source0-md5:	2c7e5f3a10e703745ecdc613f7a7d187
 Source1:	%{name}-owl-man.tar.bz2
-# Source1-md5: cd4425df972a4ab001db31a5eb1c5da5
+# Source1-md5:	cd4425df972a4ab001db31a5eb1c5da5
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-uClibc.patch
 Patch2:		%{name}-fix-2_2.patch
