@@ -10,6 +10,7 @@ Group(pl):	Sieciowe/Administracja
 Source:		ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{version}-now-ss990630.tar.gz
 Patch:		iproute2-make.patch
 BuildRequires:	tetex-dvips
+BuildRequires:	psutils
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -42,7 +43,6 @@ install etc/iproute2/rt_protos \
 	etc/iproute2/rt_scopes \
 	etc/iproute2/rt_tables \
 	$RPM_BUILD_ROOT/etc/iproute2
-
 
 gzip -9nf READ* RELNOTES doc/*.ps
 
