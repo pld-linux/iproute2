@@ -1,0 +1,7 @@
+--- iproute2/Config.config	Sun Apr 16 19:42:46 2000
++++ iproute2/Config	Mon May 27 14:30:07 2002
+@@ -1,2 +1,2 @@
+-TC_CONFIG_DIFFSERV=n
+-TC_CONFIG_ATM=n
++TC_CONFIG_DIFFSERV=y
++TC_CONFIG_ATM=n
