@@ -100,7 +100,6 @@ install etc/iproute2/rt_protos \
 	etc/iproute2/rt_scopes \
 	etc/iproute2/rt_tables \
 	$RPM_BUILD_ROOT%{_sysconfdir}
-install man/*	$RPM_BUILD_ROOT%{_mandir}/man8
 install lib/libnetlink.a $RPM_BUILD_ROOT%{_libdir}
 install include/libnetlink.h $RPM_BUILD_ROOT%{_includedir}
 
@@ -114,7 +113,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/*
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/*
-%{_mandir}/man8/*
 
 %files -n libnetlink-devel
 %defattr(644,root,root,755)
