@@ -12,7 +12,7 @@ diff -urN iproute2.orig/tc/Makefile iproute2/tc/Makefile
 diff -urN iproute2.orig/tc/q_esfq.c iproute2/tc/q_esfq.c
 --- iproute2.orig/tc/q_esfq.c	Thu Jan  1 02:00:00 1970
 +++ iproute2/tc/q_esfq.c	Thu May 16 02:13:30 2002
-@@ -0,0 +1,169 @@
+@@ -0,0 +1,167 @@
 +/*
 + * q_esfq.c		ESFQ.
 + *
@@ -53,7 +53,7 @@ diff -urN iproute2.orig/tc/q_esfq.c iproute2/tc/q_esfq.c
 +static int esfq_parse_opt(struct qdisc_util *qu, int argc, char **argv, struct nlmsghdr *n)
 +{
 +	int ok=0;
-+	struct tc_sfq_qopt opt;
++	struct tc_esfq_qopt opt;
 +
 +	memset(&opt, 0, sizeof(opt));
 +
@@ -134,7 +134,7 @@ diff -urN iproute2.orig/tc/q_esfq.c iproute2/tc/q_esfq.c
 +
 +static int esfq_print_opt(struct qdisc_util *qu, FILE *f, struct rtattr *opt)
 +{
-+	struct tc_sfq_qopt *qopt;
++	struct tc_esfq_qopt *qopt;
 +	SPRINT_BUF(b1);
 +
 +	if (opt == NULL)
@@ -174,11 +174,9 @@ diff -urN iproute2.orig/tc/q_esfq.c iproute2/tc/q_esfq.c
 +	return 0;
 +}
 +
-+
-+struct qdisc_util esfq_util = {
-+	NULL,
-+	"esfq",
-+	esfq_parse_opt,
-+	esfq_print_opt,
-+	esfq_print_xstats,
++struct qdisc_util esfq_qdisc_util = {
++       .id = "esfq",
++       .parse_qopt = esfq_parse_opt,
++       .print_qopt = esfq_print_opt,
++       .print_xstats = esfq_print_xstats,
 +};
