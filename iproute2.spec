@@ -12,6 +12,7 @@ License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
 Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.gz
+Source1:	%{name}-owl-man.tar.bz2
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-uClibc.patch
 Patch2:		%{name}-fix-2_2.patch
@@ -36,7 +37,7 @@ Ten pakiet zawiera programy pozwalaj±ce na kontrolê routingu i innych
 aspektów dotycz±cych sieci.
 
 %prep
-%setup -q -n %{name}
+%setup -q -n %{name} -a1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -55,7 +56,7 @@ aspektów dotycz±cych sieci.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir}}
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man8}
 
 install ip/{ip,rtmon,rtacct,routel} %{!?_without_tc:tc/tc} $RPM_BUILD_ROOT%{_sbindir}
 install etc/iproute2/rt_protos \
@@ -63,6 +64,7 @@ install etc/iproute2/rt_protos \
 	etc/iproute2/rt_scopes \
 	etc/iproute2/rt_tables \
 	$RPM_BUILD_ROOT%{_sysconfdir}
+install man/*	$RPM_BUILD_ROOT%{_mandir}/man8
 
 gzip -9nf READ* RELNOTES %{!?_without_tetex:doc/*.ps}
 
@@ -76,3 +78,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/*
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/*
+%{_mandir}/man8/*
