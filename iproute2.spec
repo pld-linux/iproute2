@@ -10,7 +10,7 @@ Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
-Release:	9
+Release:	10
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
@@ -21,7 +21,7 @@ Patch1:		%{name}-uClibc.patch
 Patch2:		%{name}-fix-2_2.patch
 Patch3:		%{name}-label.patch
 Patch4:		%{name}-latest.patch
-Patch5:		%{name}-htb2_tc.patch
+Patch5:		%{name}-htb3_tc.patch
 Patch6:		wrr-iproute2-2.2.4.patch
 %{!?_without_tetex:BuildRequires:	tetex-dvips}
 %{!?_without_tetex:BuildRequires:	tetex-latex}
