@@ -1,0 +1,28 @@
+--- iproute2/lib/ll_types.c~	Sun Apr 16 19:42:52 2000
++++ iproute2/lib/ll_types.c	Sun Nov  5 23:50:17 2000
+@@ -45,6 +45,9 @@
+ __PF(ARCNET,arcnet)
+ __PF(APPLETLK,atalk)
+ __PF(DLCI,dlci)
++#ifdef ARPHRD_ATM
++__PF(ATM,atm)
++#endif
+ __PF(METRICOM,metricom)
+ __PF(SLIP,slip)
+ __PF(CSLIP,cslip)
+@@ -54,7 +57,15 @@
+ __PF(ADAPT,adapt)
+ __PF(ROSE,rose)
+ __PF(X25,x25)
++#ifdef ARPHRD_HWX25
++__PF(HWX25,hwx25)
++#endif
+ __PF(PPP,ppp)
++__PF(HDLC,hdlc)
++__PF(LAPB,lapb)
++#ifdef ARPHRD_DDMCP
++__PF(DDMCP,ddmcp)
++#endif
+ __PF(TUNNEL,ipip)
+ __PF(TUNNEL6,tunnel6)
+ __PF(FRAD,frad)
