@@ -101,8 +101,7 @@ rm -rf include/linux
 %{__make} \
 	%{?with_uClibc:CC="%{_target_cpu}-uclibc-gcc"}%{!?with_uClibc:CC="%{__cc}"} \
 	OPT="%{rpmcflags}" \
-	%{!?with_tc:SUBDIRS="lib ip misc"} \
-	LDFLAGS="%{rpmldflags}"
+	%{!?with_tc:SUBDIRS="lib ip misc" LDFLAGS="%{rpmldflags}"} \
 
 %{?with_doc:%{__make} -C doc}
 
