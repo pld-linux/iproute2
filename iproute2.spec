@@ -12,7 +12,7 @@ Name:		iproute2
 %define		mainver		2.4.7
 %define		snapshot	ss020116
 Version:	%{mainver}.%{snapshot}
-Release:	16
+Release:	17
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
@@ -43,6 +43,7 @@ BuildRequires:	tetex-latex
 BuildRequires:	tetex-tex-babel
 %endif
 Obsoletes:	iproute
+Conflicts:	ifstat
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
