@@ -35,7 +35,7 @@ BuildRequires:	db-devel
 %if %{with atm}
 BuildRequires:	linux-atm-devel
 %endif
-BuildRequires:	linux-libc-headers >= 7:2.6.11.2-2
+BuildRequires:	linux-libc-headers >= 7:2.6.11.2-3
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
