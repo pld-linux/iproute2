@@ -1,0 +1,123 @@
+--- iproute2/include/rt_names.h.orig	2000-04-16 19:42:50.000000000 +0200
++++ iproute2/include/rt_names.h	2004-04-04 22:27:06.235485664 +0200
+@@ -1,6 +1,8 @@
+ #ifndef RT_NAMES_H_
+ #define RT_NAMES_H_ 1
+ 
++#include <asm/types.h>
++
+ const char* rtnl_rtprot_n2a(int id, char *buf, int len);
+ const char* rtnl_rtscope_n2a(int id, char *buf, int len);
+ const char* rtnl_rttable_n2a(int id, char *buf, int len);
+--- iproute2/include/utils.h.orig	2002-01-08 20:41:16.000000000 +0100
++++ iproute2/include/utils.h	2004-04-04 22:27:25.495557688 +0200
+@@ -1,6 +1,7 @@
+ #ifndef __UTILS_H__
+ #define __UTILS_H__ 1
+ 
++#include <asm/byteorder.h>
+ #include <asm/types.h>
+ #include <resolv.h>
+ 
+--- iproute2/lib/rt_names.c.orig	2000-04-16 19:42:52.000000000 +0200
++++ iproute2/lib/rt_names.c	2004-04-04 22:33:06.876659872 +0200
+@@ -16,6 +16,7 @@
+ #include <fcntl.h>
+ #include <string.h>
+ #include <sys/time.h>
++#include "rt_names.h"
+ 
+ static void rtnl_tab_initialize(char *file, char **tab, int size)
+ {
+@@ -79,7 +80,7 @@
+ 			    rtnl_rtprot_tab, 256);
+ }
+ 
+-char * rtnl_rtprot_n2a(int id, char *buf, int len)
++const char * rtnl_rtprot_n2a(int id, char *buf, int len)
+ {
+ 	if (id<0 || id>=256) {
+ 		snprintf(buf, len, "%d", id);
+@@ -95,7 +96,7 @@
+ 	return buf;
+ }
+ 
+-int rtnl_rtprot_a2n(__u32 *id, char *arg)
++int rtnl_rtprot_a2n(int *id, char *arg)
+ {
+ 	static char *cache = NULL;
+ 	static unsigned long res;
+@@ -146,7 +147,7 @@
+ 			    rtnl_rtscope_tab, 256);
+ }
+ 
+-char * rtnl_rtscope_n2a(int id, char *buf, int len)
++const char * rtnl_rtscope_n2a(int id, char *buf, int len)
+ {
+ 	if (id<0 || id>=256) {
+ 		snprintf(buf, len, "%d", id);
+@@ -162,7 +163,7 @@
+ 	return buf;
+ }
+ 
+-int rtnl_rtscope_a2n(__u32 *id, char *arg)
++int rtnl_rtscope_a2n(int *id, char *arg)
+ {
+ 	static char *cache = NULL;
+ 	static unsigned long res;
+@@ -209,7 +210,7 @@
+ 			    rtnl_rtrealm_tab, 256);
+ }
+ 
+-char * rtnl_rtrealm_n2a(int id, char *buf, int len)
++const char * rtnl_rtrealm_n2a(int id, char *buf, int len)
+ {
+ 	if (id<0 || id>=256) {
+ 		snprintf(buf, len, "%d", id);
+@@ -275,7 +276,7 @@
+ 			    rtnl_rttable_tab, 256);
+ }
+ 
+-char * rtnl_rttable_n2a(int id, char *buf, int len)
++const char * rtnl_rttable_n2a(int id, char *buf, int len)
+ {
+ 	if (id<0 || id>=256) {
+ 		snprintf(buf, len, "%d", id);
+@@ -291,7 +292,7 @@
+ 	return buf;
+ }
+ 
+-int rtnl_rttable_a2n(__u32 *id, char *arg)
++int rtnl_rttable_a2n(int *id, char *arg)
+ {
+ 	static char *cache = NULL;
+ 	static unsigned long res;
+@@ -337,7 +338,7 @@
+ 			    rtnl_rtdsfield_tab, 256);
+ }
+ 
+-char * rtnl_dsfield_n2a(int id, char *buf, int len)
++const char * rtnl_dsfield_n2a(int id, char *buf, int len)
+ {
+ 	if (id<0 || id>=256) {
+ 		snprintf(buf, len, "%d", id);
+--- iproute2/misc/rtstat.c.orig	2001-12-24 22:44:30.000000000 +0100
++++ iproute2/misc/rtstat.c	2004-04-04 22:34:44.865763264 +0200
+@@ -14,6 +14,7 @@
+  */
+ 
+ #include <stdio.h>
++#include <stdlib.h>
+ #include <unistd.h>
+ #include <getopt.h>
+ 
+--- iproute2/misc/ssfilter.y.orig	2001-12-25 21:07:50.000000000 +0100
++++ iproute2/misc/ssfilter.y	2004-04-04 22:40:40.134754168 +0200
+@@ -1,6 +1,7 @@
+ %{
+ 
+ #include <stdio.h>
++#include <stdlib.h>
+ #include <malloc.h>
+ #include <string.h>
+ #include "ssfilter.h"

@@ -2,8 +2,6 @@
 # Conditional build
 %bcond_without	doc	# don't build documentation
 %bcond_without	tc	# don't build tc program (it breaks static linkage)
-%bcond_without	tc_esfq	# build tc without esfq support (requires patched headers)
-%bcond_without	tc_wrr	# build tc without wrr support
 %bcond_with	uClibc	# do some hacks to build with uClibc
 #
 Summary:	Utility to control Networking behavior in 2.2.X kernels
@@ -11,8 +9,8 @@ Summary(es):	Herramientas para encaminamiento avanzado y configuración de interf
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-%define mainver	2.4.7
-%define snapshot ss020116
+%define		mainver		2.4.7
+%define		snapshot	ss020116
 Version:	%{mainver}.%{snapshot}
 Release:	16
 License:	GPL
@@ -22,24 +20,20 @@ Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.g
 # Source0-md5:	2c7e5f3a10e703745ecdc613f7a7d187
 Source1:	%{name}-owl-man.tar.bz2
 # Source1-md5:	cd4425df972a4ab001db31a5eb1c5da5
-Patch0:		%{name}-make.patch
-Patch1:		%{name}-no_libresolv.patch
-Patch2:		%{name}-disable_arpd.patch
-Patch3:		%{name}-uspace.patch
-Patch4:		%{name}-diffserv-config.patch
-Patch5:		%{name}-netlink.patch
-Patch6:		%{name}-kernellast.patch
+Patch0:		%{name}-Makefile.patch
+Patch1:		%{name}-llh.patch
+Patch2:		%{name}-diffserv-config.patch
+Patch3:		%{name}-netlink.patch
+Patch4:		%{name}-ipaddress.patch
+Patch5:		%{name}-iprule.patch
 # uClibc hacks
-Patch7:		%{name}-uClibc.patch
-Patch8:		htb3.6_tc.patch
-Patch9:		%{name}-stats.patch
+Patch6:		%{name}-uClibc.patch
 # extensions
-Patch10:	wrr-iproute2-2.2.4.patch
-Patch11:	%{name}-2.2.4-now-ss001007-esfq.diff
-Patch12:	%{name}-kernel_headers.patch
-Patch13:	%{name}-ipaddress.patch
-Patch14:	%{name}-a-flush-hack.patch
+Patch10:	htb3.6_tc.patch
+Patch11:	wrr-iproute2-2.2.4.patch
+Patch12:	%{name}-2.2.4-now-ss001007-esfq.diff
 BuildRequires:	bison
+BuildRequires:	linux-libc-headers >= 7:2.6.4.0-3
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
@@ -89,30 +83,22 @@ a przestrzeni± u¿ytkownika.
 
 %prep
 %setup -q -n %{name} -a1
+rm -rf include-glibc
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%{?with_uClibc:%patch7 -p1}
-%patch8 -p1
-%patch9 -p1
-%{?with_tc_wrr:%patch10 -p1}
-%{?with_tc_esfq:%patch11 -p1}
+%{?with_uClibc:%patch6 -p1}
+%patch10 -p1
+%patch11 -p1
 %patch12 -p1
-%patch13 -p1
-%patch14 -p1
 
 %build
-WRRDEF=""
-%{?with_tc_wrr:grep -q tc_wrr_class_weight kernel-headers/linux/pkt_sched.h || WRRDEF="-DNEED_WRR_DEFS"}
-
 %{__make} \
 	CC="%{__cc}" \
-	OPT="%{rpmcflags} ${WRRDEF}" \
-	KERNEL_INCLUDE="`pwd`/kernel-headers" \
+	OPT="%{rpmcflags}" \
 	%{!?with_tc:SUBDIRS="lib ip misc" LDFLAGS="%{rpmldflags}"}
 
 %{?with_doc:%{__make} -C doc}
