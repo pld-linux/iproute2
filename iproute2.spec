@@ -40,7 +40,7 @@ aspektów dotycz±cych sieci.
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir}}
 
-install ip/{ip,rtmon,rtacct,tc,mroutel} $RPM_BUILD_ROOT%{_sbindir}
+install ip/{ip,rtmon,rtacct,tc} ip/routel $RPM_BUILD_ROOT%{_sbindir}
 
 install etc/iproute2/rt_protos \
 	etc/iproute2/rt_realms \
