@@ -6,6 +6,7 @@
 # Conditional build
 %bcond_without	doc		# don't build documentation
 %bcond_without	tc		# don't build tc program (it breaks static linkage)
+%bcond_without	atm		# don't required ATM.
 %bcond_with	uClibc		# do some hacks to build with uClibc
 %bcond_with	iec_complaint	# fix bitrate calculations
 #
@@ -33,7 +34,9 @@ Patch13:        %{name}-rates-1024-fix.patch
 URL:		http://developer.osdl.org/dev/iproute2/
 BuildRequires:	bison
 BuildRequires:	db-devel
+%if %{with atm}
 BuildRequires:	linux-atm-devel
+%endif
 BuildRequires:	linux-libc-headers >= 7:2.6.7.0-9
 %if %{with doc}
 BuildRequires:	psutils
