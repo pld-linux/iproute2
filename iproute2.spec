@@ -1,3 +1,5 @@
+# conditional build
+# --without tetex
 %define mainver		2.4.7
 %define snapshot	ss010803
 Summary:	Utility to control Networking behavior in 2.2.X kernels
@@ -15,9 +17,9 @@ Patch2:		%{name}-fix-2_2.patch
 Patch3:		%{name}-label.patch
 Patch4:		%{name}-latest.patch
 Patch5:		%{name}-htb2_tc.patch
-BuildRequires:	tetex-dvips
-BuildRequires:	tetex-latex
-BuildRequires:	psutils
+%{!?_without_tetex:BuildRequires:	tetex-dvips}
+%{!?_without_tetex:BuildRequires:	tetex-latex}
+%{!?_without_tetex:BuildRequires:	psutils}
 Obsoletes:	iproute
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -47,7 +49,7 @@ aspektów dotycz±cych sieci.
 	CC="%{__cc}" \
 	OPT="%{rpmcflags}" \
 	KERNEL_INCLUDE="%{_kernelsrcdir}/include"
-%{__make} -C doc
+%{!?_without_tetex:%{__make} -C doc}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -60,7 +62,7 @@ install etc/iproute2/rt_protos \
 	etc/iproute2/rt_tables \
 	$RPM_BUILD_ROOT%{_sysconfdir}
 
-gzip -9nf READ* RELNOTES doc/*.ps
+gzip -9nf READ* RELNOTES %{!?_without_tetex:doc/*.ps}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -68,7 +70,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc {README,README.iproute2+tc,RELNOTES}.gz
-%doc doc/*.ps.gz
+%{!?_without_tetex:d%doc doc/*.ps.gz}
 %attr(755,root,root) %{_sbindir}/*
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/*
