@@ -1,8 +1,9 @@
-# conditional build
-# --without tetex	# with tetex-2 there shuld be BR tetex-tex-babel
-# --without tc (don't build tc program, it break static linkage)
-# --without dist_kernel
-
+#
+# Conditional build
+# _without_tetex	- don't build documentation
+# _without_tc		- don't build tc program (it breaks static linkage)
+# _without_tc_esfq	- build tc without esfq support (requires patched headers)
+#
 %define		_kernel24	%(echo %{_kernel_ver} | grep -q '2\.[012]\.' ; echo $?)
 %define mainver		2.4.7
 %define snapshot	ss020116
@@ -93,7 +94,7 @@ a przestrzeni± u¿ytkownika.
 %endif
 %patch6 -p1
 %patch8 -p1
-%patch9 -p1
+%{!?_without_tc_esfq:%patch9 -p1}
 
 %build
 WRRDEF=""
@@ -125,8 +126,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README README.iproute2+tc RELNOTES
-%{!?_without_tetex:%doc doc/*.ps}
+%doc README README.iproute2+tc RELNOTES %{!?_without_tetex:doc/*.ps}
 %attr(755,root,root) %{_sbindir}/*
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/*
