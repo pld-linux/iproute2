@@ -2,6 +2,8 @@
 # --without tetex
 # --without tc (don't build tc program, it break static linkage)
 # --without dist_kernel
+
+%define		_kernel24	%(echo %{_kernel_ver} | grep -q '2\.[012]\.' ; echo $?)
 %define mainver		2.4.7
 %define snapshot	ss010803
 Summary:	Utility to control Networking behavior in 2.2.X kernels
@@ -10,7 +12,7 @@ Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
-Release:	9
+Release:	10@%{_kernel_ver_str}
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
@@ -23,6 +25,7 @@ Patch3:		%{name}-label.patch
 Patch4:		%{name}-latest.patch
 Patch5:		%{name}-htb2_tc.patch
 Patch6:		wrr-iproute2-2.2.4.patch
+Patch7:		htb3.6_tc.patch
 %{!?_without_tetex:BuildRequires:	tetex-dvips}
 %{!?_without_tetex:BuildRequires:	tetex-latex}
 %{!?_without_tetex:BuildRequires:	psutils}
@@ -61,7 +64,11 @@ includes the new utilities.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%if %{_kernel24}
+%patch7 -p1
+%else
 %patch5 -p1
+%endif
 %patch6 -p1
 
 %build
