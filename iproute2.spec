@@ -55,21 +55,28 @@ Group(pl):	Sieciowe/Administracyjne
 %if %{?BOOT:1}%{!?BOOT:0}
 %{__make} \
 	OPT="-m386 -Os" GLIBCFIX="" \
-	KERNEL_INCLUDE="/usr/src/linux/include -I%{_libdir}/bootdisk%{_includedir}" \
+	KERNEL_INCLUDE="%{_kernelsrcdir}/include" \
+	OPT="-I%{_libdir}/bootdisk%{_includedir}" \
 	LDFLAGS="-nostdlib -static -s" \
 	LDLIBS="%{_libdir}/bootdisk%{_libdir}/crt0.o %{_libdir}/bootdisk%{_libdir}/libc.a -lgcc" \
 	ADDLIB="inet_ntop.o inet_pton.o dnet_ntop.o dnet_pton.o ipx_ntop.o ipx_pton.o" \
 	SUBDIRS="lib ip"
 
 # there are some problems compiling with uClibc, falling back to simple glibc-static
-%{__make} SUBDIRS="lib ip" OPT="-Os" LDFLAGS="-static -s" 
+%{__make} \
+	SUBDIRS="lib ip" \
+	OPT="-Os" \
+	LDFLAGS="-static -s" \
+	KERNEL_INCLUDE="%{_kernelsrcdir}/include"
 mv -f ip/ip ip-BOOT
 mv -f ip/rtacct rtacct-BOOT
 mv -f ip/rtmon rtmon-BOOT
 %{__make} clean
 %endif
 
-%{__make} OPT="%{rpmcflags}"
+%{__make} \
+	OPT="%{rpmcflags}" \
+	KERNEL_INCLUDE="%{_kernelsrcdir}/include"
 %{__make} -C doc
 
 
