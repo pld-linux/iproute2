@@ -16,7 +16,7 @@ Name:		iproute2
 %define	sdate	050330
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.11
-Release:	0.1
+Release:	1
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
@@ -101,7 +101,8 @@ rm -rf include/linux
 %{__make} \
 	%{?with_uClibc:CC="%{_target_cpu}-uclibc-gcc"}%{!?with_uClibc:CC="%{__cc}"} \
 	OPT="%{rpmcflags}" \
-	%{!?with_tc:SUBDIRS="lib ip misc" LDFLAGS="%{rpmldflags}"}
+	%{!?with_tc:SUBDIRS="lib ip misc"} \
+	LDFLAGS="%{rpmldflags}"
 
 %{?with_doc:%{__make} -C doc}
 
