@@ -50,7 +50,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc {README,README.ip-sysctl,README.iproute2+tc}.gz
 %doc {README.multidomain-httpd,README.policy-routing,RELNOTES}.gz
-%doc flowlabels.tex ip-tunnels.tex
+%doc doc/flowlabels.tex doc/ip-tunnels.tex
 
 %attr(755,root,root) /sbin/*
 /etc/iproute2
