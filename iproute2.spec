@@ -32,7 +32,8 @@ Patch6:		wrr-iproute2-2.2.4.patch
 Patch7:		htb3.6_tc.patch
 Patch8:		%{name}-no_libresolv.patch
 Patch9:		%{name}-2.2.4-now-ss001007-esfq.diff
-%{!?_without_tc:BuildRequires:	db-devel}
+Patch10:	%{name}-stats.patch
+Patch11:	%{name}-disable_arpd.patch
 BuildRequires:	bison
 %{!?_without_tetex:BuildRequires:	latex2html}
 %{!?_without_tetex:BuildRequires:	psutils}
@@ -89,12 +90,14 @@ a przestrzeni± u¿ytkownika.
 #%%patch4 -p1
 %if %{_kernel24}
 %patch7 -p1
+%patch10 -p1
 %else
 %patch5 -p1
 %endif
 %patch6 -p1
 %patch8 -p1
 %{!?_without_tc_esfq:%patch9 -p1}
+%patch11 -p1
 
 %build
 WRRDEF=""
@@ -102,16 +105,17 @@ grep -q tc_wrr_class_weight %{_kernelsrcdir}/include/linux/pkt_sched.h || WRRDEF
 
 %{__make} \
 	CC="%{__cc}" \
-	OPT="%{rpmcflags} ${WRRDEF}" \
+	OPT="-march=%{_arch} ${WRRDEF}" \
 	KERNEL_INCLUDE="%{_kernelsrcdir}/include" \
-	%{?_without_tc:SUBDIRS="lib ip" LDFLAGS="%{rpmldflags}"}
+	LDFLAGS="%{rpmldflags}" \
+	%{?_without_tc:SUBDIRS="lib ip misc"}
 %{!?_without_tetex:%{__make} -C doc}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man8,%{_libdir},%{_includedir}}
 
-install ip/{ip,rtmon,routel} %{!?_without_tc:tc/tc} $RPM_BUILD_ROOT%{_sbindir}
+install ip/{ip,rtmon,routel} %{!?_without_tc:tc/tc} misc/{rtacct,rtstat} $RPM_BUILD_ROOT%{_sbindir}
 install etc/iproute2/rt_protos \
 	etc/iproute2/rt_realms \
 	etc/iproute2/rt_scopes \
