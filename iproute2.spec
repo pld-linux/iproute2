@@ -5,21 +5,21 @@
 # --without dist_kernel
 
 %define		_kernel24	%(echo %{_kernel_ver} | grep -q '2\.[012]\.' ; echo $?)
-%define mainver		2.4.7
-%define snapshot	ss020116
+%define		mainver		2.4.7
+%define		snapshot	ss020116
 Summary:	Utility to control Networking behavior in 2.2.X kernels
 Summary(es):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
-%define _rel    2
-Release:        %{_rel}@%{_kernel_ver_str}
+%define	_rel	2
+Release:	%{_rel}@%{_kernel_ver_str}
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
 Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.gz
-# Source0-md5:  2c7e5f3a10e703745ecdc613f7a7d187
+# Source0-md5:	2c7e5f3a10e703745ecdc613f7a7d187
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-uClibc.patch
 Patch6:		wrr-iproute2-2.2.4.patch
