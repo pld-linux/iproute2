@@ -4,7 +4,7 @@ Summary:	Utility to control Networking behavior in 2.2.X kernels
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
-Release:	1
+Release:	2
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 License:	GPL
 Group:		Networking/Admin
@@ -14,6 +14,7 @@ Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.g
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-uClibc.patch
 Patch2:		%{name}-fix-2_2.patch
+Patch3:		%{name}-label.patch
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	psutils
@@ -51,6 +52,7 @@ Group(pl):	Sieciowe/Administracyjne
 %patch0 -p1
 %{?BOOT:%patch1 -p1}
 %patch2 -p1
+%patch3 -p1
 
 %build
 
