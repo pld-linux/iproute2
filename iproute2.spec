@@ -9,7 +9,7 @@ Group:		Networking/Admin
 Group(pl):	Sieciowe/Administracja
 Source:		ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{version}-now-ss990630.tar.gz
 Patch:		iproute2-make.patch
-BuildRequire:	tetex-dvips
+BuildRequires:	tetex-dvips
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %description
