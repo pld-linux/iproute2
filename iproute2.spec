@@ -4,26 +4,27 @@ Name:		iproute2
 Version:	2.2.4
 Release:	6
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
-Copyright:	GPL
+License:	GPL
 Group:		Networking/Admin
 Group(pl):	Sieciowe/Administracja
-Source:		ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{version}-now-ss000225.tar.gz
-Patch:		iproute2-make.patch
+Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{version}-now-ss000225.tar.gz
+Patch0:		iproute2-make.patch
 BuildRequires:	tetex-dvips
 BuildRequires:	psutils
 Obsoletes:	iproute
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %define		_sbindir	/sbin
+%define		_sysconfdir	/etc/iproute2
 
 %description
 This package contains the ip, tc and the rtmon tool that allow control of
 routing and other aspects of networking.
-  
+
 %description -l pl
-Ten pakiet zawiera programy pozwalaj±ce na kontrolê routingu i innych 
+Ten pakiet zawiera programy pozwalaj±ce na kontrolê routingu i innych
 aspektów dotycz±cych sieci.
-  
+
 %prep
 %setup -q -n %{name}
 %patch -p1
@@ -35,8 +36,7 @@ make -C doc
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{_sbindir}
-install -d $RPM_BUILD_ROOT/etc/iproute2
+install -d $RPM_BUILD_ROOT{%{_sbindir},{_sysconfdir}}
 
 install -s ip/ip ip/rtmon ip/rtacct tc/tc $RPM_BUILD_ROOT%{_sbindir}
 install    ip/routel $RPM_BUILD_ROOT%{_sbindir}
@@ -45,7 +45,7 @@ install etc/iproute2/rt_protos \
 	etc/iproute2/rt_realms \
 	etc/iproute2/rt_scopes \
 	etc/iproute2/rt_tables \
-	$RPM_BUILD_ROOT/etc/iproute2
+	$RPM_BUILD_ROOT%{_sysconfdir}
 
 gzip -9nf READ* RELNOTES doc/*.ps
 
@@ -58,4 +58,4 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc/*.ps.gz
 
 %attr(755,root,root) %{_sbindir}/*
-/etc/iproute2
+%{_sysconfdir}
