@@ -14,7 +14,7 @@ diff -urN iproute2-2.6.8.org/Makefile iproute2-2.6.8/Makefile
  
  CC = gcc
  HOSTCC = gcc
--CCOPTS = -D_GNU_SOURCE -O2 -Wstrict-prototypes -Wall -g
+-CCOPTS = -D_GNU_SOURCE -O2 -Wstrict-prototypes -Wall
 +CCOPTS = -D_GNU_SOURCE $(OPT) -Wstrict-prototypes -Wall
  CFLAGS = $(CCOPTS) -I../include $(DEFINES)
  
