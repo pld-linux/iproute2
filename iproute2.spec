@@ -8,8 +8,8 @@ Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
 Release:	5
-Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 License:	GPL
+Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
 Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.gz
 Patch0:		%{name}-make.patch
@@ -24,8 +24,8 @@ Patch5:		%{name}-htb2_tc.patch
 Obsoletes:	iproute
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define	_sbindir	/sbin
-%define	_sysconfdir	/etc/iproute2
+%define		_sbindir	/sbin
+%define		_sysconfdir	/etc/iproute2
 
 %description
 This package contains the ip, tc and the rtmon tool that allow control
@@ -56,8 +56,8 @@ aspektów dotycz±cych sieci.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir}}
+
 install ip/{ip,rtmon,rtacct,routel} %{!?_without_tc:tc/tc} $RPM_BUILD_ROOT%{_sbindir}
 install etc/iproute2/rt_protos \
 	etc/iproute2/rt_realms \
