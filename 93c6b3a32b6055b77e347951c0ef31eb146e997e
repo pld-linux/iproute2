@@ -1,0 +1,25 @@
+update && make doc
+
+* Sat May  1 1999 Piotr Czerwiñski <pius@pld.org.pl>
+  [2.2.4-1]
+- new upstream release (990417),
+- patches corrected,
+- added %{_sysconfdir}/iproute2/*,
+- added more documentation,
+- recompiled on rpm 3,
+- cosmetic changes for common l&f.
+
+* Fri Feb 19 1999 Arkadiusz Mi¶kiewicz <misiek@misiek.eu.org>
+- new upstream release
+- gzipping instead bzipping
+
+* Fri Jan 01 1999 Arkadiusz Mi¶kiewicz <misiek@misiek.eu.org>
+- new upstream release (981220).
+- docs are now compressed
+
+* Sat Nov 07 1998 Arkadiusz Mi¶kiewicz <misiek@misiek.eu.org>
+- new upstream release (981101),
+- corrected patch.
+
+* Wed Oct 14 1998 Arkadiusz Mi¶kiewicz <misiek@zsz2.starachowice.pl>
+- initial rpm release.
