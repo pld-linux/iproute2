@@ -104,7 +104,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc {README,README.iproute2+tc,RELNOTES}.gz
 %doc doc/*.ps.gz
 %attr(755,root,root) %{_sbindir}/*
-%{_sysconfdir}
+%dir %{_sysconfdir}
+%config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/*
 
 %if %{?BOOT:1}%{!?BOOT:0}
 %files BOOT
