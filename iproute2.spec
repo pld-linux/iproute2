@@ -25,7 +25,7 @@ Patch0:		%{name}-db.patch
 Patch1:		%{name}-arp.patch
 URL:		http://developer.osdl.org/dev/iproute2/
 BuildRequires:	bison
-BuildRequires:	linux-libc-headers >= 7:2.6.5.1-4
+BuildRequires:	linux-libc-headers >= 7:2.6.6.0-2
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
