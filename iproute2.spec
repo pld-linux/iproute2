@@ -60,10 +60,15 @@ includes the new utilities.
 
 %package -n libnetlink-devel
 Summary:	Library for the netlink interface
+Summary(pl):	Biblioteka do interfejsu netlink
 Group:		Development/Libraries
 
 %description -n libnetlink-devel
 This library provides an interface for kernel-user netlink interface.
+
+%description -n libnetlink-devel -l pl
+Ta biblioteka udostêpnia interfejs do interfejsu netlink miêdzy j±drem
+a przestrzeni± u¿ytkownika.
 
 %prep
 %setup -q -n %{name} -a1
