@@ -23,8 +23,10 @@ Patch3:		%{name}-label.patch
 Patch4:		%{name}-latest.patch
 Patch5:		%{name}-htb3_tc.patch
 Patch6:		wrr-iproute2-2.2.4.patch
+BuildRequires:	db3-devel
 %{!?_without_tetex:BuildRequires:	tetex-dvips}
 %{!?_without_tetex:BuildRequires:	tetex-latex}
+%{!?_without_tetex:BuildRequires:       latex2html}
 %{!?_without_tetex:BuildRequires:	psutils}
 Obsoletes:	iproute
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
