@@ -31,6 +31,7 @@ Patch11:        %{name}-2.2.4-esfq.patch
 Patch13:        %{name}-rates-1024-fix.patch
 URL:		http://developer.osdl.org/dev/iproute2/
 BuildRequires:	bison
+BuildRequires:	db-devel
 BuildRequires:	linux-libc-headers >= 7:2.6.7.0-9
 %if %{with doc}
 BuildRequires:	psutils
