@@ -1,8 +1,12 @@
 #
+# TODO:
+#	- build @ uClibc
+#
 # Conditional build
-%bcond_without	doc	# don't build documentation
-%bcond_without	tc	# don't build tc program (it breaks static linkage)
-%bcond_with	uClibc	# do some hacks to build with uClibc
+%bcond_without	doc		# don't build documentation
+%bcond_without	tc		# don't build tc program (it breaks static linkage)
+%bcond_with	uClibc		# do some hacks to build with uClibc
+%bcond_with	iec_complaint	# fix bitrate calculations
 #
 Summary:	Utility to control Networking behavior in 2.2.X kernels
 Summary(es):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
@@ -33,6 +37,7 @@ Patch10:	%{name}-htb3.6_tc.patch
 Patch11:	%{name}-2.2.4-wrr.patch
 Patch12:	%{name}-2.2.4-esfq.patch
 Patch13:	%{name}-hfsc.patch
+Patch14:	%{name}-rates-1024-fix.patch
 BuildRequires:	bison
 BuildRequires:	linux-libc-headers >= 7:2.6.5.1-4
 %if %{with doc}
@@ -97,6 +102,7 @@ rm -rf include-glibc
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%{?with_iec_complaint:%patch14 -p1}
 
 %build
 %{__make} \
