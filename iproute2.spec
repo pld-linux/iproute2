@@ -47,7 +47,7 @@ Group:		Networking/Admin
 %setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+%{?BOOT:%patch2 -p1}
 
 %build
 
