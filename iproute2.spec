@@ -97,7 +97,11 @@ install etc/iproute2/rt_protos \
 	etc/iproute2/rt_scopes \
 	etc/iproute2/rt_tables \
 	$RPM_BUILD_ROOT%{_sysconfdir}
-install man/*	$RPM_BUILD_ROOT%{_mandir}/man8
+
+install man/man8/*	$RPM_BUILD_ROOT%{_mandir}/man8
+echo ".so tc-pbfifo.8" > $RPM_BUILD_ROOT%{_mandir}/man8/tc-bfifo.8
+echo ".so tc-pbfifo.8" > $RPM_BUILD_ROOT%{_mandir}/man8/tc-pfifo.8
+
 install lib/libnetlink.a $RPM_BUILD_ROOT%{_libdir}
 install include/libnetlink.h $RPM_BUILD_ROOT%{_includedir}
 
