@@ -1,6 +1,7 @@
 #
 # TODO:
 #	- fix build @ uClibc
+#	- remove -DCONFIG_CLS_U32_PERF=1 when llh will be fixed
 #
 # Conditional build
 %bcond_without	doc		# don't build documentation
@@ -13,15 +14,15 @@ Summary(es):	Herramientas para encaminamiento avanzado y configuración de interf
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-%define	sdate	040730
+%define	sdate	040823
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.8
-Release:	2
+Release:	3
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
-Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-2.6.8-ss%{sdate}.tar.gz
-# Source0-md5:	0d8c23f6c3a42bb680c3bdf9f580987a
+Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-2.6.8-%{sdate}.tar.gz
+# Source0-md5:	dab25877d70f132dcfeaba373805d867
 Patch0:         %{name}-build.patch
 Patch2:		%{name}-arp.patch
 Patch4:         %{name}-ipaddress.patch
@@ -96,9 +97,11 @@ rm -rf include-glibc
 %{?with_iec_complaint:%patch13 -p1}
 
 %build
+rm -rf include/linux
+
 %{__make} \
 	%{?with_uClibc:CC="%{_target_cpu}-uclibc-gcc"}%{!?with_uClibc:CC="%{__cc}"} \
-	OPT="%{rpmcflags}" \
+	OPT="%{rpmcflags} -DCONFIG_CLS_U32_PERF=1" \
 	%{!?with_tc:SUBDIRS="lib ip misc" LDFLAGS="%{rpmldflags}"}
 
 %{?with_doc:%{__make} -C doc}
