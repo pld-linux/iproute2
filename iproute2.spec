@@ -18,7 +18,7 @@ Name:		iproute2
 %define	sdate	050207
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.10
-Release:	0.1
+Release:	0.2
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
