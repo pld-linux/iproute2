@@ -30,6 +30,7 @@ Patch1:		%{name}-arp.patch
 Patch10:        %{name}-2.2.4-wrr.patch
 Patch11:        %{name}-2.2.4-esfq.patch
 Patch13:        %{name}-rates-1024-fix.patch
+Patch14:        %{name}-match-nfmark-in-u32.patch
 URL:		http://developer.osdl.org/dev/iproute2/
 BuildRequires:	bison
 BuildRequires:	db-devel
@@ -96,6 +97,7 @@ rm -rf include-glibc
 %patch10 -p1
 %patch11 -p1
 %{?with_iec_complaint:%patch13 -p1}
+%patch14 -p1
 
 %build
 rm -rf include/linux
