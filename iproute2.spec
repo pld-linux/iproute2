@@ -1,21 +1,23 @@
 #
 # Conditional build
-# _without_tetex	- don't build documentation
-# _without_tc		- don't build tc program (it breaks static linkage)
-# _without_tc_esfq	- build tc without esfq support (requires patched headers)
-# _without_tc_wrr	- build tc without wrr support
+%bcond_without	tetex	# don't build documentation
+%bcond_without	tc	# don't build tc program (it breaks static linkage)
+%bcond_without	tc_esfq	# build tc without esfq support (requires patched headers)
+%bcond_without	tc_wrr	# build tc without wrr support
+%bcond_with	uClibc	# do some hacks to build with uClibc
 
-%define		_kernel24	%(echo %{_kernel_ver} | grep -qv '2\.4\.' ; echo $?)
+# is it 2.2 not 2.4+?
+%define		_kernel22	%(echo %{_kernel_ver} | grep -q '2\.[3-9]\.' ; echo $?)
 
-%define mainver		2.4.7
-%define snapshot	ss020116
 Summary:	Utility to control Networking behavior in 2.2.X kernels
 Summary(es):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
+%define mainver	2.4.7
+%define snapshot ss020116
 Version:	%{mainver}.%{snapshot}
-%define _rel    12
+%define _rel    13
 Release:	%{_rel}@%{_kernel_ver_str}
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
@@ -25,27 +27,29 @@ Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.g
 Source1:	%{name}-owl-man.tar.bz2
 # Source1-md5:	cd4425df972a4ab001db31a5eb1c5da5
 Patch0:		%{name}-make.patch
-Patch1:		%{name}-uClibc.patch
-Patch2:		%{name}-fix-2_2.patch
-Patch3:		%{name}-label.patch
-Patch4:		%{name}-latest.patch
-Patch5:		%{name}-htb2_tc.patch
-Patch6:		wrr-iproute2-2.2.4.patch
-Patch7:		htb3.6_tc.patch
-Patch8:		%{name}-no_libresolv.patch
-Patch9:		%{name}-2.2.4-now-ss001007-esfq.diff
-Patch10:	%{name}-stats.patch
-Patch11:	%{name}-disable_arpd.patch
-Patch12:	%{name}-uspace.patch
-Patch13:	%{name}-diffserv-config.patch
-
+Patch1:		%{name}-no_libresolv.patch
+Patch2:		%{name}-disable_arpd.patch
+Patch3:		%{name}-uspace.patch
+Patch4:		%{name}-diffserv-config.patch
+Patch5:		%{name}-netlink.patch
+Patch6:		%{name}-kernellast.patch
+# uClibc hacks
+Patch7:		%{name}-uClibc.patch
+# 2.2-specific stuff
+Patch8:		%{name}-fix-2_2.patch
+Patch9:		%{name}-htb2_tc.patch
+# 2.4-specific
+Patch10:	htb3.6_tc.patch
+Patch11:	%{name}-stats.patch
+# extensions
+Patch12:	wrr-iproute2-2.2.4.patch
+Patch13:	%{name}-2.2.4-now-ss001007-esfq.diff
 BuildRequires:	bison
-%{!?_without_tetex:BuildRequires:	latex2html}
-%{!?_without_tetex:BuildRequires:	psutils}
-%{!?_without_tetex:BuildRequires:	sgml-tools}
-%{!?_without_tetex:BuildRequires:	tetex-dvips}
-%{!?_without_tetex:BuildRequires:	tetex-latex}
-%{!?_without_tetex:BuildRequires:	tetex-tex-babel}
+%{?with_tetex:BuildRequires:	psutils}
+%{?with_tetex:BuildRequires:	sgml-tools}
+%{?with_tetex:BuildRequires:	tetex-dvips}
+%{?with_tetex:BuildRequires:	tetex-latex}
+%{?with_tetex:BuildRequires:	tetex-tex-babel}
 Obsoletes:	iproute
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -91,38 +95,39 @@ a przestrzeni± u¿ytkownika.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-#%%patch3 -p1
-#%%patch4 -p1
-%if %{_kernel24}
-%patch7 -p1
-%patch10 -p1
-%else
+%patch3 -p1
+%patch4 -p1
 %patch5 -p1
-%endif
-%{!?_without_tc_wrr:%patch6 -p1}
+%patch6 -p1
+%{?with_uClibc:%patch7 -p1}
+%if %{_kernel22}
 %patch8 -p1
-%{!?_without_tc_esfq:%patch9 -p1}
+%patch9 -p1
+%else
+%patch10 -p1
 %patch11 -p1
-%patch12 -p1
-%patch13 -p1
+%endif
+%{?with_tc_wrr:%patch12 -p1}
+%{?with_tc_esfq:%patch13 -p1}
 
 %build
 WRRDEF=""
-%{!?_without_tc_wrr:WRRDEF="-DNEED_WRR_DEFS"}
+%{?with_tc_wrr:grep -q tc_wrr_class_weight %{_kernelsrcdir}/include/linux/pkt_sched.h || WRRDEF="-DNEED_WRR_DEFS"}
 
 %{__make} \
 	CC="%{__cc}" \
 	OPT="%{rpmcflags} ${WRRDEF}" \
 	KERNEL_INCLUDE="%{_kernelsrcdir}/include" \
 	LDFLAGS="%{rpmldflags}" \
-	%{?_without_tc:SUBDIRS="lib ip misc"}
-%{!?_without_tetex:%{__make} -C doc}
+	%{!?with_tc:SUBDIRS="lib ip misc"}
+
+%{?with_tetex:%{__make} -C doc}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man8,%{_libdir},%{_includedir}}
 
-install ip/{ip,rtmon,routel} %{!?_without_tc:tc/tc} misc/{rtacct,rtstat} $RPM_BUILD_ROOT%{_sbindir}
+install ip/{ip,rtmon,routel} %{?with_tc:tc/tc} misc/{rtacct,rtstat} $RPM_BUILD_ROOT%{_sbindir}
 install etc/iproute2/rt_protos \
 	etc/iproute2/rt_realms \
 	etc/iproute2/rt_scopes \
@@ -137,7 +142,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README README.iproute2+tc RELNOTES %{!?_without_tetex:doc/*.ps}
+%doc README README.iproute2+tc RELNOTES %{?with_tetex:doc/*.ps}
 %attr(755,root,root) %{_sbindir}/*
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/*
