@@ -55,35 +55,3 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_sbindir}/*
 /etc/iproute2
-
-%changelog
-* Sun Jul 11 1999 PLD Team <pld-list@pld.org.pl>
- $Log: iproute2.spec,v $
- Revision 1.5  1999-07-11 17:16:01  misiek
- update && make doc
-
-
-
-* Sat May  1 1999 Piotr Czerwiñski <pius@pld.org.pl>
-  [2.2.4-1]
-- new upstream release (990417),
-- patches corrected,
-- added /etc/iproute2/*,
-- added more documentation,
-- recompiled on rpm 3,
-- cosmetic changes for common l&f.
-
-* Fri Feb 19 1999 Arkadiusz Mi¶kiewicz <misiek@misiek.eu.org>
-- new upstream release
-- gzipping instead bzipping
-
-* Fri Jan 01 1999 Arkadiusz Mi¶kiewicz <misiek@misiek.eu.org>
-- new upstream release (981220).
-- docs are now compressed
-
-* Sat Nov 07 1998 Arkadiusz Mi¶kiewicz <misiek@misiek.eu.org>
-- new upstream release (981101),
-- corrected patch.
-
-* Wed Oct 14 1998 Arkadiusz Mi¶kiewicz <misiek@zsz2.starachowice.pl>
-- initial rpm release.
