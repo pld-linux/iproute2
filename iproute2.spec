@@ -16,7 +16,7 @@ Name:		iproute2
 %define	sdate	040702
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.8
-Release:	2
+Release:	3
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
@@ -31,7 +31,7 @@ Patch11:        %{name}-2.2.4-esfq.patch
 Patch13:        %{name}-rates-1024-fix.patch
 URL:		http://developer.osdl.org/dev/iproute2/
 BuildRequires:	bison
-BuildRequires:	linux-libc-headers >= 7:2.6.7.0-7
+BuildRequires:	linux-libc-headers >= 7:2.6.7.0-8
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
