@@ -6,7 +6,7 @@ Release:	6
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 License:	GPL
 Group:		Networking/Admin
-Group(pl):	Sieciowe/Administracja
+Group(pl):	Sieciowe/Administracyjne
 Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{version}-now-ss000225.tar.gz
 Patch0:		iproute2-make.patch
 BuildRequires:	tetex-dvips
