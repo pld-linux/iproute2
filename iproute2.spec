@@ -73,7 +73,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc {README,README.iproute2+tc,RELNOTES}.gz
-%{!?_without_tetex:d%doc doc/*.ps.gz}
+%{!?_without_tetex:%doc doc/*.ps.gz}
 %attr(755,root,root) %{_sbindir}/*
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/*
