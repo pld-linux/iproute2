@@ -13,7 +13,7 @@ Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
-%define _rel    1
+%define _rel    2
 Release:        %{_rel}@%{_kernel_ver_str}
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
