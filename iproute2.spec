@@ -56,7 +56,7 @@ Group(pl):	Sieciowe/Administracyjne
 
 %if %{?BOOT:1}%{!?BOOT:0}
 %{__make} \
-	OPT="-Os" GLIBCFIX="" \
+	OPT="-m386 -Os" GLIBCFIX="" \
 	KERNEL_INCLUDE="/usr/lib/bootdisk%{_includedir}" \
 	LDFLAGS="-nostdlib -static -s" \
 	LDLIBS="%{_libdir}/bootdisk%{_libdir}/crt0.o %{_libdir}/bootdisk%{_libdir}/libc.a -lgcc" \
