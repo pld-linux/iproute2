@@ -34,6 +34,8 @@ Patch8:		%{name}-no_libresolv.patch
 Patch9:		%{name}-2.2.4-now-ss001007-esfq.diff
 Patch10:	%{name}-stats.patch
 Patch11:	%{name}-disable_arpd.patch
+Patch100:	%{name}-2.6.0-t7-test.patch
+
 BuildRequires:	bison
 %{!?_without_tetex:BuildRequires:	latex2html}
 %{!?_without_tetex:BuildRequires:	psutils}
@@ -98,6 +100,8 @@ a przestrzeni± u¿ytkownika.
 %patch8 -p1
 %{!?_without_tc_esfq:%patch9 -p1}
 %patch11 -p1
+
+%patch100 -p1
 
 %build
 WRRDEF=""
