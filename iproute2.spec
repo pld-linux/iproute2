@@ -15,6 +15,7 @@ Patch1:		%{name}-uClibc.patch
 Patch2:		%{name}-fix-2_2.patch
 Patch3:		%{name}-label.patch
 Patch4:		%{name}-latest.patch
+Patch5:		%{name}-htb2_tc.patch
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	psutils
@@ -59,6 +60,7 @@ iproute2 dla systemów osadzonych.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 
