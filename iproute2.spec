@@ -101,7 +101,7 @@ a przestrzeni± u¿ytkownika.
 %{!?_without_tc_esfq:%patch9 -p1}
 %patch11 -p1
 
-%patch100 -p1
+#%patch100 -p1
 
 %build
 WRRDEF=""
