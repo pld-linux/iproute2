@@ -29,6 +29,7 @@ Patch6:		wrr-iproute2-2.2.4.patch
 Patch7:		htb3.6_tc.patch
 Patch8:		%{name}-no_libresolv.patch
 BuildRequires:	db-devel
+BuildRequires:	bison
 %{!?_without_tetex:BuildRequires:	latex2html}
 %{!?_without_tetex:BuildRequires:	tetex-dvips}
 %{!?_without_tetex:BuildRequires:	tetex-latex}
