@@ -30,6 +30,7 @@ Patch5:		%{name}-htb2_tc.patch
 Patch6:		wrr-iproute2-2.2.4.patch
 Patch7:		htb3.6_tc.patch
 Patch8:		%{name}-no_libresolv.patch
+Patch9:		%{name}-2.2.4-now-ss001007-esfq.diff
 %{!?_without_tc:BuildRequires:	db-devel}
 BuildRequires:	bison
 %{!?_without_tetex:BuildRequires:	latex2html}
@@ -91,10 +92,11 @@ a przestrzeni± u¿ytkownika.
 %endif
 %patch6 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
 WRRDEF=""
-grep -q tc_wrr_class_weight /usr/include/linux/pkt_sched.h || WRRDEF="-DNEED_WRR_DEFS"
+grep -q tc_wrr_class_weight %{_kernelsrcdir}/include/linux/pkt_sched.h || WRRDEF="-DNEED_WRR_DEFS"
 
 %{__make} \
 	CC="%{__cc}" \
