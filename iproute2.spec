@@ -99,7 +99,7 @@ a przestrzeni± u¿ytkownika.
 %else
 %patch5 -p1
 %endif
-%patch6 -p1
+%{!?_without_tc_wrr:%patch6 -p1}
 %patch8 -p1
 %{!?_without_tc_esfq:%patch9 -p1}
 %patch11 -p1
