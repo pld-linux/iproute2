@@ -1,10 +1,11 @@
+# _without_embed - don't build uClibc version
 %define mainver  2.4.7
 %define snapshot ss010803
 Summary:	Utility to control Networking behavior in 2.2.X kernels
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
-Release:	2
+Release:	3
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 License:	GPL
 Group:		Networking/Admin
@@ -18,12 +19,20 @@ Patch3:		%{name}-label.patch
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	psutils
-%{?BOOT:BuildRequires:	uClibc-devel-BOOT}
+%if %{!?_without_embed:1}%{?_without_embed:0}
+BuildRequires:	uClibc-devel
+BuildRequires:	uClibc-static
+%endif
 Obsoletes:	iproute
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
 %define		_sysconfdir	/etc/iproute2
+
+%define embed_path	/usr/lib/embed
+%define embed_cc	%{_arch}-uclibc-cc
+%define embed_cflags	%{rpmcflags} -Os
+%define uclibc_prefix	/usr/%{_arch}-linux-uclibc
 
 %description
 This package contains the ip, tc and the rtmon tool that allow control
@@ -33,48 +42,44 @@ of routing and other aspects of networking.
 Ten pakiet zawiera programy pozwalaj±ce na kontrolê routingu i innych
 aspektów dotycz±cych sieci.
 
-
-%if %{?BOOT:1}%{!?BOOT:0}
-%package BOOT
+%package embed
 Summary:	Utility to control Networking behavior in 2.2.X kernels
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Group:		Networking/Admin
 Group(de):	Netzwerkwesen/Administration
 Group(pl):	Sieciowe/Administracyjne
 
-%description BOOT
-
-%endif
-
+%description embed
+Embedded iproute2.
 
 %prep
 %setup -q -n %{name}
 %patch0 -p1
-%{?BOOT:%patch1 -p1}
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
 %build
 
-%if %{?BOOT:1}%{!?BOOT:0}
+%if %{!?_without_embed:1}%{?_without_embed:0}
 %{__make} \
-	OPT="-Os" GLIBCFIX="" \
+	OPT="%{embed_cflags}" GLIBCFIX="" \
 	KERNEL_INCLUDE="%{_kernelsrcdir}/include" \
-	OPT="-I%{_libdir}/bootdisk%{_includedir}" \
-	LDFLAGS="-nostdlib -static -s" \
-	LDLIBS="%{_libdir}/bootdisk%{_libdir}/crt0.o %{_libdir}/bootdisk%{_libdir}/libc.a -lgcc" \
+	CC=%{embed_cc} \
+	ADDLIB="inet_ntop.o inet_pton.o dnet_ntop.o dnet_pton.o ipx_ntop.o ipx_pton.o" \
+	SUBDIRS="lib ip"
+# someday we might also need rtmon and rtacct, but not today ;)
+mv -f ip/ip ip-embed-shared
+
+%{__make} \
+	OPT="%{embed_cflags}" GLIBCFIX="" \
+	KERNEL_INCLUDE="%{_kernelsrcdir}/include" \
+	LDFLAGS="-static" \
+	CC=%{embed_cc} \
 	ADDLIB="inet_ntop.o inet_pton.o dnet_ntop.o dnet_pton.o ipx_ntop.o ipx_pton.o" \
 	SUBDIRS="lib ip"
 
-# there are some problems compiling with uClibc, falling back to simple glibc-static
-%{__make} \
-	SUBDIRS="lib ip" \
-	OPT="-Os" \
-	LDFLAGS="-static -s" \
-	KERNEL_INCLUDE="%{_kernelsrcdir}/include"
-mv -f ip/ip ip-BOOT
-mv -f ip/rtacct rtacct-BOOT
-mv -f ip/rtmon rtmon-BOOT
+mv -f ip/ip ip-embed-static
 %{__make} clean
 %endif
 
@@ -83,14 +88,12 @@ mv -f ip/rtmon rtmon-BOOT
 	KERNEL_INCLUDE="%{_kernelsrcdir}/include"
 %{__make} -C doc
 
-
-
 %install
 rm -rf $RPM_BUILD_ROOT
-%if %{?BOOT:1}%{!?BOOT:0}
-install -d $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin
-# we need only 'ip' on bootdisk (don't we??)
-install ip-BOOT $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin/ip
+%if %{!?_without_embed:1}%{?_without_embed:0}
+install -d $RPM_BUILD_ROOT%{embed_path}/{shared,static}
+install ip-embed-shared $RPM_BUILD_ROOT%{embed_path}/shared/ip
+install ip-embed-static $RPM_BUILD_ROOT%{embed_path}/static/ip
 %endif
 
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir}}
@@ -114,8 +117,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/*
 
-%if %{?BOOT:1}%{!?BOOT:0}
-%files BOOT
+%if %{!?_without_embed:1}%{?_without_embed:0}
+%files embed
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/bootdisk/sbin/*
+%attr(755,root,root) %{embed_path}/*/*
 %endif
