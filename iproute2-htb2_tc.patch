@@ -1,6 +1,6 @@
 --- iproute2/tc/q_htb.c	Sun Oct 21 22:07:29 2001
 +++ iproute2new/tc/q_htb.c	Wed Dec 19 16:51:41 2001
-@@ -0,0 +1,291 @@
+@@ -0,0 +1,342 @@
 +/*
 + * q_htb.c		HTB.
 + *
@@ -25,6 +25,57 @@
 +
 +#include "utils.h"
 +#include "tc_util.h"
++
++#ifndef TC_HTB_NUMPRIO
++/* HTB section */
++#define TC_HTB_NUMPRIO		4
++#define TC_HTB_MAXDEPTH		4
++
++struct tc_htb_opt
++{
++	struct tc_ratespec 	rate;
++	struct tc_ratespec 	ceil;
++	__u32	buffer;
++	__u32	cbuffer;
++	__u32	quantum;	/* out only */
++	__u32	level;		/* out only */
++	__u8	prio;
++	__u8	injectd;	/* inject class distance */
++	__u8	pad[2];
++};
++struct tc_htb_glob
++{
++    	__u32 rate2quantum;	/* bps->quantum divisor */
++    	__u32 defcls;		/* default class number */
++    	__u32 use_dcache;	/* use dequeue cache ? */
++	__u32 debug;		/* debug flags */
++
++
++	/* stats */
++	__u32 deq_rate;	/* dequeue rate */
++	__u32 utilz;	/* dequeue utilization */
++	__u32 trials;	/* deq_prio trials per dequeue */
++	__u32 dcache_hits;
++	__u32 direct_pkts; /* count of non shapped packets */
++};
++enum
++{
++	TCA_HTB_UNSPEC,
++	TCA_HTB_PARMS,
++	TCA_HTB_INIT,
++	TCA_HTB_CTAB,
++	TCA_HTB_RTAB,
++};
++struct tc_htb_xstats
++{
++	__u32 lends;
++	__u32 borrows;
++	__u32 giants;	/* too big packets (rate will not be accurate) */
++	__u32 injects;	/* how many times leaf used injected bw */	
++	__u32 tokens;
++	__u32 ctokens;
++};
++#endif
 +
 +static void explain(void)
 +{
