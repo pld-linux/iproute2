@@ -31,9 +31,10 @@ Patch8:		%{name}-no_libresolv.patch
 BuildRequires:	db-devel
 BuildRequires:	bison
 %{!?_without_tetex:BuildRequires:	latex2html}
+%{!?_without_tetex:BuildRequires:	psutils}
+%{!?_without_tetex:BuildRequires:	sgml-tools}
 %{!?_without_tetex:BuildRequires:	tetex-dvips}
 %{!?_without_tetex:BuildRequires:	tetex-latex}
-%{!?_without_tetex:BuildRequires:	psutils}
 Obsoletes:	iproute
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
