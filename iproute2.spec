@@ -5,7 +5,7 @@
 %bcond_without	tc_esfq	# build tc without esfq support (requires patched headers)
 %bcond_without	tc_wrr	# build tc without wrr support
 %bcond_with	uClibc	# do some hacks to build with uClibc
-
+#
 Summary:	Utility to control Networking behavior in 2.2.X kernels
 Summary(es):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
@@ -40,11 +40,13 @@ Patch12:	%{name}-kernel_headers.patch
 Patch13:	%{name}-ipaddress.patch
 Patch14:	%{name}-a-flush-hack.patch
 BuildRequires:	bison
-%{?with_doc:BuildRequires:	psutils}
-%{?with_doc:BuildRequires:	sgml-tools}
-%{?with_doc:BuildRequires:	tetex-dvips}
-%{?with_doc:BuildRequires:	tetex-latex}
-%{?with_doc:BuildRequires:	tetex-tex-babel}
+%if %{with doc}
+BuildRequires:	psutils
+BuildRequires:	sgml-tools
+BuildRequires:	tetex-dvips
+BuildRequires:	tetex-latex
+BuildRequires:	tetex-tex-babel
+%endif
 Obsoletes:	iproute
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
