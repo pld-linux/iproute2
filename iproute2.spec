@@ -88,7 +88,7 @@ grep -q tc_wrr_class_weight /usr/include/linux/pkt_sched.h || WRRDEF="-DNEED_WRR
 	OPT="%{rpmcflags} ${WRRDEF}" \
 	KERNEL_INCLUDE="%{_kernelsrcdir}/include" \
 	%{?_without_tc:SUBDIRS="lib ip" LDFLAGS="%{rpmldflags}"}
-%{!?_without_tetex:%{__make} -C doc}
+%{!?_without_tex:%{__make} -C doc}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -109,7 +109,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README README.iproute2+tc RELNOTES
-%{!?_without_tetex:%doc doc/*.ps}
+%{!?_without_tex:%doc doc/*.ps}
 %attr(755,root,root) %{_sbindir}/*
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/*
