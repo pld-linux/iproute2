@@ -1,7 +1,4 @@
 #
-# TODO:
-#	- build @ uClibc
-#
 # Conditional build
 %bcond_without	doc		# don't build documentation
 %bcond_without	tc		# don't build tc program (it breaks static linkage)
@@ -30,8 +27,6 @@ Patch2:		%{name}-diffserv-config.patch
 Patch3:		%{name}-netlink.patch
 Patch4:		%{name}-ipaddress.patch
 Patch5:		%{name}-iprule.patch
-# uClibc hacks
-Patch6:		%{name}-uClibc.patch
 # extensions
 Patch10:	%{name}-htb3.6_tc.patch
 Patch11:	%{name}-2.2.4-wrr.patch
@@ -97,7 +92,7 @@ rm -rf include-glibc
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%{?with_uClibc:%patch6 -p1}
+
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -106,7 +101,7 @@ rm -rf include-glibc
 
 %build
 %{__make} \
-	CC="%{__cc}" \
+	%{?with_uClibc:CC="%{_target_cpu}-uclibc-gcc"}%{!?with_uClibc:CC="%{__cc}"} \
 	OPT="%{rpmcflags}" \
 	%{!?with_tc:SUBDIRS="lib ip misc" LDFLAGS="%{rpmldflags}"}
 
