@@ -15,23 +15,23 @@ Summary(es):	Herramientas para encaminamiento avanzado y configuración de interf
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-%define	sdate	050209
+%define	sdate	050314
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
-Version:	2.6.10
-Release:	0.3
+Version:	2.6.11
+Release:	0.1
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
 #Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-ss%{sdate}.tar.gz
 Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-%{sdate}.tar.gz
-# Source0-md5:	c00d07df1b9e574e4f6b66f79342c93b
+# Source0-md5:	32dd8efe9b71200cd9bf43c8459f043e
 #Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{sdate}.tar.gz
-Patch0:         %{name}-build.patch
-Patch1:		%{name}-arp.patch
+#Patch0:         %{name}-build.patch
+#Patch1:		%{name}-arp.patch
 # extensions
-Patch10:        %{name}-2.2.4-wrr.patch
-Patch11:        %{name}-2.2.4-esfq.patch
-Patch13:        %{name}-rates-1024-fix.patch
+#Patch10:        %{name}-2.2.4-wrr.patch
+#Patch11:        %{name}-2.2.4-esfq.patch
+#Patch13:        %{name}-rates-1024-fix.patch
 URL:		http://developer.osdl.org/dev/iproute2/
 BuildRequires:	bison
 BuildRequires:	db-devel
@@ -90,14 +90,14 @@ Ta biblioteka udostêpnia interfejs do interfejsu netlink miêdzy j±drem
 a przestrzeni± u¿ytkownika.
 
 %prep
-%setup -q -n %{name}-2.6.9-%{sdate}
+%setup -q -n %{name}-%{version}-%{sdate}
 rm -rf include-glibc
-%patch0 -p1
-%patch1 -p1
+#%patch0 -p1
+#%patch1 -p1
 
-%patch10 -p1
-%patch11 -p1
-%{?with_iec_complaint:%patch13 -p1}
+#%patch10 -p1
+#%patch11 -p1
+#%{?with_iec_complaint:%patch13 -p1}
 
 %build
 rm -rf include/linux
