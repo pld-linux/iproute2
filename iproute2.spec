@@ -8,36 +8,20 @@
 %bcond_with	uClibc		# do some hacks to build with uClibc
 %bcond_with	iec_complaint	# fix bitrate calculations
 #
-Summary:	Utility to control Networking behavior in 2.2.X kernels
+Summary:	Utility to control Networking behavior in.X kernels
 Summary(es):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
-Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
+Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-%define		mainver		2.4.7
-%define		snapshot	ss020116
-Version:	%{mainver}.%{snapshot}
-Release:	17
+Version:	2.6.6
+Release:	0.1
 License:	GPL
-Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
+Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
-Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.gz
-# Source0-md5:	2c7e5f3a10e703745ecdc613f7a7d187
-Source1:	%{name}-owl-man.tar.bz2
-# Source1-md5:	cd4425df972a4ab001db31a5eb1c5da5
+Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}.tar.bz2
+# Source0-md5:	b70b6b9de4b1a901ee20fea2ae7bd3b1
 Patch0:		%{name}-llh.patch
-Patch1:		%{name}-Makefile.patch
-Patch2:		%{name}-diffserv-config.patch
-Patch3:		%{name}-netlink.patch
-Patch4:		%{name}-ipaddress.patch
-Patch5:		%{name}-iprule.patch
-# uClibc hacks
-Patch6:		%{name}-uClibc.patch
-# extensions
-Patch10:	%{name}-htb3.6_tc.patch
-Patch11:	%{name}-2.2.4-wrr.patch
-Patch12:	%{name}-2.2.4-esfq.patch
-Patch13:	%{name}-hfsc.patch
-Patch14:	%{name}-rates-1024-fix.patch
+URL:		http://developer.osdl.org/dev/iproute2/
 BuildRequires:	bison
 BuildRequires:	linux-libc-headers >= 7:2.6.5.1-4
 %if %{with doc}
@@ -55,7 +39,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_sysconfdir	/etc/iproute2
 
 %description
-Linux 2.2 maintains compatibility with the basic configuration
+Linux maintains compatibility with the basic configuration
 utilities of the network (ifconfig, route) but a new utility is
 required to exploit the new characteristics and features of the
 kernel. This package includes the new utilities.
@@ -89,20 +73,8 @@ Ta biblioteka udostêpnia interfejs do interfejsu netlink miêdzy j±drem
 a przestrzeni± u¿ytkownika.
 
 %prep
-%setup -q -n %{name} -a1
-rm -rf include-glibc
+%setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%{?with_uClibc:%patch6 -p1}
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%{?with_iec_complaint:%patch14 -p1}
 
 %build
 %{__make} \
