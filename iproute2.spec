@@ -14,6 +14,7 @@ Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.g
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-ll_types.patch
 %{?BOOT:Patch2:	%{name}-uClibc.patch}
+Patch3:		%{name}-linux-2.4.5.patch
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	psutils
@@ -51,6 +52,7 @@ Group(pl):	Sieciowe/Administracyjne
 %patch0 -p1
 %patch1 -p1
 %{?BOOT:%patch2 -p1}
+#%patch3 -p1
 
 %build
 
