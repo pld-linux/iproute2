@@ -1,0 +1,44 @@
+--- iproute2/misc/ss.c.ss	2002-01-10 01:11:43.000000000 +0100
++++ iproute2/misc/ss.c	2003-10-23 16:33:29.000000000 +0200
+@@ -33,7 +33,7 @@
+ #include "tcp_diag.h"
+ #include "SNAPSHOT.h"
+ 
+-#include <linux/tcp.h>
++#include <netinet/tcp.h>
+ 
+ int resolve_hosts = 0;
+ int resolve_services = 1;
+--- iproute2/include-glibc/glibc-bugs.h.glibc22	Tue Oct 10 20:12:59 2000
++++ iproute2/include-glibc/glibc-bugs.h	Fri Mar 15 00:32:59 2002
+@@ -12,8 +12,8 @@
+ 
+ #include <linux/types.h>
+ 
+-typedef __u16 in_port_t;
+-typedef __u32 in_addr_t;
++/* typedef __u16 in_port_t; */
++/* typedef __u32 in_addr_t; */
+ 
+ #endif
+ 
+--- iproute2/ip/iprule.c.fwhex	Sun Apr 16 13:42:51 2000
++++ iproute2/ip/iprule.c	Fri May 24 22:22:21 2002
+@@ -120,7 +120,7 @@
+ 		fprintf(fp, "tos %s ", rtnl_dsfield_n2a(r->rtm_tos, b1, sizeof(b1)));
+ 	}
+ 	if (tb[RTA_PROTOINFO]) {
+-		fprintf(fp, "fwmark %8x ", *(__u32*)RTA_DATA(tb[RTA_PROTOINFO]));
++		fprintf(fp, "fwmark %#x ", *(__u32*)RTA_DATA(tb[RTA_PROTOINFO]));
+ 	}
+ 
+ 	if (tb[RTA_IIF]) {
+@@ -245,7 +245,7 @@
+ 		} else if (strcmp(*argv, "fwmark") == 0) {
+ 			__u32 fwmark;
+ 			NEXT_ARG();
+-			if (get_u32(&fwmark, *argv, 16))
++			if (get_u32(&fwmark, *argv, 0))
+ 				invarg("fwmark value is invalid\n", *argv);
+ 			addattr32(&req.n, sizeof(req), RTA_PROTOINFO, fwmark);
+ 		} else if (matches(*argv, "realms") == 0) {
