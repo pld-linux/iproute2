@@ -105,7 +105,7 @@ grep -q tc_wrr_class_weight %{_kernelsrcdir}/include/linux/pkt_sched.h || WRRDEF
 
 %{__make} \
 	CC="%{__cc}" \
-	OPT="-march=%{_arch} ${WRRDEF}" \
+	OPT="%{rpmcflags} ${WRRDEF}" \
 	KERNEL_INCLUDE="%{_kernelsrcdir}/include" \
 	LDFLAGS="%{rpmldflags}" \
 	%{?_without_tc:SUBDIRS="lib ip misc"}
