@@ -86,7 +86,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{?BOOT:1}%{!?BOOT:0}
 install -d $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin
 # we need only 'ip' on bootdisk (don't we??)
-install -s ip-BOOT $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin/ip
+install ip-BOOT $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin/ip
 %endif
 
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir}}
