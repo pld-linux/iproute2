@@ -60,7 +60,7 @@ Group:		Networking/Admin
 #	LDFLAGS="-nostdlib -s" 	ADDLIB="inet_ntop.o inet_pton.o" \
 #	LDLIBS="%{_libdir}/bootdisk%{_libdir}/crt0.o %{_libdir}/bootdisk%{_libdir}/libc.a -lgcc"
 
-# there are some problems compiling with uClibc, fallibg back to simple glibc-static
+# there are some problems compiling with uClibc, falling back to simple glibc-static
 %{__make} SUBDIRS="lib ip" OPT="-Os" LDFLAGS="-static -s" 
 mv -f ip/ip ip-BOOT
 %{__make} clean
@@ -74,8 +74,8 @@ mv -f ip/ip ip-BOOT
 %install
 rm -rf $RPM_BUILD_ROOT
 %if %{?BOOT:1}%{!?BOOT:0}
-install -d $RPM_BUILD_ROOT%{_libdir}/bootdisk/bin
-install -s ip-BOOT $RPM_BUILD_ROOT%{_libdir}/bootdisk/bin/ip
+install -d $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin
+install -s ip-BOOT $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin/ip
 %endif
 
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir}}
@@ -101,5 +101,5 @@ rm -rf $RPM_BUILD_ROOT
 %if %{?BOOT:1}%{!?BOOT:0}
 %files BOOT
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/bootdisk/bin/*
+%attr(755,root,root) %{_libdir}/bootdisk/sbin/*
 %endif
