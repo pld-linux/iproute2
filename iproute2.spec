@@ -13,14 +13,16 @@ Summary(es):	Herramientas para encaminamiento avanzado y configuración de interf
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	2.6.6
+%define	sdate	040608
+Version:	2.6.7
 Release:	0.1
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
-Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}.tar.bz2
-# Source0-md5:	b70b6b9de4b1a901ee20fea2ae7bd3b1
-Patch0:		%{name}-llh.patch
+Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-ss%{sdate}.tar.gz
+# Source0-md5:	28196897deb1a45295cd606bd911a33d
+Patch0:		%{name}-db.patch
+Patch1:		%{name}-arp.patch
 URL:		http://developer.osdl.org/dev/iproute2/
 BuildRequires:	bison
 BuildRequires:	linux-libc-headers >= 7:2.6.5.1-4
@@ -75,11 +77,12 @@ a przestrzeni± u¿ytkownika.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__make} \
 	CC="%{__cc}" \
-	OPT="%{rpmcflags}" \
+	CCOPTS="-D_GNU_SOURCE %{rpmcflags}" \
 	%{!?with_tc:SUBDIRS="lib ip misc" LDFLAGS="%{rpmldflags}"}
 
 %{?with_doc:%{__make} -C doc}
