@@ -33,16 +33,14 @@ aspektów dotycz±cych sieci.
 %patch -p1
 
 %build
-%{__make} OPT="$RPM_OPT_FLAGS"
+%{__make} OPT="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-g -O}"
 %{__make} -C doc
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir}}
 
-install -s ip/ip ip/rtmon ip/rtacct tc/tc $RPM_BUILD_ROOT%{_sbindir}
-install    ip/routel $RPM_BUILD_ROOT%{_sbindir}
+install ip/{ip,rtmon,rtacct,tcmroutel} $RPM_BUILD_ROOT%{_sbindir}
 
 install etc/iproute2/rt_protos \
 	etc/iproute2/rt_realms \
