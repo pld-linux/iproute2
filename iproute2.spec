@@ -118,8 +118,7 @@ WRRDEF=""
 	CC="%{__cc}" \
 	OPT="%{rpmcflags} ${WRRDEF}" \
 	KERNEL_INCLUDE="%{_kernelsrcdir}/include" \
-	LDFLAGS="%{rpmldflags}" \
-	%{!?with_tc:SUBDIRS="lib ip misc"}
+	%{!?with_tc:SUBDIRS="lib ip misc" LDFLAGS="%{rpmldflags}"}
 
 %{?with_tetex:%{__make} -C doc}
 
