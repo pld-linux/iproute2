@@ -31,8 +31,8 @@ aspektów dotycz±cych sieci.
 %patch -p1
 
 %build
-make OPT="$RPM_OPT_FLAGS"
-make -C doc
+%{__make} OPT="$RPM_OPT_FLAGS"
+%{__make} -C doc
 
 %install
 rm -rf $RPM_BUILD_ROOT
