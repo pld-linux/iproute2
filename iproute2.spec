@@ -19,6 +19,7 @@ License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
 Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.gz
+# Source0-md5:  2c7e5f3a10e703745ecdc613f7a7d187
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-uClibc.patch
 Patch6:		wrr-iproute2-2.2.4.patch
