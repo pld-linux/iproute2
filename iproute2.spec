@@ -26,6 +26,7 @@ Patch4:		%{name}-latest.patch
 Patch5:		%{name}-htb2_tc.patch
 Patch6:		wrr-iproute2-2.2.4.patch
 Patch7:		htb3.6_tc.patch
+Patch8:		%{name}-no_libresolv.patch
 %{!?_without_tetex:BuildRequires:	tetex-dvips}
 %{!?_without_tetex:BuildRequires:	tetex-latex}
 %{!?_without_tetex:BuildRequires:	psutils}
@@ -70,6 +71,7 @@ includes the new utilities.
 %patch5 -p1
 %endif
 %patch6 -p1
+%patch8 -p1
 
 %build
 WRRDEF=""
