@@ -26,6 +26,7 @@ Patch6:		wrr-iproute2-2.2.4.patch
 Patch7:		htb3.6_tc.patch
 Patch8:		%{name}-no_libresolv.patch
 BuildRequires:	kernel-headers
+BuildRequires:	bison
 %{?_with_db3:BuildRequires: db3-devel}
 %{!?_with_db3:BuildRequires: db-devel}
 %{!?_without_tex:BuildRequires:	tetex-dvips}
