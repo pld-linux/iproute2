@@ -1,0 +1,2 @@
+- release 3,
+- fix: move all binaries to %{_sbindir}.
