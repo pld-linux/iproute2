@@ -107,7 +107,7 @@ rm -rf include-glibc
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man8,%{_libdir},%{_includedir}}
 
-install ip/{ip,rtmon,routel} %{?with_tc:tc/tc} misc/{rtacct,rtstat} $RPM_BUILD_ROOT%{_sbindir}
+install ip/{ip,rtmon,routel} %{?with_tc:tc/tc} misc/{rtacct,rtstat,ss,ifstat} $RPM_BUILD_ROOT%{_sbindir}
 install etc/iproute2/rt_protos \
 	etc/iproute2/rt_realms \
 	etc/iproute2/rt_scopes \
