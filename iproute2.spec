@@ -1,44 +1,41 @@
 #
 # TODO:
 #	- fix build @ uClibc
-#	- remove -DCONFIG_CLS_U32_PERF=1 when llh will be fixed
 #
 # Conditional build
 %bcond_without	doc		# don't build documentation
 %bcond_without	tc		# don't build tc program (it breaks static linkage)
 %bcond_without	atm		# don't required ATM.
 %bcond_with	uClibc		# do some hacks to build with uClibc
-%bcond_with	iec_complaint	# fix bitrate calculations
 #
 Summary:	Utility to control Networking behavior in.X kernels
 Summary(es):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-%define	sdate	050209
+%define	sdate	050330
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
-Version:	2.6.10
-Release:	0.3
+Version:	2.6.11
+Release:	0.1
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
 #Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-ss%{sdate}.tar.gz
 Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-%{sdate}.tar.gz
-# Source0-md5:	c00d07df1b9e574e4f6b66f79342c93b
+# Source0-md5:	e705f26b5ae93e0332e46ae3ff15d934
 #Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{sdate}.tar.gz
 Patch0:         %{name}-build.patch
 Patch1:		%{name}-arp.patch
 # extensions
 Patch10:        %{name}-2.2.4-wrr.patch
 Patch11:        %{name}-2.2.4-esfq.patch
-Patch13:        %{name}-rates-1024-fix.patch
 URL:		http://developer.osdl.org/dev/iproute2/
 BuildRequires:	bison
 BuildRequires:	db-devel
 %if %{with atm}
 BuildRequires:	linux-atm-devel
 %endif
-BuildRequires:	linux-libc-headers >= 7:2.6.10.0-2
+BuildRequires:	linux-libc-headers >= 7:2.6.11.2-2
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
@@ -90,21 +87,20 @@ Ta biblioteka udostêpnia interfejs do interfejsu netlink miêdzy j±drem
 a przestrzeni± u¿ytkownika.
 
 %prep
-%setup -q -n %{name}-2.6.9-%{sdate}
+%setup -q -n %{name}-%{version}-%{sdate}
 rm -rf include-glibc
 %patch0 -p1
 %patch1 -p1
 
 %patch10 -p1
 %patch11 -p1
-%{?with_iec_complaint:%patch13 -p1}
 
 %build
 rm -rf include/linux
 
 %{__make} \
 	%{?with_uClibc:CC="%{_target_cpu}-uclibc-gcc"}%{!?with_uClibc:CC="%{__cc}"} \
-	OPT="%{rpmcflags} -DCONFIG_CLS_U32_PERF=1" \
+	OPT="%{rpmcflags}" \
 	%{!?with_tc:SUBDIRS="lib ip misc" LDFLAGS="%{rpmldflags}"}
 
 %{?with_doc:%{__make} -C doc}
