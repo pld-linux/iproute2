@@ -1,10 +1,10 @@
-%define mainver  2.2.4
-%define snapshot ss001007
+%define mainver  2.4.7
+%define snapshot ss010803
 Summary:	Utility to control Networking behavior in 2.2.X kernels
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
-Release:	3
+Release:	1
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 License:	GPL
 Group:		Networking/Admin
@@ -12,9 +12,7 @@ Group(de):	Netzwerkwesen/Administration
 Group(pl):	Sieciowe/Administracyjne
 Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.gz
 Patch0:		%{name}-make.patch
-Patch1:		%{name}-ll_types.patch
-%{?BOOT:Patch2:	%{name}-uClibc.patch}
-Patch3:		%{name}-linux-2.4.5.patch
+%{?BOOT:Patch1:	%{name}-uClibc.patch}
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	psutils
@@ -50,9 +48,7 @@ Group(pl):	Sieciowe/Administracyjne
 %prep
 %setup -q -n %{name}
 %patch0 -p1
-%patch1 -p1
-%{?BOOT:%patch2 -p1}
-#%patch3 -p1
+%{?BOOT:%patch1 -p1}
 
 %build
 
