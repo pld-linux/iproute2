@@ -1,6 +1,6 @@
 # _without_embed - don't build uClibc version
-%define mainver  2.4.7
-%define snapshot ss010803
+%define mainver		2.4.7
+%define snapshot	ss010803
 Summary:	Utility to control Networking behavior in 2.2.X kernels
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Name:		iproute2
@@ -27,8 +27,8 @@ BuildRequires:	uClibc-static
 Obsoletes:	iproute
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_sbindir	/sbin
-%define		_sysconfdir	/etc/iproute2
+%define	_sbindir	/sbin
+%define	_sysconfdir	/etc/iproute2
 
 %define embed_path	/usr/lib/embed
 %define embed_cc	%{_arch}-uclibc-cc
@@ -52,6 +52,9 @@ Group(pl):	Sieciowe/Administracyjne
 
 %description embed
 Embedded iproute2.
+
+%description embed -l pl
+iproute2 dla systemów osadzonych.
 
 %prep
 %setup -q -n %{name}
