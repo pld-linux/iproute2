@@ -38,6 +38,7 @@ BuildRequires:	bison
 %{!?_without_tetex:BuildRequires:	sgml-tools}
 %{!?_without_tetex:BuildRequires:	tetex-dvips}
 %{!?_without_tetex:BuildRequires:	tetex-latex}
+%{!?_without_tetex:BuildRequires:	tetex-tex-babel}
 Obsoletes:	iproute
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -133,5 +134,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n libnetlink-devel
 %defattr(644,root,root,755)
-%{_libdir}/*
-%{_includedir}/*
+%{_libdir}/lib*.a
+%{_includedir}/*.h
