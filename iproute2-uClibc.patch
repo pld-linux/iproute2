@@ -45,18 +45,14 @@ diff -Nur --exclude *~ iproute2/lib/utils.c iproute2.new/lib/utils.c
 diff -Nur --exclude *~ iproute2/lib/inet_ntop.c iproute2.new/lib/inet_ntop.c
 --- iproute2/lib/inet_ntop.c	Sun Apr 16 19:42:52 2000
 +++ iproute2.new/lib/inet_ntop.c	Sun Apr 15 14:11:19 2001
-@@ -28,10 +28,10 @@
+@@ -28,8 +28,8 @@
  #include <errno.h>
  #include <stdio.h>
  
 -#include <linux/in6.h>
--#ifndef IN6ADDRSZ
 -#define IN6ADDRSZ sizeof(struct in6_addr)
--#endif
 +/* #include <linux/in6.h> */
-+/* #ifndef IN6ADDRSZ */
 +/* #define IN6ADDRSZ sizeof(struct in6_addr) */
-+/* #endif */
  
  #ifdef SPRINTF_CHAR
  # define SPRINTF(x) strlen(sprintf/**/x)
@@ -74,3 +70,15 @@ diff -Nur --exclude *~ iproute2/lib/inet_pton.c iproute2.new/lib/inet_pton.c
  
  /*
   * WARNING: Don't even consider trying to compile this on a system where
+diff -Nur --exclude *~ iproute2/ip/Makefile iproute2.new/ip/Makefile
+--- iproute2/ip/Makefile	Sun Apr 16 19:42:50 2000
++++ iproute2.new/ip/Makefile	Sun Apr 15 14:26:48 2001
+@@ -14,7 +14,7 @@
+ 
+ rtmon: $(RTMONOBJ) $(LIBNETLINK)
+ 
+-rtacct: $(RTACCTOBJ)
++rtacct: $(RTACCTOBJ) $(LIBNETLINK)
+ 
+ clean:
+ 	rm -f $(IPOBJ) $(RTMONOBJ) $(RTACCTOBJ) ip rtmon rtacct

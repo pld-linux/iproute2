@@ -1,0 +1,206 @@
+diff -urN iproute2.old/ip/ipaddress.c iproute2/ip/ipaddress.c
+--- iproute2.old/ip/ipaddress.c	Sun Sep 10 21:03:26 2000
++++ iproute2/ip/ipaddress.c	Thu Aug 23 06:07:46 2001
+@@ -719,6 +719,15 @@
+ 	filter.oneline = oneline;
+ }
+ 
++int default_scope(inet_prefix *lcl)
++{
++	if (lcl->family == AF_INET) {
++		if (lcl->bytelen >= 1 && *(__u8*)&lcl->data == 127)
++			return RT_SCOPE_HOST;
++	}
++	return 0;
++}
++
+ int ipaddr_modify(int cmd, int argc, char **argv)
+ {
+ 	struct rtnl_handle rth;
+@@ -735,6 +744,7 @@
+ 	int peer_len = 0;
+ 	int brd_len = 0;
+ 	int any_len = 0;
++	int scoped = 0;
+ 
+ 	memset(&req, 0, sizeof(req));
+ 
+@@ -789,6 +799,7 @@
+ 			if (rtnl_rtscope_a2n(&scope, *argv))
+ 				invarg(*argv, "invalid scope value.");
+ 			req.ifa.ifa_scope = scope;
++			scoped = 1;
+ 		} else if (strcmp(*argv, "dev") == 0) {
+ 			NEXT_ARG();
+ 			d = *argv;
+@@ -847,6 +858,8 @@
+ 			brd_len = brd.bytelen;
+ 		}
+ 	}
++	if (!scoped && cmd != RTM_DELADDR)
++		req.ifa.ifa_scope = default_scope(&lcl);
+ 
+ 	if (rtnl_open(&rth, 0) < 0)
+ 		exit(1);
+diff -urN iproute2.old/ip/ipmaddr.c iproute2/ip/ipmaddr.c
+--- iproute2.old/ip/ipmaddr.c	Sun Apr 16 19:42:51 2000
++++ iproute2/ip/ipmaddr.c	Mon Dec 24 23:33:02 2001
+@@ -191,7 +191,7 @@
+ 
+ static void print_maddr(FILE *fp, struct ma_info *list)
+ {
+-	fprintf(fp, "%s\t", _SL_);
++	fprintf(fp, "\t");
+ 
+ 	if (list->addr.family == AF_PACKET) {
+ 		SPRINT_BUF(b1);
+@@ -230,7 +230,8 @@
+ 
+ 	for (; list; list = list->next) {
+ 		if (oneline) {
+-			fprintf(fp, "%d:\t%s", cur_index, list->name);
++			cur_index = list->index;
++			fprintf(fp, "%d:\t%s%s", cur_index, list->name, _SL_);
+ 		} else if (cur_index != list->index) {
+ 			cur_index = list->index;
+ 			fprintf(fp, "%d:\t%s\n", cur_index, list->name);
+diff -urN iproute2.old/ip/ipmroute.c iproute2/ip/ipmroute.c
+--- iproute2.old/ip/ipmroute.c	Sun Apr 16 19:42:51 2000
++++ iproute2/ip/ipmroute.c	Mon Dec 24 22:38:55 2001
+@@ -108,9 +108,9 @@
+ 		if (filter.msrc.family && inet_addr_match(&msrc, &filter.msrc, filter.msrc.bitlen))
+ 			continue;
+ 
+-		format_host(AF_INET, 4, &msrc.data[0], sbuf, sizeof(sbuf));
+-		format_host(AF_INET, 4, &maddr.data[0], mbuf, sizeof(mbuf));
+-		snprintf(obuf, sizeof(obuf), "(%s, %s)", sbuf, mbuf);
++		snprintf(obuf, sizeof(obuf), "(%s, %s)", 
++			 format_host(AF_INET, 4, &msrc.data[0], sbuf, sizeof(sbuf)),
++			 format_host(AF_INET, 4, &maddr.data[0], mbuf, sizeof(mbuf)));
+ 
+ 		fprintf(ofp, "%-32s Iif: ", obuf);
+ 
+@@ -162,7 +162,7 @@
+ 	while (argc > 0) {
+ 		if (strcmp(*argv, "iif") == 0) {
+ 			NEXT_ARG();
+-			strcpy(filter_dev, *argv);
++			strncpy(filter_dev, *argv, sizeof(filter_dev)-1);
+ 		} else if (matches(*argv, "from") == 0) {
+ 			NEXT_ARG();
+ 			get_prefix(&filter.msrc, *argv, AF_INET);
+diff -urN iproute2.old/ip/iproute.c iproute2/ip/iproute.c
+--- iproute2.old/ip/iproute.c	Thu Aug  2 06:32:09 2001
++++ iproute2/ip/iproute.c	Thu Jan 10 03:12:16 2002
+@@ -617,8 +618,8 @@
+ 			fprintf(stderr, "Error: unexpected end of line after \"nexthop\"\n");
+ 			exit(-1);
+ 		}
++		memset(rtnh, 0, sizeof(*rtnh));
+ 		rtnh->rtnh_len = sizeof(*rtnh);
+-		rtnh->rtnh_ifindex = 0;
+ 		rta->rta_len += rtnh->rtnh_len;
+ 		parse_one_nh(rta, rtnh, &argc, &argv);
+ 		rtnh = RTNH_NEXT(rtnh);
+diff -urN iproute2.old/ip/iptunnel.c iproute2/ip/iptunnel.c
+--- iproute2.old/ip/iptunnel.c	Sun Apr 16 19:42:51 2000
++++ iproute2/ip/iptunnel.c	Mon Dec 24 22:29:41 2001
+@@ -399,31 +399,36 @@
+ 
+ void print_tunnel(struct ip_tunnel_parm *p)
+ {
+-	char s1[256];
+-	char s2[256];
++	char s1[1024];
++	char s2[1024];
+ 	char s3[64];
+ 	char s4[64];
+ 
+-	format_host(AF_INET, 4, &p->iph.daddr, s1, sizeof(s1));
+-	format_host(AF_INET, 4, &p->iph.saddr, s2, sizeof(s2));
+ 	inet_ntop(AF_INET, &p->i_key, s3, sizeof(s3));
+ 	inet_ntop(AF_INET, &p->o_key, s4, sizeof(s4));
+ 
++	/* Do not use format_host() for local addr,
++	 * symbolic name will not be useful.
++	 */
+ 	printf("%s: %s/ip  remote %s  local %s ",
+ 	       p->name,
+ 	       p->iph.protocol == IPPROTO_IPIP ? "ip" :
+ 	       (p->iph.protocol == IPPROTO_GRE ? "gre" :
+ 		(p->iph.protocol == IPPROTO_IPV6 ? "ipv6" : "unknown")),
+-	       p->iph.daddr ? s1 : "any", p->iph.saddr ? s2 : "any");
++	       p->iph.daddr ? format_host(AF_INET, 4, &p->iph.daddr, s1, sizeof(s1))  : "any",
++	       p->iph.saddr ? rt_addr_n2a(AF_INET, 4, &p->iph.saddr, s2, sizeof(s2)) : "any");
++
+ 	if (p->link) {
+ 		char *n = do_ioctl_get_ifname(p->link);
+ 		if (n)
+ 			printf(" dev %s ", n);
+ 	}
++
+ 	if (p->iph.ttl)
+ 		printf(" ttl %d ", p->iph.ttl);
+ 	else
+ 		printf(" ttl inherit ");
++	
+ 	if (p->iph.tos) {
+ 		SPRINT_BUF(b1);
+ 		printf(" tos");
+@@ -433,6 +438,7 @@
+ 			printf("%c%s ", p->iph.tos&1 ? '/' : ' ',
+ 			       rtnl_dsfield_n2a(p->iph.tos&~1, b1, sizeof(b1)));
+ 	}
++
+ 	if (!(p->iph.frag_off&htons(IP_DF)))
+ 		printf(" nopmtudisc");
+ 
+diff -urN iproute2.old/lib/libnetlink.c iproute2/lib/libnetlink.c
+--- iproute2.old/lib/libnetlink.c	Fri Aug  3 00:43:41 2001
++++ iproute2/lib/libnetlink.c	Fri Aug 24 21:32:05 2001
+@@ -241,6 +241,7 @@
+ 	iov.iov_base = buf;
+ 
+ 	while (1) {
++		iov.iov_len = sizeof(buf);
+ 		status = recvmsg(rtnl->fd, &msg, 0);
+ 
+ 		if (status < 0) {
+diff -urN iproute2.old/lib/utils.c iproute2/lib/utils.c
+--- iproute2.old/lib/utils.c	Thu Aug  2 05:32:44 2001
++++ iproute2/lib/utils.c	Thu Jan 10 03:33:53 2002
+@@ -193,7 +193,9 @@
+ 
+ 	memset(dst, 0, sizeof(*dst));
+ 
+-	if (strcmp(arg, "default") == 0 || strcmp(arg, "any") == 0) {
++	if (strcmp(arg, "default") == 0 ||
++	    strcmp(arg, "any") == 0 ||
++	    strcmp(arg, "all") == 0) {
+ 		if (family == AF_DECnet)
+ 			return -1;
+ 		dst->family = family;
+@@ -332,8 +334,21 @@
+ 
+ int __get_hz(void)
+ {
++	char name[1024];
+ 	int hz = 0;
+-	FILE *fp = fopen("/proc/net/psched", "r");
++	FILE *fp;
++
++	if (getenv("HZ"))
++		return atoi(getenv("HZ")) ? : HZ;
++
++	if (getenv("PROC_NET_PSCHED")) {
++		snprintf(name, sizeof(name)-1, "%s", getenv("PROC_NET_PSCHED"));
++	} else if (getenv("PROC_ROOT")) { 
++		snprintf(name, sizeof(name)-1, "%s/net/psched", getenv("PROC_ROOT"));
++	} else {
++		strcpy(name, "/proc/net/psched");
++	}
++	fp = fopen(name, "r");
+ 
+ 	if (fp) {
+ 		unsigned nom, denom;
+

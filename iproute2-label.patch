@@ -1,0 +1,10 @@
+--- iproute2/lib/utils.c~	Thu Aug  2 05:32:44 2001
++++ iproute2/lib/utils.c	Mon Dec 10 21:56:05 2001
+@@ -390,7 +390,6 @@
+ 				len = 2;
+ 				break;
+ #endif
+-			default:
+ 			}
+ 		}
+ 		if (len > 0 &&

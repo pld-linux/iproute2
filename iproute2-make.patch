@@ -1,0 +1,11 @@
+--- iproute2/Makefile~	Tue Aug  7 15:58:27 2001
++++ iproute2/Makefile	Tue Aug  7 15:58:55 2001
+@@ -28,7 +28,7 @@
+ endif
+ 
+ CC = gcc
+-CCOPTS = -D_GNU_SOURCE -O2 -Wstrict-prototypes -Wall -Werror -g
++CCOPTS = -D_GNU_SOURCE $(OPT) -Wstrict-prototypes -Wall -g
+ CFLAGS = $(CCOPTS) $(GLIBCFIX) -I$(KERNEL_INCLUDE) -I../include $(DEFINES)
+ 
+ LDLIBS += -L../lib -lnetlink -lutil
