@@ -7,7 +7,7 @@ Summary:	Utility to control Networking behavior in 2.2.X kernels
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
-Release:	5
+Release:	6
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
