@@ -39,7 +39,7 @@ BuildRequires:	db-devel
 %if %{with atm}
 BuildRequires:	linux-atm-devel
 %endif
-BuildRequires:	linux-libc-headers >= 7:2.6.10.0-2
+BuildRequires:	linux-libc-headers >= 7:2.6.11.0-2
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
