@@ -20,8 +20,8 @@ Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.g
 # Source0-md5:	2c7e5f3a10e703745ecdc613f7a7d187
 Source1:	%{name}-owl-man.tar.bz2
 # Source1-md5:	cd4425df972a4ab001db31a5eb1c5da5
-Patch0:		%{name}-Makefile.patch
-Patch1:		%{name}-llh.patch
+Patch0:		%{name}-llh.patch
+Patch1:		%{name}-Makefile.patch
 Patch2:		%{name}-diffserv-config.patch
 Patch3:		%{name}-netlink.patch
 Patch4:		%{name}-ipaddress.patch
@@ -34,7 +34,7 @@ Patch11:	%{name}-2.2.4-wrr.patch
 Patch12:	%{name}-2.2.4-esfq.patch
 Patch13:	%{name}-hfsc.patch
 BuildRequires:	bison
-BuildRequires:	linux-libc-headers >= 7:2.6.4.0-3
+BuildRequires:	linux-libc-headers >= 7:2.6.5.1-1
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
