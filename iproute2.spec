@@ -21,10 +21,11 @@ Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
 Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-ss%{sdate}.tar.gz
 # Source0-md5:	28196897deb1a45295cd606bd911a33d
-Patch0:		%{name}-db.patch
-Patch1:		%{name}-arp.patch
-Patch2:         %{name}-diffserv-config.patch
-Patch3:         %{name}-ipaddress.patch
+Patch0:         %{name}-build.patch
+Patch1:		%{name}-db.patch
+Patch2:		%{name}-arp.patch
+Patch3:         %{name}-diffserv-config.patch
+Patch4:         %{name}-ipaddress.patch
 # extensions
 Patch10:        %{name}-2.2.4-wrr.patch
 Patch11:        %{name}-2.2.4-esfq.patch
@@ -84,9 +85,9 @@ a przestrzeni± u¿ytkownika.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %patch10 -p1
 %patch11 -p1
@@ -95,9 +96,9 @@ a przestrzeni± u¿ytkownika.
 
 %build
 %{__make} \
-	CC="%{__cc}" \
-	CCOPTS="-D_GNU_SOURCE %{rpmcflags}" \
-	%{!?with_tc:SUBDIRS="lib ip misc" LDFLAGS="%{rpmldflags}"}
+        %{?with_uClibc:CC="%{_target_cpu}-uclibc-gcc"}%{!?with_uClibc:CC="%{__cc}"} \
+        CCOPTS="-D_GNU_SOURCE %{rpmcflags}" \
+        %{!?with_tc:SUBDIRS="lib ip misc" LDFLAGS="%{rpmldflags}"}
 
 %{?with_doc:%{__make} -C doc}
 
