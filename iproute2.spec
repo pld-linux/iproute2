@@ -13,6 +13,7 @@ Group(pl):	Sieciowe/Administracyjne
 Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.gz
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-uClibc.patch
+Patch2:		%{name}-fix-2_2.patch
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	psutils
@@ -49,6 +50,7 @@ Group(pl):	Sieciowe/Administracyjne
 %setup -q -n %{name}
 %patch0 -p1
 %{?BOOT:%patch1 -p1}
+%patch2 -p1
 
 %build
 
