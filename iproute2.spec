@@ -1,5 +1,5 @@
 # conditional build
-# --without tetex
+# --without tex
 # --without tc (don't build tc program, it break static linkage)
 # --without dist_kernel
 
@@ -12,7 +12,7 @@ Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
-%define _rel    10
+%define _rel    1
 Release:        %{_rel}@%{_kernel_ver_str}
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
@@ -22,15 +22,12 @@ Source1:	%{name}-owl-man.tar.bz2
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-uClibc.patch
 Patch2:		%{name}-fix-2_2.patch
-Patch3:		%{name}-label.patch
-Patch4:		%{name}-latest.patch
-Patch5:		%{name}-htb2_tc.patch
 Patch6:		wrr-iproute2-2.2.4.patch
 Patch7:		htb3.6_tc.patch
 Patch8:		%{name}-no_libresolv.patch
-%{!?_without_tetex:BuildRequires:	tetex-dvips}
-%{!?_without_tetex:BuildRequires:	tetex-latex}
-%{!?_without_tetex:BuildRequires:	psutils}
+%{!?_without_tex:BuildRequires:	tetex-dvips}
+%{!?_without_tex:BuildRequires:	tetex-latex}
+%{!?_without_tex:BuildRequires:	psutils}
 Obsoletes:	iproute
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -76,13 +73,7 @@ a przestrzeni± u¿ytkownika.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-#%%patch3 -p1
-#%%patch4 -p1
-%if %{_kernel24}
 %patch7 -p1
-%else
-%patch5 -p1
-%endif
 %patch6 -p1
 %patch8 -p1
 
