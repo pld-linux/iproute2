@@ -18,7 +18,7 @@ Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
 Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.gz
 # Source0-md5:	e74a8059d4f605095cb644a50a7d44ab
-Source1:	http://piorun.ds.pg.gda.pl/~blues/SOURCES/%{name}-owl-man.tar.bz2
+Source1:	%{name}-owl-man.tar.bz2
 # Source1-md5:	cd4425df972a4ab001db31a5eb1c5da5
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-uClibc.patch
