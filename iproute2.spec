@@ -3,7 +3,12 @@
 # _without_tetex	- don't build documentation
 # _without_tc		- don't build tc program (it breaks static linkage)
 # _without_dist_kernel	- use with non-dist-kernel
+# _without_htb		- build without htb support
 #
+%ifarch alpha
+# no distro kernel for ra/alpha, old htb on builder, unknown on user hosts
+%define	_without_htb	1
+%endif
 %define mainver		2.4.7
 %define snapshot	ss010803
 Summary:	Utility to control Networking behavior in 2.2.X kernels
@@ -12,7 +17,7 @@ Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
-Release:	12
+Release:	13
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
@@ -68,7 +73,7 @@ includes the new utilities.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
+%{!?_without_htb:%patch5 -p1}
 %patch6 -p1
 %patch7 -p1
 
@@ -81,6 +86,7 @@ grep -q tc_wrr_class_weight /usr/include/linux/pkt_sched.h || WRRDEF="-DNEED_WRR
 	OPT="%{rpmcflags} ${WRRDEF}" \
 	KERNEL_INCLUDE="%{_kernelsrcdir}/include" \
 	%{?_without_tc:SUBDIRS="lib ip" LDFLAGS="%{rpmldflags}"}
+
 %{!?_without_tetex:%{__make} -C doc}
 
 %install
@@ -100,8 +106,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README README.iproute2+tc RELNOTES
-%{!?_without_tetex:%doc doc/*.ps}
+%doc README README.iproute2+tc RELNOTES %{!?_without_tetex:doc/*.ps}
 %attr(755,root,root) %{_sbindir}/*
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/*
