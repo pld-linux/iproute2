@@ -1,0 +1,45 @@
+--- iproute2/ip/ipaddress.c.orig	2001-08-23 06:07:46.000000000 +0200
++++ iproute2/ip/ipaddress.c	2004-04-04 22:56:52.306961528 +0200
+@@ -220,9 +220,9 @@
+ 			s = &slocal;
+ 		}
+ 		fprintf(fp, "%s", _SL_);
+-		fprintf(fp, "    RX: bytes  packets  errors  dropped overrun mcast   %s%s",
++		fprintf(fp, "    RX: bytes      packets  errors  dropped overrun mcast   %s%s",
+ 			s->rx_compressed ? "compressed" : "", _SL_);
+-		fprintf(fp, "    %-10lu %-8lu %-7lu %-7lu %-7lu %-7lu",
++		fprintf(fp, "    %-14lu %-8lu %-7lu %-7lu %-7lu %-7lu",
+ 			s->rx_bytes, s->rx_packets, s->rx_errors,
+ 			s->rx_dropped, s->rx_over_errors,
+ 			s->multicast
+@@ -232,7 +232,7 @@
+ 		if (show_stats > 1) {
+ 			fprintf(fp, "%s", _SL_);
+ 			fprintf(fp, "    RX errors: length  crc     frame   fifo    missed%s", _SL_);
+-			fprintf(fp, "               %-7lu  %-7lu %-7lu %-7lu %-7lu",
++			fprintf(fp, "               %-7lu %-7lu %-7lu %-7lu %-7lu",
+ 				s->rx_length_errors,
+ 				s->rx_crc_errors,
+ 				s->rx_frame_errors,
+@@ -241,9 +241,9 @@
+ 				);
+ 		}
+ 		fprintf(fp, "%s", _SL_);
+-		fprintf(fp, "    TX: bytes  packets  errors  dropped carrier collsns %s%s",
++		fprintf(fp, "    TX: bytes      packets  errors  dropped carrier collsns %s%s",
+ 			s->tx_compressed ? "compressed" : "", _SL_);
+-		fprintf(fp, "    %-10lu %-8lu %-7lu %-7lu %-7lu %-7lu",
++		fprintf(fp, "    %-14lu %-8lu %-7lu %-7lu %-7lu %-7lu",
+ 			s->tx_bytes, s->tx_packets, s->tx_errors,
+ 			s->tx_dropped, s->tx_carrier_errors, s->collisions);
+ 		if (s->tx_compressed)
+@@ -251,7 +251,7 @@
+ 		if (show_stats > 1) {
+ 			fprintf(fp, "%s", _SL_);
+ 			fprintf(fp, "    TX errors: aborted fifo    window  heartbeat%s", _SL_);
+-			fprintf(fp, "               %-7lu  %-7lu %-7lu %-7lu",
++			fprintf(fp, "               %-7lu %-7lu %-7lu %-7lu",
+ 				s->tx_aborted_errors,
+ 				s->tx_fifo_errors,
+ 				s->tx_window_errors,
+

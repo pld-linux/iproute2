@@ -1,0 +1,11 @@
+diff -urN iproute2-2.6.7.org/misc/arpd.c iproute2-2.6.7/misc/arpd.c
+--- iproute2-2.6.7.org/misc/arpd.c	2004-06-09 01:43:55.298418184 +0200
++++ iproute2-2.6.7/misc/arpd.c	2004-06-09 01:50:48.921537912 +0200
+@@ -29,6 +29,7 @@
+ #include <linux/if.h>
+ #include <linux/if_arp.h>
+ #include <netinet/in.h>
++#include <linux/if_ether.h>
+ #include <arpa/inet.h>
+ #include <linux/if_packet.h>
+ #include <linux/filter.h>
