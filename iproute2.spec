@@ -12,7 +12,7 @@ Patch0:		iproute2-make.patch
 BuildRequires:	tetex-dvips
 BuildRequires:	psutils
 Obsoletes:	iproute
-BuildRoot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
 %define		_sysconfdir	/etc/iproute2
