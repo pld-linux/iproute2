@@ -14,7 +14,7 @@ Name:		iproute2
 %define mainver	2.4.7
 %define snapshot ss020116
 Version:	%{mainver}.%{snapshot}
-Release:	15
+Release:	16
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
@@ -38,6 +38,7 @@ Patch10:	wrr-iproute2-2.2.4.patch
 Patch11:	%{name}-2.2.4-now-ss001007-esfq.diff
 Patch12:	%{name}-kernel_headers.patch
 Patch13:	%{name}-ipaddress.patch
+Patch14:	%{name}-a-flush-hack.patch
 BuildRequires:	bison
 %{?with_tetex:BuildRequires:	psutils}
 %{?with_tetex:BuildRequires:	sgml-tools}
@@ -100,6 +101,7 @@ a przestrzeni± u¿ytkownika.
 %{?with_tc_esfq:%patch11 -p1}
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 
 %build
 WRRDEF=""
