@@ -1,6 +1,18 @@
---- iproute2/Makefile~	Tue Aug  7 15:58:27 2001
-+++ iproute2/Makefile	Tue Aug  7 15:58:55 2001
-@@ -28,7 +28,7 @@
+diff -urN iproute2/Makefile.orig iproute2/Makefile
+--- iproute2/Makefile.orig	Wed Jan 16 00:30:32 2002
++++ iproute2/Makefile	Wed Sep 24 18:54:04 2003
+@@ -25,16 +25,16 @@
+ 
+ ifeq ($(LIBC_INCLUDE)/socketbits.h,$(wildcard $(LIBC_INCLUDE)/socketbits.h))
+   ifeq ($(LIBC_INCLUDE)/net/if_packet.h,$(wildcard $(LIBC_INCLUDE)/net/if_packet.h))
+-    GLIBCFIX=-I../include-glibc -include ../include-glibc/glibc-bugs.h
++    GLIBCFIX=-include ../include-glibc/glibc-bugs.h
+   endif
+ endif
+ ifeq ($(LIBC_INCLUDE)/bits/socket.h,$(wildcard $(LIBC_INCLUDE)/bits/socket.h))
+-  GLIBCFIX=-I../include-glibc -I/usr/include/db3 -include ../include-glibc/glibc-bugs.h
++  GLIBCFIX=-include ../include-glibc/glibc-bugs.h
+ endif
  
  
  CC = gcc
