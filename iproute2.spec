@@ -4,7 +4,9 @@
 %define mainver		2.4.7
 %define snapshot	ss010803
 Summary:	Utility to control Networking behavior in 2.2.X kernels
+Summary(es):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
+Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
 Release:	8
@@ -29,12 +31,26 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_sysconfdir	/etc/iproute2
 
 %description
-This package contains the ip, tc and the rtmon tool that allow control
-of routing and other aspects of networking.
+Linux 2.2 maintains compatibility with the basic configuration
+utilities of the network (ifconfig, route) but a new utility is
+required to exploit the new characteristics and features of the
+kernel. This package includes the new utilities.
+
+%description -l es
+Linux mantiene compatibilidad con los utilitarios estándares de
+configuración de la red, pero se necesitan nuevos utilitarios para
+usar los recursos y características del nuevo núcleo. Este paquete
+incluye los nuevos utilitarios.
 
 %description -l pl
 Ten pakiet zawiera programy pozwalaj±ce na kontrolê routingu i innych
 aspektów dotycz±cych sieci.
+
+%description -l pt_BR
+O Linux mantém compatibilidade com os utilitários padrão de
+configuração da rede, mas novos utilitários são necessários para fazer
+uso das características e recursos da nova kernel. This package
+includes the new utilities.
 
 %prep
 %setup -q -n %{name} -a1
