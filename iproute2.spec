@@ -1,5 +1,6 @@
 # conditional build
 # --without tetex
+# --without tc (don't build tc program, it break static linkage)
 %define mainver		2.4.7
 %define snapshot	ss010803
 Summary:	Utility to control Networking behavior in 2.2.X kernels
@@ -48,14 +49,16 @@ aspektów dotycz±cych sieci.
 %{__make} \
 	CC="%{__cc}" \
 	OPT="%{rpmcflags}" \
-	KERNEL_INCLUDE="%{_kernelsrcdir}/include"
+	LDFLAGS="%{rpmldflags}" \
+	KERNEL_INCLUDE="%{_kernelsrcdir}/include" \
+	%{?_without_tc:SUBDIRS="lib ip"}
 %{!?_without_tetex:%{__make} -C doc}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir}}
-install ip/{ip,rtmon,rtacct,routel} tc/tc $RPM_BUILD_ROOT%{_sbindir}
+install ip/{ip,rtmon,rtacct,routel} %{!?_without_tc:tc/tc} $RPM_BUILD_ROOT%{_sbindir}
 install etc/iproute2/rt_protos \
 	etc/iproute2/rt_realms \
 	etc/iproute2/rt_scopes \
