@@ -17,7 +17,7 @@ Name:		iproute2
 %define		mainver		2.4.7
 %define 	snapshot	ss010803
 Version:	%{mainver}.%{snapshot}
-Release:	13.1
+Release:	13.2
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
@@ -33,7 +33,6 @@ Patch4:		%{name}-latest.patch
 Patch5:		%{name}-htb3_tc.patch
 Patch6:		wrr-iproute2-2.2.4.patch
 Patch7:		%{name}-netlink.patch
-Patch8:		%{name}-a-flush-hack.patch
 BuildRequires:	db3-devel
 %{!?_without_tetex:BuildRequires:	psutils}
 %{!?_without_tetex:BuildRequires:	sgml-tools}
@@ -77,7 +76,6 @@ includes the new utilities.
 %{!?_without_htb:%patch5 -p1}
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
 
 %build
 WRRDEF=""
