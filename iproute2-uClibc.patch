@@ -1,0 +1,44 @@
+diff -Nur --exclude *~ iproute2/lib/rt_names.c iproute2.new/lib/rt_names.c
+--- iproute2/lib/rt_names.c	Sun Apr 16 19:42:52 2000
++++ iproute2.new/lib/rt_names.c	Sun Apr 15 10:22:07 2001
+@@ -16,6 +16,7 @@
+ #include <fcntl.h>
+ #include <string.h>
+ #include <sys/time.h>
++#include <asm/types.h>
+ 
+ static void rtnl_tab_initialize(char *file, char **tab, int size)
+ {
+diff -Nur --exclude *~ iproute2/include/rt_names.h iproute2.new/include/rt_names.h
+--- iproute2/include/rt_names.h	Sun Apr 16 19:42:50 2000
++++ iproute2.new/include/rt_names.h	Sat Apr 14 17:13:33 2001
+@@ -1,6 +1,7 @@
+ #ifndef RT_NAMES_H_
+ #define RT_NAMES_H_ 1
+ 
++#include <asm/types.h>
+ const char* rtnl_rtprot_n2a(int id, char *buf, int len);
+ const char* rtnl_rtscope_n2a(int id, char *buf, int len);
+ const char* rtnl_rttable_n2a(int id, char *buf, int len);
+diff -Nur --exclude *~ iproute2/ip/iptunnel.c iproute2.new/ip/iptunnel.c
+--- iproute2/ip/iptunnel.c	Sun Apr 16 19:42:51 2000
++++ iproute2.new/ip/iptunnel.c	Sun Apr 15 13:57:16 2001
+@@ -30,6 +30,7 @@
+ #include <netinet/ip.h>
+ #include <arpa/inet.h>
+ #include <linux/if_tunnel.h>
++#include <asm/byteorder.h>
+ 
+ #include "rt_names.h"
+ #include "utils.h"
+diff -Nur --exclude *~ iproute2/lib/utils.c iproute2.new/lib/utils.c
+--- iproute2/lib/utils.c	Sun Apr 16 19:42:53 2000
++++ iproute2.new/lib/utils.c	Sat Apr 14 17:28:18 2001
+@@ -25,6 +25,7 @@
+ #include <netdb.h>
+ #include <arpa/inet.h>
+ #include <resolv.h>
++#include <asm/types.h>
+ #include <linux/pkt_sched.h>
+ 
+ #include "utils.h"
