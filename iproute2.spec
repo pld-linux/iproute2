@@ -1,7 +1,9 @@
-# conditional build
-# --without tetex
-# --without tc (don't build tc program, it break static linkage)
-# --without dist_kernel
+#
+# Conditional build:
+# _without_tetex	- don't build documentation
+# _without_tc		- don't build tc program (it breaks static linkage)
+# _without_dist_kernel	- use with non-dist-kernel
+#
 %define mainver		2.4.7
 %define snapshot	ss010803
 Summary:	Utility to control Networking behavior in 2.2.X kernels
@@ -10,12 +12,14 @@ Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
-Release:	10
+Release:	11
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
 Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.gz
-Source1:	%{name}-owl-man.tar.bz2
+# Source0-md5:	e74a8059d4f605095cb644a50a7d44ab
+Source1:	http://piorun.ds.pg.gda.pl/~blues/SOURCES/%{name}-owl-man.tar.bz2
+# Source1-md5:	cd4425df972a4ab001db31a5eb1c5da5
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-uClibc.patch
 Patch2:		%{name}-fix-2_2.patch
@@ -24,10 +28,12 @@ Patch4:		%{name}-latest.patch
 Patch5:		%{name}-htb3_tc.patch
 Patch6:		wrr-iproute2-2.2.4.patch
 BuildRequires:	db3-devel
-%{!?_without_tetex:BuildRequires:	tetex-dvips}
-%{!?_without_tetex:BuildRequires:	tetex-latex}
 %{!?_without_tetex:BuildRequires:       latex2html}
 %{!?_without_tetex:BuildRequires:	psutils}
+%{!?_without_tetex:BuildRequires:	sgml-tools}
+%{!?_without_tetex:BuildRequires:	tetex-dvips}
+%{!?_without_tetex:BuildRequires:	tetex-latex}
+%{!?_without_tetex:BuildRequires:	tetex-tex-babel}
 Obsoletes:	iproute
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
