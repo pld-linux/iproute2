@@ -3,7 +3,8 @@
 # _without_tetex	- don't build documentation
 # _without_tc		- don't build tc program (it breaks static linkage)
 # _without_tc_esfq	- build tc without esfq support (requires patched headers)
-#
+# _without_tc_wrr	- build tc without wrr support
+
 %define		_kernel24	%(echo %{_kernel_ver} | grep -q '2\.[012]\.' ; echo $?)
 
 %define mainver		2.4.7
@@ -107,7 +108,7 @@ a przestrzeni± u¿ytkownika.
 
 %build
 WRRDEF=""
-grep -q tc_wrr_class_weight %{_kernelsrcdir}/include/linux/pkt_sched.h || WRRDEF="-DNEED_WRR_DEFS"
+%{!?_without_tc_wrr:WRRDEF="-DNEED_WRR_DEFS"}
 
 %{__make} \
 	CC="%{__cc}" \
