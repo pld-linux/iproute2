@@ -5,7 +5,7 @@ Summary:	Utility to control Networking behavior in 2.2.X kernels
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
-Release:	3
+Release:	4
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 License:	GPL
 Group:		Networking/Admin
@@ -16,6 +16,7 @@ Patch0:		%{name}-make.patch
 Patch1:		%{name}-uClibc.patch
 Patch2:		%{name}-fix-2_2.patch
 Patch3:		%{name}-label.patch
+Patch4:		%{name}-latest.patch
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	psutils
@@ -58,6 +59,7 @@ Embedded iproute2.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 
@@ -84,6 +86,7 @@ mv -f ip/ip ip-embed-static
 %endif
 
 %{__make} \
+	CC="%{__cc}" \
 	OPT="%{rpmcflags}" \
 	KERNEL_INCLUDE="%{_kernelsrcdir}/include"
 %{__make} -C doc
