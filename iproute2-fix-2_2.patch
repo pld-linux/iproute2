@@ -1,6 +1,6 @@
 --- ./include/pseudo2_4.h.org	Sun Oct 28 22:58:55 2001
 +++ ./include/pseudo2_4.h	Sun Oct 28 23:09:54 2001
-@@ -0,0 +1,47 @@
+@@ -0,0 +1,51 @@
 +/* 
 + * These are definitions needed to build iproute2 with kernel 2.2
 + */
@@ -48,6 +48,11 @@
 +#define ETH_P_ECONET		0x0018	/* Acorn Econet                 */
 +#endif
 +
++#ifndef ARPHRD_ATM
++#define ARPHRD_ATM      19              /* ATM                          */
++#endif
++
+
 --- ./lib/ll_types.c.org	Sun Oct 28 23:01:45 2001
 +++ ./lib/ll_types.c	Sun Oct 28 23:02:17 2001
 @@ -23,6 +23,7 @@
