@@ -12,7 +12,7 @@ Group(de):	Netzwerkwesen/Administration
 Group(pl):	Sieciowe/Administracyjne
 Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.gz
 Patch0:		%{name}-make.patch
-%{?BOOT:Patch1:	%{name}-uClibc.patch}
+Patch1:		%{name}-uClibc.patch
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	psutils
@@ -54,7 +54,7 @@ Group(pl):	Sieciowe/Administracyjne
 
 %if %{?BOOT:1}%{!?BOOT:0}
 %{__make} \
-	OPT="-m386 -Os" GLIBCFIX="" \
+	OPT="-Os" GLIBCFIX="" \
 	KERNEL_INCLUDE="%{_kernelsrcdir}/include" \
 	OPT="-I%{_libdir}/bootdisk%{_includedir}" \
 	LDFLAGS="-nostdlib -static -s" \
