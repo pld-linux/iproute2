@@ -36,7 +36,7 @@ BuildRequires:	linux-libc-headers >= 7:2.6.7.0-7
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
 BuildRequires:	tetex-dvips
-BuildRequires:	tetex-latex
+BuildRequires:	tetex-format-latex
 BuildRequires:	tetex-tex-babel
 %endif
 Obsoletes:	iproute
