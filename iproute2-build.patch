@@ -19,3 +19,13 @@ diff -urN iproute2-2.6.8.org/Makefile iproute2-2.6.8/Makefile
  CFLAGS = $(CCOPTS) -I../include $(DEFINES)
  
  LDLIBS += -L../lib -lnetlink -lutil
+--- iproute2-050124/ip/iptunnel.c.orig	2005-01-25 01:13:46.000000000 +0100
++++ iproute2-050124/ip/iptunnel.c	2005-01-25 10:26:02.716547608 +0100
+@@ -16,6 +16,7 @@
+  * Phil Karn <karn@ka9q.ampr.org>	990408:	"pmtudisc" flag
+  */
+ 
++#include <asm/byteorder.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
