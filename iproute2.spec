@@ -6,9 +6,6 @@
 %bcond_without	tc_wrr	# build tc without wrr support
 %bcond_with	uClibc	# do some hacks to build with uClibc
 
-# is it 2.2 not 2.4+?
-%define		_kernel22	%(echo %{_kernel_ver} | grep -q '2\.[3-9]\.' ; echo $?)
-
 Summary:	Utility to control Networking behavior in 2.2.X kernels
 Summary(es):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
@@ -18,7 +15,7 @@ Name:		iproute2
 %define snapshot ss020116
 Version:	%{mainver}.%{snapshot}
 %define	_rel	13
-Release:	%{_rel}@%{_kernel_ver_str}
+Release:	%{_rel}
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Group:		Networking/Admin
@@ -35,15 +32,12 @@ Patch5:		%{name}-netlink.patch
 Patch6:		%{name}-kernellast.patch
 # uClibc hacks
 Patch7:		%{name}-uClibc.patch
-# 2.2-specific stuff
-Patch8:		%{name}-fix-2_2.patch
-Patch9:		%{name}-htb2_tc.patch
-# 2.4-specific
-Patch10:	htb3.6_tc.patch
-Patch11:	%{name}-stats.patch
+Patch8:		htb3.6_tc.patch
+Patch9:		%{name}-stats.patch
 # extensions
-Patch12:	wrr-iproute2-2.2.4.patch
-Patch13:	%{name}-2.2.4-now-ss001007-esfq.diff
+Patch10:	wrr-iproute2-2.2.4.patch
+Patch11:	%{name}-2.2.4-now-ss001007-esfq.diff
+Patch12:	%{name}-kernel_headers.patch
 BuildRequires:	bison
 %{?with_tetex:BuildRequires:	psutils}
 %{?with_tetex:BuildRequires:	sgml-tools}
@@ -100,24 +94,20 @@ a przestrzeni± u¿ytkownika.
 %patch5 -p1
 %patch6 -p1
 %{?with_uClibc:%patch7 -p1}
-%if %{_kernel22}
 %patch8 -p1
 %patch9 -p1
-%else
-%patch10 -p1
-%patch11 -p1
-%endif
-%{?with_tc_wrr:%patch12 -p1}
-%{?with_tc_esfq:%patch13 -p1}
+%{?with_tc_wrr:%patch10 -p1}
+%{?with_tc_esfq:%patch11 -p1}
+%patch12 -p1
 
 %build
 WRRDEF=""
-%{?with_tc_wrr:grep -q tc_wrr_class_weight %{_kernelsrcdir}/include/linux/pkt_sched.h || WRRDEF="-DNEED_WRR_DEFS"}
+%{?with_tc_wrr:grep -q tc_wrr_class_weight kernel-headers/linux/pkt_sched.h || WRRDEF="-DNEED_WRR_DEFS"}
 
 %{__make} \
 	CC="%{__cc}" \
 	OPT="%{rpmcflags} ${WRRDEF}" \
-	KERNEL_INCLUDE="%{_kernelsrcdir}/include" \
+	KERNEL_INCLUDE="`pwd`/kernel-headers" \
 	%{!?with_tc:SUBDIRS="lib ip misc" LDFLAGS="%{rpmldflags}"}
 
 %{?with_tetex:%{__make} -C doc}
