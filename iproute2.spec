@@ -6,7 +6,7 @@ Release:	1
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
 Copyright:	GPL
 Group:		Networking/Admin
-Group(pl):	Sieciowe/Administracyjne
+Group(pl):	Sieciowe/Administracja
 Source:		ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{version}-now-ss990630.tar.gz
 Patch:		iproute2-make.patch
 BuildRoot:	/tmp/%{name}-%{version}-root
