@@ -5,6 +5,7 @@
 # _without_tc_esfq	- build tc without esfq support (requires patched headers)
 #
 %define		_kernel24	%(echo %{_kernel_ver} | grep -q '2\.[012]\.' ; echo $?)
+
 %define mainver		2.4.7
 %define snapshot	ss020116
 Summary:	Utility to control Networking behavior in 2.2.X kernels
@@ -13,7 +14,7 @@ Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	%{mainver}.%{snapshot}
-%define _rel    11
+%define _rel    12
 Release:	%{_rel}@%{_kernel_ver_str}
 License:	GPL
 Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
@@ -34,7 +35,8 @@ Patch8:		%{name}-no_libresolv.patch
 Patch9:		%{name}-2.2.4-now-ss001007-esfq.diff
 Patch10:	%{name}-stats.patch
 Patch11:	%{name}-disable_arpd.patch
-Patch100:	%{name}-2.6.0-t7-test.patch
+Patch12:	%{name}-uspace.patch
+Patch13:	%{name}-diffserv-config.patch
 
 BuildRequires:	bison
 %{!?_without_tetex:BuildRequires:	latex2html}
@@ -100,8 +102,8 @@ a przestrzeni± u¿ytkownika.
 %patch8 -p1
 %{!?_without_tc_esfq:%patch9 -p1}
 %patch11 -p1
-
-#%patch100 -p1
+%patch12 -p1
+%patch13 -p1
 
 %build
 WRRDEF=""
