@@ -34,7 +34,7 @@ Patch11:	%{name}-2.2.4-wrr.patch
 Patch12:	%{name}-2.2.4-esfq.patch
 Patch13:	%{name}-hfsc.patch
 BuildRequires:	bison
-BuildRequires:	linux-libc-headers >= 7:2.6.5.1-3
+BuildRequires:	linux-libc-headers >= 7:2.6.5.1-4
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
