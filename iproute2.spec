@@ -1,40 +1,39 @@
 #
+# TODO:
+#	- fix build @ uClibc
+#
 # Conditional build
 %bcond_without	doc		# don't build documentation
 %bcond_without	tc		# don't build tc program (it breaks static linkage)
 %bcond_with	uClibc		# do some hacks to build with uClibc
 %bcond_with	iec_complaint	# fix bitrate calculations
 #
-Summary:	Utility to control Networking behavior in 2.2.X kernels
+Summary:	Utility to control Networking behavior in.X kernels
 Summary(es):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
-Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach 2.2
+Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-%define		mainver		2.4.7
-%define		snapshot	ss020116
-Version:	%{mainver}.%{snapshot}
-Release:	17
+%define	sdate	040608
+Version:	2.6.7
+Release:	0.1
 License:	GPL
-Vendor:		Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
+Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
-Source0:	ftp://ftp.inr.ac.ru/ip-routing/%{name}-%{mainver}-now-%{snapshot}.tar.gz
-# Source0-md5:	2c7e5f3a10e703745ecdc613f7a7d187
-Source1:	%{name}-owl-man.tar.bz2
-# Source1-md5:	cd4425df972a4ab001db31a5eb1c5da5
-Patch0:		%{name}-llh.patch
-Patch1:		%{name}-Makefile.patch
-Patch2:		%{name}-diffserv-config.patch
-Patch3:		%{name}-netlink.patch
-Patch4:		%{name}-ipaddress.patch
-Patch5:		%{name}-iprule.patch
+Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-ss%{sdate}.tar.gz
+# Source0-md5:	28196897deb1a45295cd606bd911a33d
+Patch0:         %{name}-build.patch
+Patch1:		%{name}-db.patch
+Patch2:		%{name}-arp.patch
+Patch3:         %{name}-diffserv-config.patch
+Patch4:         %{name}-ipaddress.patch
 # extensions
-Patch10:	%{name}-htb3.6_tc.patch
-Patch11:	%{name}-2.2.4-wrr.patch
-Patch12:	%{name}-2.2.4-esfq.patch
-Patch13:	%{name}-hfsc.patch
-Patch14:	%{name}-rates-1024-fix.patch
+Patch10:        %{name}-2.2.4-wrr.patch
+Patch11:        %{name}-2.2.4-esfq.patch
+Patch12:        %{name}-hfsc.patch
+Patch13:        %{name}-rates-1024-fix.patch
+URL:		http://developer.osdl.org/dev/iproute2/
 BuildRequires:	bison
-BuildRequires:	linux-libc-headers >= 7:2.6.5.1-4
+BuildRequires:	linux-libc-headers >= 7:2.6.6.0-2
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
@@ -50,7 +49,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_sysconfdir	/etc/iproute2
 
 %description
-Linux 2.2 maintains compatibility with the basic configuration
+Linux maintains compatibility with the basic configuration
 utilities of the network (ifconfig, route) but a new utility is
 required to exploit the new characteristics and features of the
 kernel. This package includes the new utilities.
@@ -84,20 +83,16 @@ Ta biblioteka udostêpnia interfejs do interfejsu netlink miêdzy j±drem
 a przestrzeni± u¿ytkownika.
 
 %prep
-%setup -q -n %{name} -a1
-rm -rf include-glibc
+%setup -q
 %patch0 -p1
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
-%{?with_iec_complaint:%patch14 -p1}
+%{?with_iec_complaint:%patch13 -p1}
 
 %build
 %{__make} \
@@ -117,7 +112,11 @@ install etc/iproute2/rt_protos \
 	etc/iproute2/rt_scopes \
 	etc/iproute2/rt_tables \
 	$RPM_BUILD_ROOT%{_sysconfdir}
-install man/*	$RPM_BUILD_ROOT%{_mandir}/man8
+
+install man/man8/*	$RPM_BUILD_ROOT%{_mandir}/man8
+echo ".so tc-pbfifo.8" > $RPM_BUILD_ROOT%{_mandir}/man8/tc-bfifo.8
+echo ".so tc-pbfifo.8" > $RPM_BUILD_ROOT%{_mandir}/man8/tc-pfifo.8
+
 install lib/libnetlink.a $RPM_BUILD_ROOT%{_libdir}
 install include/libnetlink.h $RPM_BUILD_ROOT%{_includedir}
 
