@@ -441,7 +441,7 @@ diff -uNrbB org/tc/q_wrr.c new/tc/q_wrr.c
 +}
 +
 +
-+struct qdisc_util wrr_util = {
++struct qdisc_util wrr_qdisc_util = {
 +	NULL,
 +	"wrr",
 +	wrr_parse_opt,
