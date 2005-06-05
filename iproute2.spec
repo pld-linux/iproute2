@@ -24,11 +24,11 @@ Group:		Networking/Admin
 Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-%{sdate}.tar.gz
 # Source0-md5:	e705f26b5ae93e0332e46ae3ff15d934
 #Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{sdate}.tar.gz
-Patch0:         %{name}-build.patch
+Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
 # extensions
-Patch10:        %{name}-2.2.4-wrr.patch
-Patch11:        %{name}-2.2.4-esfq.patch
+Patch10:	%{name}-2.2.4-wrr.patch
+Patch11:	%{name}-2.2.4-esfq.patch
 URL:		http://developer.osdl.org/dev/iproute2/
 BuildRequires:	bison
 BuildRequires:	db-devel
@@ -53,10 +53,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_sysconfdir	/etc/iproute2
 
 %description
-Linux maintains compatibility with the basic configuration
-utilities of the network (ifconfig, route) but a new utility is
-required to exploit the new characteristics and features of the
-kernel. This package includes the new utilities.
+Linux maintains compatibility with the basic configuration utilities
+of the network (ifconfig, route) but a new utility is required to
+exploit the new characteristics and features of the kernel. This
+package includes the new utilities.
 
 %description -l es
 Linux mantiene compatibilidad con los utilitarios estándares de
@@ -131,7 +131,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc README README.iproute2+tc RELNOTES %{?with_doc:doc/*.ps}
 %attr(755,root,root) %{_sbindir}/*
 %dir %{_sysconfdir}
-%config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/*
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
 %{_mandir}/man8/*
 
 %files -n libnetlink-devel
