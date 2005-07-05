@@ -13,17 +13,15 @@ Summary(es):	Herramientas para encaminamiento avanzado y configuración de interf
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-%define	sdate	050330
+%define	sdate	050607
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.11
-Release:	3
+Release:	4
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
-#Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-ss%{sdate}.tar.gz
-Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-%{sdate}.tar.gz
-# Source0-md5:	e705f26b5ae93e0332e46ae3ff15d934
-#Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{sdate}.tar.gz
+Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-ss%{sdate}.tar.gz
+# Source0-md5:	89d25b1954be95bcbc3fa4957facc54b
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
 # extensions
@@ -87,7 +85,7 @@ Ta biblioteka udostêpnia interfejs do interfejsu netlink miêdzy j±drem
 a przestrzeni± u¿ytkownika.
 
 %prep
-%setup -q -n %{name}-%{version}-%{sdate}
+%setup -q -n %{name}-ss%{sdate}
 rm -rf include-glibc
 %patch0 -p1
 %patch1 -p1
@@ -128,7 +126,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README README.iproute2+tc RELNOTES %{?with_doc:doc/*.ps}
+%doc README README.decnet README.iproute2+tc README.lnstat RELNOTES
+%doc ChangeLog %{?with_doc:doc/*.ps}
 %attr(755,root,root) %{_sbindir}/*
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
