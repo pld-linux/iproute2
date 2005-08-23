@@ -16,7 +16,7 @@ Name:		iproute2
 %define	sdate	050607
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.11
-Release:	4
+Release:	5
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
@@ -33,7 +33,7 @@ BuildRequires:	db-devel
 %if %{with atm}
 BuildRequires:	linux-atm-devel
 %endif
-BuildRequires:	linux-libc-headers >= 7:2.6.11.2-3
+BuildRequires:	linux-libc-headers >= 7:2.6.12.0-2
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
