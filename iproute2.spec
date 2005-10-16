@@ -13,15 +13,15 @@ Summary(es):	Herramientas para encaminamiento avanzado y configuración de interf
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-%define	sdate	050607
+%define	sdate	051007
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.11
-Release:	5
+Release:	1
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
-Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-ss%{sdate}.tar.gz
-# Source0-md5:	89d25b1954be95bcbc3fa4957facc54b
+Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{sdate}.tar.gz
+# Source0-md5:	53f47d46f50eff9ed8c6fa2ac2b41a80
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
 # extensions
@@ -85,7 +85,7 @@ Ta biblioteka udostêpnia interfejs do interfejsu netlink miêdzy j±drem
 a przestrzeni± u¿ytkownika.
 
 %prep
-%setup -q -n %{name}-ss%{sdate}
+%setup -q -n %{name}-%{sdate}
 rm -rf include-glibc
 %patch0 -p1
 %patch1 -p1
