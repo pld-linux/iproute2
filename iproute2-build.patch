@@ -1,35 +1,6 @@
---- iproute2-2.6.8.org/Makefile	2004-07-16 21:49:23.066528064 +0200
-+++ iproute2-2.6.8/Makefile	2004-07-16 21:50:01.491686552 +0200
-@@ -10,7 +10,7 @@
- DEFINES= -DRESOLVE_HOSTNAMES
- 
- #options if you have a bind>=4.9.4 libresolv (or, maybe, glibc)
--LDLIBS=-lresolv
-+LDLIBS=
- ADDLIB=
- 
- #options for decnet
-@@ -21,7 +21,7 @@
- 
- CC = gcc
- HOSTCC = gcc
--CCOPTS = -D_GNU_SOURCE -O2 -Wstrict-prototypes -Wall
-+CCOPTS = -D_GNU_SOURCE $(OPT) -Wstrict-prototypes -Wall
- CFLAGS = $(CCOPTS) -I../include $(DEFINES)
- 
- LDLIBS += -L../lib -lnetlink -lutil
---- iproute2-050124/ip/iptunnel.c.orig	2005-01-25 01:13:46.000000000 +0100
-+++ iproute2-050124/ip/iptunnel.c	2005-01-25 10:26:02.716547608 +0100
-@@ -16,6 +16,7 @@
-  * Phil Karn <karn@ka9q.ampr.org>	990408:	"pmtudisc" flag
-  */
- 
-+#include <asm/byteorder.h>
- #include <stdio.h>
- #include <stdlib.h>
- #include <string.h>
---- iproute2-2.6.11-050330/configure.orig	2005-04-01 21:58:11.000000000 +0200
-+++ iproute2-2.6.11-050330/configure	2005-06-19 22:38:36.000000000 +0200
+diff -urNbB iproute2-2.6.14-051107.org/configure iproute2-2.6.14-051107/configure
+--- iproute2-2.6.14-051107.org/configure	2005-01-18 00:26:46.000000000 +0100
++++ iproute2-2.6.14-051107/configure	2005-11-10 16:04:15.024922750 +0100
 @@ -8,7 +8,7 @@
  echo "TC schedulers"
  
@@ -54,3 +25,122 @@
  fi
 -rm -f /tmp/atmtest.c /tmp/atmtest
 +rm -f atmtest*
+diff -urNbB iproute2-2.6.14-051107.org/ip/iptunnel.c iproute2-2.6.14-051107/ip/iptunnel.c
+--- iproute2-2.6.14-051107.org/ip/iptunnel.c	2005-02-10 19:31:18.000000000 +0100
++++ iproute2-2.6.14-051107/ip/iptunnel.c	2005-11-10 16:04:15.024922750 +0100
+@@ -16,6 +16,7 @@
+  * Phil Karn <karn@ka9q.ampr.org>	990408:	"pmtudisc" flag
+  */
+ 
++#include <asm/byteorder.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+diff -urNbB iproute2-2.6.14-051107.org/Makefile iproute2-2.6.14-051107/Makefile
+--- iproute2-2.6.14-051107.org/Makefile	2005-07-09 00:08:47.000000000 +0200
++++ iproute2-2.6.14-051107/Makefile	2005-11-10 16:04:15.024922750 +0100
+@@ -10,7 +10,7 @@
+ DEFINES= -DRESOLVE_HOSTNAMES
+ 
+ #options if you have a bind>=4.9.4 libresolv (or, maybe, glibc)
+-LDLIBS=-lresolv
++LDLIBS=
+ ADDLIB=
+ 
+ #options for decnet
+@@ -21,7 +21,7 @@
+ 
+ CC = gcc
+ HOSTCC = gcc
+-CCOPTS = -D_GNU_SOURCE -O2 -Wstrict-prototypes -Wall
++CCOPTS = -D_GNU_SOURCE $(OPT) -Wstrict-prototypes -Wall
+ CFLAGS = $(CCOPTS) -I../include $(DEFINES)
+ YACCFLAGS = -d -t -v
+ 
+diff -urNbB iproute2-2.6.14-051107.org/Makefile.orig iproute2-2.6.14-051107/Makefile.orig
+--- iproute2-2.6.14-051107.org/Makefile.orig	1970-01-01 01:00:00.000000000 +0100
++++ iproute2-2.6.14-051107/Makefile.orig	2005-07-09 00:08:47.000000000 +0200
+@@ -0,0 +1,72 @@
++DESTDIR=
++SBINDIR=/usr/sbin
++CONFDIR=/etc/iproute2
++DOCDIR=/usr/share/doc/iproute2
++MANDIR=/usr/share/man
++
++# Path to db_185.h include
++DBM_INCLUDE:=/usr/include
++
++DEFINES= -DRESOLVE_HOSTNAMES
++
++#options if you have a bind>=4.9.4 libresolv (or, maybe, glibc)
++LDLIBS=-lresolv
++ADDLIB=
++
++#options for decnet
++ADDLIB+=dnet_ntop.o dnet_pton.o
++
++#options for ipx
++ADDLIB+=ipx_ntop.o ipx_pton.o
++
++CC = gcc
++HOSTCC = gcc
++CCOPTS = -D_GNU_SOURCE -O2 -Wstrict-prototypes -Wall
++CFLAGS = $(CCOPTS) -I../include $(DEFINES)
++YACCFLAGS = -d -t -v
++
++LDLIBS += -L../lib -lnetlink -lutil
++
++SUBDIRS=lib ip tc misc netem
++
++LIBNETLINK=../lib/libnetlink.a ../lib/libutil.a
++
++all: Config
++	@for i in $(SUBDIRS); \
++	do $(MAKE) $(MFLAGS) -C $$i; done
++
++Config:
++	sh configure $(KERNEL_INCLUDE)
++
++install: all
++	install -m 0755 -d $(DESTDIR)$(SBINDIR)
++	install -m 0755 -d $(DESTDIR)$(CONFDIR)
++	install -m 0755 -d $(DESTDIR)$(DOCDIR)/examples
++	install -m 0755 -d $(DESTDIR)$(DOCDIR)/examples/diffserv
++	install -m 0644 README.iproute2+tc $(shell find examples -maxdepth 1 -type f) \
++		$(DESTDIR)$(DOCDIR)/examples
++	install -m 0644 $(shell find examples/diffserv -maxdepth 1 -type f) \
++		$(DESTDIR)$(DOCDIR)/examples/diffserv
++	@for i in $(SUBDIRS) doc; do $(MAKE) -C $$i install; done
++	install -m 0644 $(shell find etc/iproute2 -maxdepth 1 -type f) $(DESTDIR)$(CONFDIR)
++	install -m 0755 -d $(DESTDIR)$(MANDIR)/man8
++	install -m 0644 $(shell find man/man8 -maxdepth 1 -type f) $(DESTDIR)$(MANDIR)/man8
++	ln -sf tc-pbfifo.8  $(DESTDIR)$(MANDIR)/man8/tc-bfifo.8
++	ln -sf tc-pbfifo.8  $(DESTDIR)$(MANDIR)/man8/tc-pfifo.8
++	install -m 0755 -d $(DESTDIR)$(MANDIR)/man3
++	install -m 0644 $(shell find man/man3 -maxdepth 1 -type f) $(DESTDIR)$(MANDIR)/man3
++
++clean:
++	rm -f cscope.*
++	@for i in $(SUBDIRS) doc; \
++	do $(MAKE) $(MFLAGS) -C $$i clean; done
++
++clobber: clean
++	rm -f Config
++
++distclean: clobber
++
++cscope:
++	cscope -b -q -R -Iinclude -sip -slib -smisc -snetem -stc
++
++.EXPORT_ALL_VARIABLES:
+diff -urNbB iproute2-2.6.14-051107.org/misc/ss.c iproute2-2.6.14-051107/misc/ss.c
+--- iproute2-2.6.14-051107.org/misc/ss.c	2005-09-01 21:21:50.000000000 +0200
++++ iproute2-2.6.14-051107/misc/ss.c	2005-11-10 16:04:23.933479500 +0100
+@@ -35,7 +35,6 @@
+ 
+ #include <linux/inet_diag.h>
+ #include <linux/tcp.h>
+-#include <net/tcp_states.h>
+ 
+ int resolve_hosts = 0;
+ int resolve_services = 1;
