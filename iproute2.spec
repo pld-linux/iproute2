@@ -16,7 +16,7 @@ Name:		iproute2
 %define	sdate	051107
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.14
-Release:	1
+Release:	2
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
@@ -27,14 +27,14 @@ Patch1:		%{name}-arp.patch
 Patch2:		%{name}-lex.patch
 # extensions
 Patch10:	%{name}-2.2.4-wrr.patch
-Patch11:	%{name}-2.2.4-esfq.patch
+Patch11:	esfq-%{name}.patch
 URL:		http://linux-net.osdl.org/index.php/Iproute2
 BuildRequires:	bison
 BuildRequires:	db-devel
 %if %{with atm}
 BuildRequires:	linux-atm-devel
 %endif
-BuildRequires:	linux-libc-headers >= 7:2.6.12.0-8
+BuildRequires:	linux-libc-headers >= 7:2.6.12.0-9
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
@@ -87,7 +87,7 @@ a przestrzeni± u¿ytkownika.
 
 %prep
 %setup -q -n %{name}-%{version}-%{sdate}
-rm -rf include-glibc
+rm -rf include-glibc include/linux
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -96,8 +96,6 @@ rm -rf include-glibc
 %patch11 -p1
 
 %build
-rm -rf include/linux
-
 %{__make} \
 	%{?with_uClibc:CC="%{_target_cpu}-uclibc-gcc"}%{!?with_uClibc:CC="%{__cc}"} \
 	OPT="%{rpmcflags}" \
