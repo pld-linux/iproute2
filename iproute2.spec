@@ -16,7 +16,7 @@ Name:		iproute2
 %define	sdate	051107
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.14
-Release:	2
+Release:	3
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
@@ -25,12 +25,15 @@ Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-%{sd
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
 Patch2:		%{name}-lex.patch
+Patch3:		%{name}-iptables.patch
+Patch4:		%{name}-iptables64.patch
 # extensions
 Patch10:	%{name}-2.2.4-wrr.patch
 Patch11:	esfq-%{name}.patch
 URL:		http://linux-net.osdl.org/index.php/Iproute2
 BuildRequires:	bison
 BuildRequires:	db-devel
+BuildRequires:	flex
 %if %{with atm}
 BuildRequires:	linux-atm-devel
 %endif
@@ -91,7 +94,11 @@ rm -rf include-glibc include/linux
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-
+%ifarch %{x8664} ia64 ppc64 s390x sparc64
+%patch4 -p1
+%else
+%patch3 -p1
+%endif
 %patch10 -p1
 %patch11 -p1
 
