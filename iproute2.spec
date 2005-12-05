@@ -94,7 +94,7 @@ rm -rf include-glibc include/linux
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%ifarch %{x8664} ia64 ppc64 s390x sparc64
+%ifarch "%{_lib}" == "lib64"
 %patch4 -p1
 %else
 %patch3 -p1
