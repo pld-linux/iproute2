@@ -1,0 +1,11 @@
+--- iproute2-2.6.14-051107/include/iptables.h~	2005-12-05 20:25:14.753026000 +0000
++++ iproute2-2.6.14-051107/include/iptables.h	2005-12-05 20:25:50.063026000 +0000
+@@ -5,7 +5,7 @@
+ #include "libiptc/libiptc.h"
+ 
+ #ifndef IPT_LIB_DIR
+-#define IPT_LIB_DIR "/usr/local/iptables"
++#define IPT_LIB_DIR "/usr/lib64/iptables"
+ #endif
+ 
+ #ifndef IPPROTO_SCTP
