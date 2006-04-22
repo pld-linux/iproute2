@@ -13,15 +13,15 @@ Summary(es):	Herramientas para encaminamiento avanzado y configuración de interf
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-%define	sdate	060110
+%define	sdate	060323
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
-Version:	2.6.15
+Version:	2.6.16
 Release:	1
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
 Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-%{sdate}.tar.gz
-# Source0-md5:	04f57a6d366d36426d276178b600f5c5
+# Source0-md5:	f31d4516b35bbfeaa72c762f5959e97c
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
 Patch2:		%{name}-lex.patch
@@ -37,7 +37,7 @@ BuildRequires:	flex
 %if %{with atm}
 BuildRequires:	linux-atm-devel
 %endif
-BuildRequires:	linux-libc-headers >= 7:2.6.12.0-11
+BuildRequires:	linux-libc-headers >= 7:2.6.12.0-13
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
