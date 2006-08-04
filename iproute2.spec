@@ -27,6 +27,7 @@ Patch1:		%{name}-arp.patch
 Patch2:		%{name}-lex.patch
 Patch3:		%{name}-iptables.patch
 Patch4:		%{name}-iptables64.patch
+Patch5:		%{name}-LDFLAGS.patch
 # extensions
 Patch10:	%{name}-2.2.4-wrr.patch
 Patch11:	esfq-%{name}.patch
@@ -99,14 +100,22 @@ rm -rf include-glibc include/linux
 %else
 %patch3 -p1
 %endif
+%patch5 -p1
 %patch10 -p1
 %patch11 -p1
 
 %build
 %{__make} \
-	%{?with_uClibc:CC="%{_target_cpu}-uclibc-gcc"}%{!?with_uClibc:CC="%{__cc}"} \
+%if %{with uClibc}
+	CC="%{_target_cpu}-uclibc-gcc" \
+	LD="%{_target_cpu}-uclibc-gcc" \
+%else
+	CC="%{__cc}" \
+	LD="%{__cc}" \
+%endif
 	OPT="%{rpmcflags}" \
-	%{!?with_tc:SUBDIRS="lib ip misc" LDFLAGS="%{rpmldflags}"}
+	LDFLAGS="%{rpmldflags}" \
+	%{!?with_tc:SUBDIRS="lib ip misc"}
 
 %{?with_doc:%{__make} -C doc}
 
