@@ -1,0 +1,45 @@
+diff -Nur iproute2-2.6.16-060323.orig/netem/Makefile iproute2-2.6.16-060323.LDFLAGS/netem/Makefile
+--- iproute2-2.6.16-060323.orig/netem/Makefile	2006-03-14 20:43:59.000000000 +0100
++++ iproute2-2.6.16-060323.LDFLAGS/netem/Makefile	2006-08-04 03:30:36.000000000 +0200
+@@ -7,7 +7,7 @@
+ all: $(DISTGEN) $(DISTDATA)
+ 
+ $(DISTGEN):
+-	$(HOSTCC) $(CCOPTS) -I../include -o $@ $@.c -lm
++	$(HOSTCC) $(LDFLAGS) $(CCOPTS) -I../include -o $@ $@.c -lm
+ 
+ %.dist: %
+ 	./$* > $@
+diff -Nur iproute2-2.6.16-060323.orig/tc/Makefile iproute2-2.6.16-060323.LDFLAGS/tc/Makefile
+--- iproute2-2.6.16-060323.orig/tc/Makefile	2006-08-04 03:25:47.000000000 +0200
++++ iproute2-2.6.16-060323.LDFLAGS/tc/Makefile	2006-08-04 03:31:13.000000000 +0200
+@@ -54,18 +54,17 @@
+ 
+ LDLIBS += -L. -ltc -lm -ldl
+ 
+-LDFLAGS += -Wl,-export-dynamic
+-
+ YACC := bison
+ LEX := flex
+ 
+ %.so: %.c
+-	$(CC) $(CFLAGS) -shared -fpic $< -o $@
++	$(CC) $(LDFLAGS) $(CFLAGS) -shared -fpic $< -o $@
+ 
+ 
+ all: libtc.a tc $(TCSO)
+ 
+ tc: $(TCOBJ) $(LIBNETLINK) $(LIBUTIL) $(TCLIB)
++	$(LD) $(LDFLAGS) $(CFLAGS) -Wl,-export-dynamic -o $@ $^ $(LDLIBS)
+ 
+ libtc.a: $(TCLIB)
+ 	$(AR) rcs $@ $(TCLIB)
+@@ -82,7 +81,7 @@
+ 	rm -f emp_ematch.yacc.output
+ 
+ q_atm.so: q_atm.c
+-	$(CC) $(CFLAGS) -shared -fpic -o q_atm.so q_atm.c -latm
++	$(CC) $(LDFLAGS) $(CFLAGS) -shared -fpic -o q_atm.so q_atm.c -latm
+ 
+ %.yacc.c: %.y
+ 	$(YACC) $(YACCFLAGS) -o $@ $<
