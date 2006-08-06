@@ -113,6 +113,7 @@ rm -rf include-glibc include/linux
 	CC="%{__cc}" \
 	LD="%{__cc}" \
 %endif
+	HOSTCC="%{__cc}" \
 	OPT="%{rpmcflags}" \
 	LDFLAGS="%{rpmldflags}" \
 	%{!?with_tc:SUBDIRS="lib ip misc"}
