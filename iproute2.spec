@@ -95,7 +95,7 @@ rm -rf include-glibc include/linux
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%ifarch "%{_lib}" == "lib64"
+%if "%{_lib}" == "lib64"
 %patch4 -p1
 %else
 %patch3 -p1
