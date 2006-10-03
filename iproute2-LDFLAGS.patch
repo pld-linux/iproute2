@@ -1,6 +1,22 @@
-diff -Nur iproute2-2.6.16-060323.orig/netem/Makefile iproute2-2.6.16-060323.LDFLAGS/netem/Makefile
---- iproute2-2.6.16-060323.orig/netem/Makefile	2006-03-14 20:43:59.000000000 +0100
-+++ iproute2-2.6.16-060323.LDFLAGS/netem/Makefile	2006-08-04 03:30:36.000000000 +0200
+diff -ur iproute2-2.6.18-061002.org/genl/Makefile iproute2-2.6.18-061002/genl/Makefile
+--- iproute2-2.6.18-061002.org/genl/Makefile	2006-10-02 22:13:34.000000000 +0200
++++ iproute2-2.6.18-061002/genl/Makefile	2006-10-03 09:09:13.940918661 +0200
+@@ -9,11 +9,10 @@
+ 
+ GENLLIB :=
+ 
+-LDFLAGS += -Wl,-export-dynamic -lm -ldl
+-
+ all: genl
+ 
+ genl: $(GENLOBJ) $(LIBNETLINK) $(LIBUTIL) $(GENLLIB)
++	$(LD) $(LDFLAGS) $(CFLAGS) -Wl,-export-dynamic -o $@ $^ $(LDLIBS) -lm -ldl
+ 
+ install: all
+ 	install -m 0755 -s genl $(DESTDIR)$(SBINDIR)
+diff -ur iproute2-2.6.18-061002.org/netem/Makefile iproute2-2.6.18-061002/netem/Makefile
+--- iproute2-2.6.18-061002.org/netem/Makefile	2006-10-02 22:13:34.000000000 +0200
++++ iproute2-2.6.18-061002/netem/Makefile	2006-10-03 09:00:45.533018231 +0200
 @@ -7,7 +7,7 @@
  all: $(DISTGEN) $(DISTDATA)
  
@@ -10,10 +26,10 @@ diff -Nur iproute2-2.6.16-060323.orig/netem/Makefile iproute2-2.6.16-060323.LDFL
  
  %.dist: %
  	./$* > $@
-diff -Nur iproute2-2.6.16-060323.orig/tc/Makefile iproute2-2.6.16-060323.LDFLAGS/tc/Makefile
---- iproute2-2.6.16-060323.orig/tc/Makefile	2006-08-04 03:25:47.000000000 +0200
-+++ iproute2-2.6.16-060323.LDFLAGS/tc/Makefile	2006-08-04 03:31:13.000000000 +0200
-@@ -54,18 +54,17 @@
+diff -ur iproute2-2.6.18-061002.org/tc/Makefile iproute2-2.6.18-061002/tc/Makefile
+--- iproute2-2.6.18-061002.org/tc/Makefile	2006-10-02 22:13:34.000000000 +0200
++++ iproute2-2.6.18-061002/tc/Makefile	2006-10-03 09:00:45.533018231 +0200
+@@ -52,18 +52,17 @@
  
  LDLIBS += -L. -ltc -lm -ldl
  
@@ -34,7 +50,7 @@ diff -Nur iproute2-2.6.16-060323.orig/tc/Makefile iproute2-2.6.16-060323.LDFLAGS
  
  libtc.a: $(TCLIB)
  	$(AR) rcs $@ $(TCLIB)
-@@ -82,7 +81,7 @@
+@@ -80,7 +79,7 @@
  	rm -f emp_ematch.yacc.output
  
  q_atm.so: q_atm.c
