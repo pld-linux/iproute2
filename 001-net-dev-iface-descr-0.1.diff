@@ -1,0 +1,109 @@
+diff -Nur iproute2-2.6.16-060323.orig/ip/ipaddress.c iproute2-2.6.16-060323/ip/ipaddress.c
+--- iproute2-2.6.16-060323.orig/ip/ipaddress.c	2005-09-21 21:33:18.000000000 +0200
++++ iproute2-2.6.16-060323/ip/ipaddress.c	2006-07-07 12:09:50.000000000 +0200
+@@ -127,6 +127,28 @@
+ 		printf("qlen %d", ifr.ifr_qlen);
+ }
+ 
++void print_description(char *name)
++{
++	struct ifreq ifr;
++	int s;
++
++	s = socket(AF_INET, SOCK_STREAM, 0);
++	if (s < 0)
++		return;
++
++	memset(&ifr, 0, sizeof(ifr));
++	strcpy(ifr.ifr_name, name);
++	if (ioctl(s, SIOCGIFDESCR, &ifr) < 0) { 
++		perror("SIOCGIFDESCR");
++		close(s);
++		return;
++	}
++	close(s);
++
++	if (ifr.ifr_description[0])
++		printf("\n    descr %s", ifr.ifr_description);
++}
++
+ int print_linkinfo(const struct sockaddr_nl *who, 
+ 		   struct nlmsghdr *n, void *arg)
+ {
+@@ -192,6 +214,8 @@
+ 	if (filter.showqueue)
+ 		print_queuelen((char*)RTA_DATA(tb[IFLA_IFNAME]));
+ 	
++	print_description((char*)RTA_DATA(tb[IFLA_IFNAME]));
++
+ 	if (!filter.family || filter.family == AF_PACKET) {
+ 		SPRINT_BUF(b1);
+ 		fprintf(fp, "%s", _SL_);
+diff -Nur iproute2-2.6.16-060323.orig/ip/iplink.c iproute2-2.6.16-060323/ip/iplink.c
+--- iproute2-2.6.16-060323.orig/ip/iplink.c	2006-03-22 00:57:50.000000000 +0100
++++ iproute2-2.6.16-060323/ip/iplink.c	2006-07-07 11:46:17.000000000 +0200
+@@ -45,6 +45,7 @@
+ 	fprintf(stderr, "	                     trailers { on | off } |\n");
+ 	fprintf(stderr, "	                     txqueuelen PACKETS |\n");
+ 	fprintf(stderr, "	                     name NEWNAME |\n");
++	fprintf(stderr, "	                     descr NEWDESCR |\n");
+ 	fprintf(stderr, "	                     address LLADDR | broadcast LLADDR |\n");
+ 	fprintf(stderr, "	                     mtu MTU }\n");
+ 	fprintf(stderr, "       ip link show [ DEVICE ]\n");
+@@ -130,6 +131,27 @@
+ 	return err;
+ }
+ 
++static int do_changedescr(const char *dev, const char *newdescr)
++{
++	struct ifreq ifr;
++	int fd;
++	int err;
++
++	strncpy(ifr.ifr_name, dev, IFNAMSIZ);
++	strncpy(ifr.ifr_description, newdescr, NET_DEV_DESCR_LEN);
++	fd = get_ctl_fd();
++	if (fd < 0)
++		return -1;
++	err = ioctl(fd, SIOCSIFDESCR, &ifr);
++	if (err) {
++		perror("SIOCSIFDESCR");
++		close(fd);
++		return -1;
++	}
++	close(fd);
++	return err;
++}
++
+ static int set_qlen(const char *dev, int qlen)
+ {
+ 	struct ifreq ifr;
+@@ -262,6 +284,7 @@
+ 	char *newbrd = NULL;
+ 	struct ifreq ifr0, ifr1;
+ 	char *newname = NULL;
++	char *newdescr = NULL;
+ 	int htype, halen;
+ 
+ 	while (argc > 0) {
+@@ -274,6 +297,9 @@
+ 		} else if (strcmp(*argv, "name") == 0) {
+ 			NEXT_ARG();
+ 			newname = *argv;
++		} else if (strcmp(*argv, "descr") == 0) {
++			NEXT_ARG();
++			newdescr = *argv;
+ 		} else if (matches(*argv, "address") == 0) {
+ 			NEXT_ARG();
+ 			newaddr = *argv;
+@@ -388,6 +414,10 @@
+ 			return -1;
+ 		dev = newname;
+ 	}
++	if (newdescr) {
++		if (do_changedescr(dev, newdescr) < 0)
++			return -1;
++	}
+ 	if (qlen != -1) { 
+ 		if (set_qlen(dev, qlen) < 0)
+ 			return -1; 
