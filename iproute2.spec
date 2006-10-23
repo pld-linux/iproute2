@@ -7,6 +7,7 @@
 %bcond_without	tc		# don't build tc program (it breaks static linkage)
 %bcond_without	atm		# don't required ATM.
 %bcond_with	uClibc		# do some hacks to build with uClibc
+%bcond_with	iface_descr	# build with interface description support
 #
 Summary:	Utility to control Networking behavior in.X kernels
 Summary(es):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
@@ -106,7 +107,7 @@ rm -rf include-glibc include/linux
 # extensions:
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
+%{?with_iface_descr:%patch12 -p1}
 
 %build
 %{__make} \
