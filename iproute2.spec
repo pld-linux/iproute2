@@ -9,9 +9,9 @@
 %bcond_with	iec_complaint	# fix bitrate calculations
 #
 Summary:	Utility to control Networking behavior in.X kernels
-Summary(es):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
-Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach
-Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
+Summary(es.UTF-8):   Herramientas para encaminamiento avanzado y configuraciÃ³n de interfaces de red
+Summary(pl.UTF-8):   NarzÄ™dzie do kontrolowania Sieci w kernelach
+Summary(pt_BR.UTF-8):   Ferramentas para roteamento avanÃ§ado e configuraÃ§Ã£o de interfaces de rede
 Name:		iproute2
 %define	sdate	040608
 Version:	2.6.7
@@ -54,33 +54,33 @@ utilities of the network (ifconfig, route) but a new utility is
 required to exploit the new characteristics and features of the
 kernel. This package includes the new utilities.
 
-%description -l es
-Linux mantiene compatibilidad con los utilitarios estándares de
-configuración de la red, pero se necesitan nuevos utilitarios para
-usar los recursos y características del nuevo núcleo. Este paquete
+%description -l es.UTF-8
+Linux mantiene compatibilidad con los utilitarios estÃ¡ndares de
+configuraciÃ³n de la red, pero se necesitan nuevos utilitarios para
+usar los recursos y caracterÃ­sticas del nuevo nÃºcleo. Este paquete
 incluye los nuevos utilitarios.
 
-%description -l pl
-Ten pakiet zawiera programy pozwalaj±ce na kontrolê routingu i innych
-aspektów dotycz±cych sieci.
+%description -l pl.UTF-8
+Ten pakiet zawiera programy pozwalajÄ…ce na kontrolÄ™ routingu i innych
+aspektÃ³w dotyczÄ…cych sieci.
 
-%description -l pt_BR
-O Linux mantém compatibilidade com os utilitários padrão de
-configuração da rede, mas novos utilitários são necessários para fazer
-uso das características e recursos da nova kernel. This package
+%description -l pt_BR.UTF-8
+O Linux mantÃ©m compatibilidade com os utilitÃ¡rios padrÃ£o de
+configuraÃ§Ã£o da rede, mas novos utilitÃ¡rios sÃ£o necessÃ¡rios para fazer
+uso das caracterÃ­sticas e recursos da nova kernel. This package
 includes the new utilities.
 
 %package -n libnetlink-devel
 Summary:	Library for the netlink interface
-Summary(pl):	Biblioteka do interfejsu netlink
+Summary(pl.UTF-8):   Biblioteka do interfejsu netlink
 Group:		Development/Libraries
 
 %description -n libnetlink-devel
 This library provides an interface for kernel-user netlink interface.
 
-%description -n libnetlink-devel -l pl
-Ta biblioteka udostêpnia interfejs do interfejsu netlink miêdzy j±drem
-a przestrzeni± u¿ytkownika.
+%description -n libnetlink-devel -l pl.UTF-8
+Ta biblioteka udostÄ™pnia interfejs do interfejsu netlink miÄ™dzy jÄ…drem
+a przestrzeniÄ… uÅ¼ytkownika.
 
 %prep
 %setup -q
