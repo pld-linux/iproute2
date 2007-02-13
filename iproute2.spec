@@ -10,9 +10,9 @@
 %bcond_with	iface_descr	# build with interface description support
 #
 Summary:	Utility to control Networking behavior in.X kernels
-Summary(es.UTF-8):   Herramientas para encaminamiento avanzado y configuración de interfaces de red
-Summary(pl.UTF-8):   Narzędzie do kontrolowania Sieci w kernelach
-Summary(pt_BR.UTF-8):   Ferramentas para roteamento avançado e configuração de interfaces de rede
+Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
+Summary(pl.UTF-8):	Narzędzie do kontrolowania Sieci w kernelach
+Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 %define	sdate	061002
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
@@ -81,7 +81,7 @@ includes the new utilities.
 
 %package -n libnetlink-devel
 Summary:	Library for the netlink interface
-Summary(pl.UTF-8):   Biblioteka do interfejsu netlink
+Summary(pl.UTF-8):	Biblioteka do interfejsu netlink
 Group:		Development/Libraries
 
 %description -n libnetlink-devel
