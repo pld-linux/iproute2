@@ -13,28 +13,31 @@ Summary(es):	Herramientas para encaminamiento avanzado y configuración de interf
 Summary(pl):	Narzêdzie do kontrolowania Sieci w kernelach
 Summary(pt_BR):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-%define	sdate	051107
+%define	sdate	060110
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
-Version:	2.6.14
+Version:	2.6.15
 Release:	2
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
 Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-%{sdate}.tar.gz
-# Source0-md5:	756a160a6d9c72d2ee2d29b1ede8ffab
+# Source0-md5:	04f57a6d366d36426d276178b600f5c5
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
 Patch2:		%{name}-lex.patch
+Patch3:		%{name}-iptables.patch
+Patch4:		%{name}-iptables64.patch
 # extensions
 Patch10:	%{name}-2.2.4-wrr.patch
 Patch11:	esfq-%{name}.patch
 URL:		http://linux-net.osdl.org/index.php/Iproute2
 BuildRequires:	bison
 BuildRequires:	db-devel
+BuildRequires:	flex
 %if %{with atm}
 BuildRequires:	linux-atm-devel
 %endif
-BuildRequires:	linux-libc-headers >= 7:2.6.12.0-9
+BuildRequires:	linux-libc-headers >= 7:2.6.12.0-11
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
@@ -91,7 +94,11 @@ rm -rf include-glibc include/linux
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-
+%ifarch "%{_lib}" == "lib64"
+%patch4 -p1
+%else
+%patch3 -p1
+%endif
 %patch10 -p1
 %patch11 -p1
 
@@ -105,7 +112,7 @@ rm -rf include-glibc include/linux
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man8,%{_libdir},%{_includedir}}
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man8,%{_libdir},%{_includedir},%{?with_tc:%{_libdir}/tc}}
 
 install ip/{ip,rtmon,routel} %{?with_tc:tc/tc} misc/{ifstat,lnstat,nstat,rtacct,ss} $RPM_BUILD_ROOT%{_sbindir}
 install etc/iproute2/rt_protos \
@@ -120,6 +127,7 @@ echo ".so tc-pbfifo.8" > $RPM_BUILD_ROOT%{_mandir}/man8/tc-pfifo.8
 
 install lib/libnetlink.a $RPM_BUILD_ROOT%{_libdir}
 install include/libnetlink.h $RPM_BUILD_ROOT%{_includedir}
+%{?with_tc:install tc/*.so $RPM_BUILD_ROOT%{_libdir}/tc}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -132,6 +140,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
 %{_mandir}/man8/*
+%{?with_tc:%dir %{_libdir}/tc}
+%{?with_tc:%attr(755,root,root) %{_libdir}/tc/*.so}
 
 %files -n libnetlink-devel
 %defattr(644,root,root,755)
