@@ -127,7 +127,7 @@ rm -rf include-glibc include/linux
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man8,%{_libdir},%{_includedir}}
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man8,%{_libdir},%{_includedir},%{?with_tc:%{_libdir}/tc}}
 
 install ip/{ip,rtmon,routel} %{?with_tc:tc/tc} misc/{ifstat,lnstat,nstat,rtacct,ss} $RPM_BUILD_ROOT%{_sbindir}
 install etc/iproute2/rt_protos \
@@ -142,6 +142,7 @@ echo ".so tc-pbfifo.8" > $RPM_BUILD_ROOT%{_mandir}/man8/tc-pfifo.8
 
 install lib/libnetlink.a $RPM_BUILD_ROOT%{_libdir}
 install include/libnetlink.h $RPM_BUILD_ROOT%{_includedir}
+%{?with_tc:install tc/*.so $RPM_BUILD_ROOT%{_libdir}/tc}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -154,6 +155,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
 %{_mandir}/man8/*
+%{?with_tc:%dir %{_libdir}/tc}
+%{?with_tc:%attr(755,root,root) %{_libdir}/tc/*.so}
 
 %files -n libnetlink-devel
 %defattr(644,root,root,755)
