@@ -14,15 +14,15 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do kontrolowania Sieci w kernelach
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-%define	sdate	061002
+%define	sdate	070313
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
-Version:	2.6.18
-Release:	2	
+Version:	2.6.20
+Release:	1	
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
 Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-%{sdate}.tar.gz
-# Source0-md5:	193b570128cf852afba337438413adf9
+# Source0-md5:	7bc5883aadf740761fa2dd70b661e8cc
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
 Patch2:		%{name}-lex.patch
@@ -52,7 +52,7 @@ BuildRequires:	tetex-tex-babel
 %endif
 Obsoletes:	iproute
 Obsoletes:	ifstat
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/iproute-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
 %define		_sysconfdir	/etc/iproute2
@@ -92,22 +92,22 @@ Ta biblioteka udostępnia interfejs do interfejsu netlink między jądrem
 a przestrzenią użytkownika.
 
 %prep
-%setup -q -n %{name}-%{version}-%{sdate}
+%setup -q -n iproute-%{version}-%{sdate}
 rm -rf include-glibc include/linux
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%if "%{_lib}" == "lib64"
-%patch4 -p1
-%else
-%patch3 -p1
-%endif
-%patch5 -p1
+#%patch0 -p1
+#%patch1 -p1
+#%patch2 -p1
+#%if "%{_lib}" == "lib64"
+#%patch4 -p1
+#%else
+#%patch3 -p1
+#%endif
+#%patch5 -p1
 
 # extensions:
-%patch10 -p1
-%patch11 -p1
-%{?with_iface_descr:%patch12 -p1}
+#%patch10 -p1
+#%patch11 -p1
+#%{?with_iface_descr:%patch12 -p1}
 
 %build
 %{__make} \
