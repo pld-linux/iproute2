@@ -1,7 +1,6 @@
 #
 # TODO:
 #	- fix build @ uClibc
-#	- add newer wrr patch - none now available for 2.6.20
 #       - fix iface_descr patch
 #
 # Conditional build
@@ -19,7 +18,7 @@ Name:		iproute2
 %define	sdate	070313
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.20
-Release:	1	
+Release:	0.1	
 License:	GPL
 Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
@@ -107,7 +106,7 @@ a przestrzenią użytkownika.
 %patch5 -p1
 
 # extensions:
-#%patch10 -p1
+%patch10 -p1
 %patch11 -p1
 #%{?with_iface_descr:%patch12 -p1}
 
