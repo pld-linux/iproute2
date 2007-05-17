@@ -1,13 +1,15 @@
 #
 # TODO:
 #	- fix build @ uClibc
+#	- add newer wrr patch - none now available for 2.6.20
+#       - fix iface_descr patch
 #
 # Conditional build
 %bcond_without	doc		# don't build documentation
 %bcond_without	tc		# don't build tc program (it breaks static linkage)
 %bcond_without	atm		# don't required ATM.
 %bcond_with	uClibc		# do some hacks to build with uClibc
-%bcond_with	iface_descr	# build with interface description support
+#%bcond_with	iface_descr	# build with interface description support
 #
 Summary:	Utility to control Networking behavior in.X kernels
 Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
@@ -23,7 +25,7 @@ Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
 Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-%{sdate}.tar.gz
 # Source0-md5:	7bc5883aadf740761fa2dd70b661e8cc
-Patch0:		%{name}-build.patch
+#Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
 Patch2:		%{name}-lex.patch
 Patch3:		%{name}-iptables.patch
@@ -93,20 +95,20 @@ a przestrzenią użytkownika.
 
 %prep
 %setup -q -n iproute-%{version}-%{sdate}
-rm -rf include-glibc include/linux
+#rm -rf include-glibc include/linux
 #%patch0 -p1
-#%patch1 -p1
+%patch1 -p1
 #%patch2 -p1
-#%if "%{_lib}" == "lib64"
-#%patch4 -p1
-#%else
-#%patch3 -p1
-#%endif
-#%patch5 -p1
+%if "%{_lib}" == "lib64"
+%patch4 -p1
+%else
+%patch3 -p1
+%endif
+%patch5 -p1
 
 # extensions:
 #%patch10 -p1
-#%patch11 -p1
+%patch11 -p1
 #%{?with_iface_descr:%patch12 -p1}
 
 %build
