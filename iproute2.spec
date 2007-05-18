@@ -20,11 +20,10 @@ Name:		iproute2
 Version:	2.6.20
 Release:	0.1	
 License:	GPL
-Vendor:		Stephen Hemminger <shemminger@osdl.org>
 Group:		Networking/Admin
 Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-%{sdate}.tar.gz
 # Source0-md5:	7bc5883aadf740761fa2dd70b661e8cc
-#Patch0:		%{name}-build.patch
+Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
 Patch2:		%{name}-lex.patch
 Patch3:		%{name}-iptables.patch
@@ -53,7 +52,7 @@ BuildRequires:	tetex-tex-babel
 %endif
 Obsoletes:	iproute
 Obsoletes:	ifstat
-BuildRoot:	%{tmpdir}/iproute-%{version}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
 %define		_sysconfdir	/etc/iproute2
@@ -94,8 +93,8 @@ a przestrzenią użytkownika.
 
 %prep
 %setup -q -n iproute-%{version}-%{sdate}
-#rm -rf include-glibc include/linux
-#%patch0 -p1
+#rm -rf include/linux
+%patch0 -p1
 %patch1 -p1
 #%patch2 -p1
 %if "%{_lib}" == "lib64"
