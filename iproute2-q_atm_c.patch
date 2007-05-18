@@ -1,0 +1,16 @@
+--- tc/q_atm.c	2007-03-13 22:50:56.000000000 +0100
++++ tc/q_atm.c-new	2007-05-18 14:04:30.317402219 +0200
+@@ -18,12 +18,11 @@
+ #include <string.h>
+ #include <atm.h>
+ #include <linux/atmdev.h>
+-#include <linux/atmarp.h>
+ 
+ #include "utils.h"
+ #include "tc_util.h"
+ 
+-
++#define ATMARP_MKIP     _IO('a',ATMIOC_CLIP+2)
+ #define MAX_HDR_LEN 64
+ 
+ #define usage() return(-1)
