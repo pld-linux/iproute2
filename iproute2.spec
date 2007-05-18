@@ -18,7 +18,7 @@ Name:		iproute2
 %define	sdate	070313
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.20
-Release:	0.1	
+Release:	0.2
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-%{sdate}.tar.gz
@@ -33,6 +33,7 @@ Patch5:		%{name}-LDFLAGS.patch
 Patch10:	%{name}-2.2.4-wrr.patch
 Patch11:	esfq-%{name}.patch
 Patch12:	001-net-dev-iface-descr-0.1.diff
+Patch13:	%{name}-q_atm_c.patch
 URL:		http://linux-net.osdl.org/index.php/Iproute2
 BuildRequires:	bison
 BuildRequires:	db-devel
@@ -108,6 +109,7 @@ a przestrzenią użytkownika.
 %patch10 -p1
 %patch11 -p1
 #%{?with_iface_descr:%patch12 -p1}
+%patch13 -p0
 
 %build
 %{__make} \
