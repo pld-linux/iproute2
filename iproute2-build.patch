@@ -25,17 +25,6 @@ diff -urNbB iproute2-2.6.14-051107.org/configure iproute2-2.6.14-051107/configur
  fi
 -rm -f /tmp/atmtest.c /tmp/atmtest
 +rm -f atmtest*
-diff -urNbB iproute2-2.6.14-051107.org/ip/iptunnel.c iproute2-2.6.14-051107/ip/iptunnel.c
---- iproute2-2.6.14-051107.org/ip/iptunnel.c	2005-02-10 19:31:18.000000000 +0100
-+++ iproute2-2.6.14-051107/ip/iptunnel.c	2005-11-10 16:04:15.024922750 +0100
-@@ -16,6 +16,7 @@
-  * Phil Karn <karn@ka9q.ampr.org>	990408:	"pmtudisc" flag
-  */
- 
-+#include <asm/byteorder.h>
- #include <stdio.h>
- #include <stdlib.h>
- #include <string.h>
 diff -urNbB iproute2-2.6.14-051107.org/Makefile iproute2-2.6.14-051107/Makefile
 --- iproute2-2.6.14-051107.org/Makefile	2005-07-09 00:08:47.000000000 +0200
 +++ iproute2-2.6.14-051107/Makefile	2005-11-10 16:04:15.024922750 +0100
@@ -57,14 +46,3 @@ diff -urNbB iproute2-2.6.14-051107.org/Makefile iproute2-2.6.14-051107/Makefile
  CFLAGS = $(CCOPTS) -I../include $(DEFINES)
  YACCFLAGS = -d -t -v
  
-diff -urNbB iproute2-2.6.14-051107.org/misc/ss.c iproute2-2.6.14-051107/misc/ss.c
---- iproute2-2.6.14-051107.org/misc/ss.c	2005-09-01 21:21:50.000000000 +0200
-+++ iproute2-2.6.14-051107/misc/ss.c	2005-11-10 16:04:23.933479500 +0100
-@@ -35,7 +35,6 @@
- 
- #include <linux/inet_diag.h>
- #include <linux/tcp.h>
--#include <net/tcp_states.h>
- 
- int resolve_hosts = 0;
- int resolve_services = 1;
