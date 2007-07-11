@@ -2,9 +2,9 @@ diff -urN iproute-2.6.20-070313-orig/tc/Makefile iproute-2.6.20-070313/tc/Makefi
 --- iproute-2.6.20-070313-orig/tc/Makefile	2007-03-13 22:50:56.000000000 +0100
 +++ iproute-2.6.20-070313/tc/Makefile	2007-04-15 20:52:33.000000000 +0200
 @@ -11,6 +11,7 @@
- TCMODULES += q_prio.o
  TCMODULES += q_tbf.o
  TCMODULES += q_cbq.o
+ TCMODULES += q_netem.o
 +TCMODULES += q_wrr.o
  TCMODULES += f_rsvp.o
  TCMODULES += f_u32.o
