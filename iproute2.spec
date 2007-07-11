@@ -25,7 +25,6 @@ Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}-%{sd
 # Source0-md5:	20ef2767896a0f156b6fbabd47936f79
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
-Patch2:		%{name}-lex.patch
 Patch3:		%{name}-iptables.patch
 Patch4:		%{name}-iptables64.patch
 Patch5:		%{name}-LDFLAGS.patch
@@ -97,7 +96,7 @@ a przestrzenią użytkownika.
 #rm -rf include/linux
 %patch0 -p1
 %patch1 -p1
-#%patch2 -p1
+
 %if "%{_lib}" == "lib64"
 %patch4 -p1
 %else
