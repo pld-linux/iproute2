@@ -17,7 +17,7 @@ Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de 
 Name:		iproute2
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.23
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}.tar.bz2
@@ -27,6 +27,7 @@ Patch1:		%{name}-arp.patch
 Patch3:		%{name}-iptables.patch
 Patch4:		%{name}-iptables64.patch
 Patch5:		%{name}-LDFLAGS.patch
+Patch6:		%{name}-nl-detect.patch
 # extensions
 Patch10:	%{name}-2.2.4-wrr.patch
 Patch11:	esfq-%{name}.patch
@@ -103,6 +104,7 @@ a przestrzenią użytkownika.
 %patch3 -p1
 %endif
 %patch5 -p1
+%patch6 -p1
 
 # extensions:
 %patch10 -p1
