@@ -16,18 +16,17 @@ Summary(pl.UTF-8):	Narzędzie do kontrolowania Sieci w kernelach
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
-Version:	2.6.23
-Release:	2
+Version:	2.6.25
+Release:	1
 License:	GPL
 Group:		Networking/Admin
-Source0:	http://developer.osdl.org/dev/iproute2/download/%{name}-%{version}.tar.bz2
-# Source0-md5:	2e59da739ef19990408cf0a5cb0cae3e
+Source0:	http://devresources.linux-foundation.org/dev/iproute2/download/%{name}-%{version}.tar.bz2
+# Source0-md5:	5737bade2f5e03fad0e2c81da91e551e
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
 Patch3:		%{name}-iptables.patch
 Patch4:		%{name}-iptables64.patch
 Patch5:		%{name}-LDFLAGS.patch
-Patch6:		%{name}-nl-detect.patch
 # extensions
 Patch10:	%{name}-2.2.4-wrr.patch
 Patch11:	esfq-%{name}.patch
@@ -104,7 +103,6 @@ a przestrzenią użytkownika.
 %patch3 -p1
 %endif
 %patch5 -p1
-%patch6 -p1
 
 # extensions:
 %patch10 -p1
