@@ -17,11 +17,12 @@ Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de 
 Name:		iproute2
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.28
-Release:	2
+Release:	3
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://devresources.linux-foundation.org/dev/iproute2/download/%{name}-%{version}.tar.bz2
 # Source0-md5:	595f9b17320f69e8d30d2fa80f1bca14
+Source1:	libnetlink.3
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
 Patch3:		%{name}-iptables.patch
@@ -50,8 +51,8 @@ BuildRequires:	tetex-format-latex
 BuildRequires:	tetex-metafont
 BuildRequires:	tetex-tex-babel
 %endif
-Obsoletes:	iproute
 Obsoletes:	ifstat
+Obsoletes:	iproute
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
@@ -132,7 +133,7 @@ a przestrzenią użytkownika.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man8,%{_libdir},%{_includedir},%{?with_tc:%{_libdir}/tc}}
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man{3,8},%{_libdir},%{_includedir},%{?with_tc:%{_libdir}/tc}}
 
 install ip/{ip,rtmon,routel} %{?with_tc:tc/tc} misc/{ifstat,lnstat,nstat,rtacct,ss} $RPM_BUILD_ROOT%{_sbindir}
 install etc/iproute2/rt_protos \
@@ -141,9 +142,10 @@ install etc/iproute2/rt_protos \
 	etc/iproute2/rt_tables \
 	$RPM_BUILD_ROOT%{_sysconfdir}
 
-install man/man8/*	$RPM_BUILD_ROOT%{_mandir}/man8
+cp -a man/man8/*	$RPM_BUILD_ROOT%{_mandir}/man8
 echo ".so tc-pbfifo.8" > $RPM_BUILD_ROOT%{_mandir}/man8/tc-bfifo.8
 echo ".so tc-pbfifo.8" > $RPM_BUILD_ROOT%{_mandir}/man8/tc-pfifo.8
+cp -a %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/man3
 
 install lib/libnetlink.a $RPM_BUILD_ROOT%{_libdir}
 install include/libnetlink.h $RPM_BUILD_ROOT%{_includedir}
@@ -156,9 +158,20 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README README.decnet README.iproute2+tc README.lnstat RELNOTES
 %doc ChangeLog %{?with_doc:doc/*.ps}
-%attr(755,root,root) %{_sbindir}/*
+%attr(755,root,root) %{_sbindir}/ifstat
+%attr(755,root,root) %{_sbindir}/ip
+%attr(755,root,root) %{_sbindir}/lnstat
+%attr(755,root,root) %{_sbindir}/nstat
+%attr(755,root,root) %{_sbindir}/routel
+%attr(755,root,root) %{_sbindir}/rtacct
+%attr(755,root,root) %{_sbindir}/rtmon
+%attr(755,root,root) %{_sbindir}/ss
+%attr(755,root,root) %{_sbindir}/tc
 %dir %{_sysconfdir}
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_protos
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_realms
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_scopes
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_tables
 %{_mandir}/man8/*
 %{?with_tc:%dir %{_libdir}/tc}
 %{?with_tc:%attr(755,root,root) %{_libdir}/tc/*.so}
@@ -167,3 +180,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
 %{_includedir}/*.h
+%{_mandir}/man3/libnetlink.3*
