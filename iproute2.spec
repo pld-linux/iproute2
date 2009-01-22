@@ -127,6 +127,9 @@ a przestrzenią użytkownika.
 
 %{?with_doc:%{__make} -C doc}
 
+# make sure we don't produce broken ip binary
+./ip/ip link add type vlan help 2>&1 | grep -q "VLANID :=" || exit 1
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man8,%{_libdir},%{_includedir},%{?with_tc:%{_libdir}/tc}}
