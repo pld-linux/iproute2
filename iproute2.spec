@@ -178,6 +178,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n libnetlink-devel
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
-%{_includedir}/*.h
+%{_libdir}/libnetlink.a
+%{_includedir}/libnetlink.h
 %{_mandir}/man3/libnetlink.3*
