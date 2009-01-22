@@ -1,0 +1,14 @@
+diff --git a/ip/iplink.c b/ip/iplink.c
+index 8e0ed2a..f28f91c 100644
+--- a/ip/iplink.c
++++ b/ip/iplink.c
+@@ -107,7 +107,8 @@ static int accept_msg(const struct sockaddr_nl *who,
+ {
+ 	struct nlmsgerr *err = (struct nlmsgerr *)NLMSG_DATA(n);
+ 
+-	if (n->nlmsg_type == NLMSG_ERROR && err->error == -EOPNOTSUPP)
++	if (n->nlmsg_type == NLMSG_ERROR &&
++	    (err->error == -EOPNOTSUPP || err->error == -EINVAL))
+ 		have_rtnl_newlink = 0;
+ 	else
+ 		have_rtnl_newlink = 1;
