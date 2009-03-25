@@ -19,12 +19,15 @@ diff -urNbB iproute2-2.6.14-051107.org/configure iproute2-2.6.14-051107/configur
  if [ $? -eq 0 ]
  then
      echo "TC_CONFIG_ATM:=y" >>Config
-@@ -24,4 +24,4 @@
+@@ -24,7 +24,7 @@
  else
      echo no
  fi
 -rm -f /tmp/atmtest.c /tmp/atmtest
 +rm -f atmtest*
+ 
+ echo -n " IPT	"
+ 
 diff -urNbB iproute2-2.6.14-051107.org/Makefile iproute2-2.6.14-051107/Makefile
 --- iproute2-2.6.14-051107.org/Makefile	2005-07-09 00:08:47.000000000 +0200
 +++ iproute2-2.6.14-051107/Makefile	2005-11-10 16:04:15.024922750 +0100
