@@ -17,7 +17,7 @@ Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de 
 Name:		iproute2
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.29
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://devresources.linux-foundation.org/dev/iproute2/download/%{name}-%{version}-1.tar.bz2
@@ -38,7 +38,7 @@ URL:		http://linux-net.osdl.org/index.php/Iproute2
 BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	flex
-BuildRequires:	iptables-devel >= 1:1.4.3
+BuildRequires:	iptables-devel >= 0:1.4.3
 %if %{with atm}
 BuildRequires:	linux-atm-devel
 %endif
