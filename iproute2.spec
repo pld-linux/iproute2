@@ -16,12 +16,12 @@ Summary(pl.UTF-8):	Narzędzie do kontrolowania Sieci w kernelach
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
-Version:	2.6.29
-Release:	3
+Version:	2.6.31
+Release:	1
 License:	GPL
 Group:		Networking/Admin
-Source0:	http://devresources.linux-foundation.org/dev/iproute2/download/%{name}-%{version}-1.tar.bz2
-# Source0-md5:	c1bc258a6c345905e79935ac7a3cc582
+Source0:	http://devresources.linux-foundation.org/dev/iproute2/download/%{name}-%{version}.tar.bz2
+# Source0-md5:	230f35282a95451622f3e8394f9cd80a
 Source1:	libnetlink.3
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
@@ -94,7 +94,7 @@ Ta biblioteka udostępnia interfejs do interfejsu netlink między jądrem
 a przestrzenią użytkownika.
 
 %prep
-%setup -q -n %{name}-%{version}-1
+%setup -q
 #rm -rf include/linux
 %patch0 -p1
 %patch1 -p1

@@ -1,10 +1,10 @@
 diff -urNbB iproute2-2.6.14-051107.org/configure iproute2-2.6.14-051107/configure
 --- iproute2-2.6.14-051107.org/configure	2005-01-18 00:26:46.000000000 +0100
 +++ iproute2-2.6.14-051107/configure	2005-11-10 16:04:15.024922750 +0100
-@@ -8,7 +8,7 @@
- echo "TC schedulers"
+@@ -5,7 +5,7 @@
  
- echo -n " ATM	"
+ function check_atm
+ {
 -cat >/tmp/atmtest.c <<EOF
 +cat >atmtest.c <<EOF
  #include <atm.h>
@@ -19,15 +19,15 @@ diff -urNbB iproute2-2.6.14-051107.org/configure iproute2-2.6.14-051107/configur
  if [ $? -eq 0 ]
  then
      echo "TC_CONFIG_ATM:=y" >>Config
-@@ -24,7 +24,7 @@
+@@ -21,7 +21,7 @@
  else
      echo no
  fi
 -rm -f /tmp/atmtest.c /tmp/atmtest
 +rm -f atmtest*
+ }
  
- echo -n " IPT	"
- 
+ function check_xt
 diff -urNbB iproute2-2.6.14-051107.org/Makefile iproute2-2.6.14-051107/Makefile
 --- iproute2-2.6.14-051107.org/Makefile	2005-07-09 00:08:47.000000000 +0200
 +++ iproute2-2.6.14-051107/Makefile	2005-11-10 16:04:15.024922750 +0100
