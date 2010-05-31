@@ -46,11 +46,11 @@ BuildRequires:	linux-libc-headers >= 7:2.6.12.0-15
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
-BuildRequires:	tetex-dvips
-BuildRequires:	tetex-fonts-jknappen
-BuildRequires:	tetex-format-latex
-BuildRequires:	tetex-metafont
-BuildRequires:	tetex-tex-babel
+BuildRequires:	texlive-dvips
+BuildRequires:	texlive-fonts-cmsuper
+BuildRequires:	texlive-fonts-jknappen
+BuildRequires:	texlive-latex
+BuildRequires:	texlive-tex-babel
 %endif
 Obsoletes:	ifstat
 Obsoletes:	iproute
