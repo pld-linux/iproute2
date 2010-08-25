@@ -17,7 +17,7 @@ Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de 
 Name:		iproute2
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.35
-Release:	2
+Release:	3
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://devresources.linux-foundation.org/dev/iproute2/download/%{name}-%{version}.tar.bz2
@@ -34,6 +34,7 @@ Patch11:	esfq-%{name}.patch
 Patch12:	001-net-dev-iface-descr-0.1.diff
 Patch13:	%{name}-q_atm_c.patch
 Patch14:	%{name}-q_srr.v0.4.patch
+Patch15:	%{name}-ip_route_get.patch
 URL:		http://linux-net.osdl.org/index.php/Iproute2
 BuildRequires:	bison
 BuildRequires:	db-devel
@@ -120,6 +121,7 @@ a przestrzenią użytkownika.
 #%{?with_iface_descr:%patch12 -p1}
 %patch13 -p0
 %patch14 -p1
+%patch15 -p1
 
 %build
 %{__make} \
