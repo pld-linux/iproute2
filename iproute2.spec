@@ -10,14 +10,14 @@
 %bcond_with	uClibc		# do some hacks to build with uClibc
 %bcond_with	iface_descr	# build with interface description support
 
-Summary:    Advanced IP routing and network device configuration tools
+Summary:	Advanced IP routing and network device configuration tools
 Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
 Summary(pl.UTF-8):	Narzędzie do kontrolowania Sieci w kernelach
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 # do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.35
-Release:	3
+Release:	4
 License:	GPL
 Group:		Networking/Admin
 Source0:	http://devresources.linux-foundation.org/dev/iproute2/download/%{name}-%{version}.tar.bz2
@@ -101,6 +101,14 @@ This library provides an interface for kernel-user netlink interface.
 Ta biblioteka udostępnia interfejs do interfejsu netlink między jądrem
 a przestrzenią użytkownika.
 
+%package doc
+Summary:	ip and tc documentation with examples
+License:	GPL v2+
+Group:		Applications/System
+
+%description doc
+The iproute documentation contains howtos and examples of settings.
+
 %prep
 %setup -q
 #rm -rf include/linux
@@ -161,13 +169,18 @@ cp -a lib/libnetlink.a $RPM_BUILD_ROOT%{_libdir}
 cp -a include/libnetlink.h $RPM_BUILD_ROOT%{_includedir}
 %{?with_tc:install -p tc/*.so $RPM_BUILD_ROOT%{_libdir}/tc}
 
+%if %{with doc}
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+%endif
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README README.decnet README.iproute2+tc README.lnstat RELNOTES
-%doc ChangeLog %{?with_doc:doc/*.ps}
+%doc README README.decnet README.iproute2+tc README.distribution README.lnstat
+%doc ChangeLog
 %attr(755,root,root) %{_sbindir}/ifstat
 %attr(755,root,root) %{_sbindir}/ip
 %attr(755,root,root) %{_sbindir}/lnstat
@@ -183,11 +196,21 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_scopes
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_tables
 %{_mandir}/man8/*
-%{?with_tc:%dir %{_libdir}/tc}
-%{?with_tc:%attr(755,root,root) %{_libdir}/tc/*.so}
+%if %{with tc}
+%dir %{_libdir}/tc
+%attr(755,root,root) %{_libdir}/tc/*.so
+%endif
 
 %files -n libnetlink-devel
 %defattr(644,root,root,755)
 %{_libdir}/libnetlink.a
 %{_includedir}/libnetlink.h
 %{_mandir}/man3/libnetlink.3*
+
+%if %{with doc}
+%files doc
+%defattr(644,root,root,755)
+%doc doc/*.ps
+%doc RELNOTES
+%{_examplesdir}/%{name}-%{version}
+%endif
