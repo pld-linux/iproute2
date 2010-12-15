@@ -1,16 +1,16 @@
 #
 # TODO:
-#	- fix build @ uClibc
-#       - fix iface_descr patch
+# - fix build @ uClibc
+# - fix iface_descr patch
 #
 # Conditional build
 %bcond_without	doc		# don't build documentation
 %bcond_without	tc		# don't build tc program (it breaks static linkage)
 %bcond_without	atm		# don't required ATM.
 %bcond_with	uClibc		# do some hacks to build with uClibc
-#%bcond_with	iface_descr	# build with interface description support
-#
-Summary:	Utility to control Networking behavior in.X kernels
+%bcond_with	iface_descr	# build with interface description support
+
+Summary:    Advanced IP routing and network device configuration tools
 Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
 Summary(pl.UTF-8):	Narzędzie do kontrolowania Sieci w kernelach
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
@@ -69,10 +69,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_sysconfdir	/etc/iproute2
 
 %description
-Linux maintains compatibility with the basic configuration utilities
-of the network (ifconfig, route) but a new utility is required to
-exploit the new characteristics and features of the kernel. This
-package includes the new utilities.
+The iproute package contains networking utilities (ip and rtmon, for
+example) which are designed to use the advanced networking
+capabilities of the Linux 2.4.x and 2.6.x kernel.
 
 %description -l es.UTF-8
 Linux mantiene compatibilidad con los utilitarios estándares de
@@ -118,7 +117,7 @@ a przestrzenią użytkownika.
 # extensions:
 %patch10 -p1
 %patch11 -p1
-#%{?with_iface_descr:%patch12 -p1}
+%{?with_iface_descr:%patch12 -p1}
 %patch13 -p0
 %patch14 -p1
 %patch15 -p1
@@ -146,8 +145,8 @@ a przestrzenią użytkownika.
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man{3,8},%{_libdir},%{_includedir},%{?with_tc:%{_libdir}/tc}}
 
-install ip/{ip,rtmon,routel} %{?with_tc:tc/tc} misc/{ifstat,lnstat,nstat,rtacct,ss} $RPM_BUILD_ROOT%{_sbindir}
-install etc/iproute2/rt_protos \
+install -p ip/{ip,rtmon,routel} %{?with_tc:tc/tc} misc/{ifstat,lnstat,nstat,rtacct,ss} $RPM_BUILD_ROOT%{_sbindir}
+cp -a etc/iproute2/rt_protos \
 	etc/iproute2/rt_realms \
 	etc/iproute2/rt_scopes \
 	etc/iproute2/rt_tables \
@@ -158,9 +157,9 @@ echo ".so tc-pbfifo.8" > $RPM_BUILD_ROOT%{_mandir}/man8/tc-bfifo.8
 echo ".so tc-pbfifo.8" > $RPM_BUILD_ROOT%{_mandir}/man8/tc-pfifo.8
 cp -a %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/man3
 
-install lib/libnetlink.a $RPM_BUILD_ROOT%{_libdir}
-install include/libnetlink.h $RPM_BUILD_ROOT%{_includedir}
-%{?with_tc:install tc/*.so $RPM_BUILD_ROOT%{_libdir}/tc}
+cp -a lib/libnetlink.a $RPM_BUILD_ROOT%{_libdir}
+cp -a include/libnetlink.h $RPM_BUILD_ROOT%{_includedir}
+%{?with_tc:install -p tc/*.so $RPM_BUILD_ROOT%{_libdir}/tc}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
