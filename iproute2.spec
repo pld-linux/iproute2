@@ -140,8 +140,9 @@ The iproute documentation contains howtos and examples of settings.
 	LD="%{__cc}" \
 %endif
 	HOSTCC="%{__cc}" \
-	OPT="%{rpmcflags}" \
+	OPT="%{rpmcflags} %{rpmcppflags}" \
 	LDFLAGS="%{rpmldflags} -Wl,-export-dynamic" \
+	LIBDIR=%{_libdir} \
 	%{!?with_tc:SUBDIRS="lib ip misc"}
 
 %{?with_doc:%{__make} -C doc}
