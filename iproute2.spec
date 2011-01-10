@@ -15,7 +15,6 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do kontrolowania Sieci w kernelach
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-# do not use ,,2.6.X'' as version here, put whole number like 2.6.8
 Version:	2.6.37
 Release:	1
 License:	GPL
