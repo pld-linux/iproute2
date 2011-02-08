@@ -68,8 +68,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_sysconfdir	/etc/iproute2
 
 %description
-The iproute package contains networking utilities (ip and rtmon, for
-example) which are designed to use the advanced networking
+The iproute package contains networking utilities (ip, tc and rtmon,
+for example) which are designed to use the advanced networking
 capabilities of the Linux 2.4.x and 2.6.x kernel.
 
 %description -l es.UTF-8
@@ -79,8 +79,9 @@ usar los recursos y características del nuevo núcleo. Este paquete
 incluye los nuevos utilitarios.
 
 %description -l pl.UTF-8
-Ten pakiet zawiera programy pozwalające na kontrolę routingu i innych
-aspektów dotyczących sieci.
+Ten pakiet zawiera programy (m.in. ip, tc, rtmon) pozwalające na
+kontrolę routingu i innych aspektów dotyczących sieci z wykorzystaniem
+zaawansowanych możliwości jąder Linuksa 2.4.x i 2.6.x.
 
 %description -l pt_BR.UTF-8
 O Linux mantém compatibilidade com os utilitários padrão de
