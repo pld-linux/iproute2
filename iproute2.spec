@@ -34,7 +34,7 @@ Patch12:	001-net-dev-iface-descr-0.1.diff
 Patch13:	%{name}-q_atm_c.patch
 Patch14:	%{name}-q_srr.v0.4.patch
 Patch15:	%{name}-ip_route_get.patch
-URL:		http://linux-net.osdl.org/index.php/Iproute2
+URL:		http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
 BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	flex
