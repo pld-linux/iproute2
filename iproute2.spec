@@ -6,18 +6,18 @@
 # Conditional build
 %bcond_without	doc		# don't build documentation
 %bcond_without	tc		# don't build tc program (it breaks static linkage)
-%bcond_without	atm		# don't required ATM.
+%bcond_without	atm		# disable ATM support for tc
 %bcond_with	uClibc		# do some hacks to build with uClibc
 %bcond_with	iface_descr	# build with interface description support
 
 Summary:	Advanced IP routing and network device configuration tools
 Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de interfaces de red
-Summary(pl.UTF-8):	Narzędzie do kontrolowania Sieci w kernelach
+Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	2.6.37
 Release:	1
-License:	GPL
+License:	GPL v2+
 Group:		Networking/Admin
 Source0:	http://devresources.linux-foundation.org/dev/iproute2/download/%{name}-%{version}.tar.bz2
 # Source0-md5:	9774ff9d74ebd301bf56bd8d74473786
@@ -102,11 +102,15 @@ a przestrzenią użytkownika.
 
 %package doc
 Summary:	ip and tc documentation with examples
+Summary(pl.UTF-8):	Dokumentacja do ip i tc z przykładami
 License:	GPL v2+
 Group:		Applications/System
 
 %description doc
 The iproute documentation contains howtos and examples of settings.
+
+%description doc -l pl.UTF-8
+Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
 
 %prep
 %setup -q
@@ -179,8 +183,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README README.decnet README.iproute2+tc README.distribution README.lnstat
-%doc ChangeLog
+%doc ChangeLog README README.decnet README.iproute2+tc README.distribution README.lnstat
 %attr(755,root,root) %{_sbindir}/ifstat
 %attr(755,root,root) %{_sbindir}/ip
 %attr(755,root,root) %{_sbindir}/lnstat
@@ -189,16 +192,24 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/rtacct
 %attr(755,root,root) %{_sbindir}/rtmon
 %attr(755,root,root) %{_sbindir}/ss
-%attr(755,root,root) %{_sbindir}/tc
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_protos
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_realms
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_scopes
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_tables
-%{_mandir}/man8/*
+%{_mandir}/man8/arpd.8*
+%{_mandir}/man8/ip.8*
+%{_mandir}/man8/lnstat.8*
+%{_mandir}/man8/routel.8*
+%{_mandir}/man8/rtacct.8*
+%{_mandir}/man8/rtmon.8*
+%{_mandir}/man8/ss.8*
 %if %{with tc}
+%attr(755,root,root) %{_sbindir}/tc
 %dir %{_libdir}/tc
 %attr(755,root,root) %{_libdir}/tc/*.so
+%{_mandir}/man8/tc.8*
+%{_mandir}/man8/tc-*.8*
 %endif
 
 %files -n libnetlink-devel
@@ -210,7 +221,6 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with doc}
 %files doc
 %defattr(644,root,root,755)
-%doc doc/*.ps
-%doc RELNOTES
+%doc RELNOTES doc/*.ps
 %{_examplesdir}/%{name}-%{version}
 %endif
