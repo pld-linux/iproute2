@@ -16,7 +16,7 @@ Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	2.6.38
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	http://devresources.linux-foundation.org/dev/iproute2/download/%{name}-%{version}.tar.bz2
@@ -34,6 +34,7 @@ Patch12:	001-net-dev-iface-descr-0.1.diff
 Patch13:	%{name}-q_atm_c.patch
 Patch14:	%{name}-q_srr.v0.4.patch
 Patch15:	%{name}-ip_route_get.patch
+Patch16:	%{name}-xt.patch
 URL:		http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
 BuildRequires:	bison
 BuildRequires:	db-devel
@@ -133,6 +134,7 @@ Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
 %patch13 -p0
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 
 %build
 %{__make} \
