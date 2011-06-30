@@ -15,12 +15,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	2.6.38
-Release:	3
+Version:	2.6.39
+Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
-Source0:	http://devresources.linux-foundation.org/dev/iproute2/download/%{name}-%{version}.tar.bz2
-# Source0-md5:	a243bfea837e71824b7ca26c3bb45fa8
+Source0:	http://devresources.linux-foundation.org/dev/iproute2/download/%{name}-%{version}.tar.gz
+# Source0-md5:	8a3b6bc77c2ecf752284aa4a6fc630a6
 Source1:	libnetlink.3
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch

@@ -6,10 +6,10 @@ diff -urN iproute-2.6.20-070313-orig/tc/Makefile iproute-2.6.20-070313/tc/Makefi
  TCMODULES += q_cbq.o
  TCMODULES += q_netem.o
 +TCMODULES += q_wrr.o
+ TCMODULES += q_choke.o
+ TCMODULES += q_sfb.o
  TCMODULES += f_rsvp.o
  TCMODULES += f_u32.o
- TCMODULES += f_route.o
-
 diff -urN iproute-2.6.20-070313-orig/include/linux/pkt_sched.h iproute-2.6.20-070313/include/linux/pkt_sched.h
 --- iproute-2.6.20-070313-orig/include/linux/pkt_sched.h	2007-03-13 22:50:56.000000000 +0100
 +++ iproute-2.6.20-070313/include/linux/pkt_sched.h	2007-04-15 20:52:33.000000000 +0200
