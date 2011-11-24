@@ -15,12 +15,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	2.6.39
-Release:	2
+Version:	3.1.0
+Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
-Source0:	http://devresources.linux-foundation.org/dev/iproute2/download/%{name}-%{version}.tar.gz
-# Source0-md5:	8a3b6bc77c2ecf752284aa4a6fc630a6
+Source0:	http://kernel.org/pub/linux/utils/networking/iproute2/%{name}-%{version}.tar.xz
+# Source0-md5:	810cdc0ddc2409a7af7089588c6c9a68
 Source1:	libnetlink.3
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
@@ -34,7 +34,6 @@ Patch12:	001-net-dev-iface-descr-0.1.diff
 Patch13:	%{name}-q_atm_c.patch
 Patch14:	%{name}-q_srr.v0.4.patch
 Patch15:	%{name}-ip_route_get.patch
-Patch16:	%{name}-xt.patch
 URL:		http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
 BuildRequires:	bison
 BuildRequires:	db-devel
@@ -134,7 +133,6 @@ Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
 %patch13 -p0
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
 
 %build
 %{__make} \
@@ -186,7 +184,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog README README.decnet README.iproute2+tc README.distribution README.lnstat
+%doc README README.decnet README.iproute2+tc README.distribution README.lnstat
 %attr(755,root,root) %{_sbindir}/ifstat
 %attr(755,root,root) %{_sbindir}/ip
 %attr(755,root,root) %{_sbindir}/lnstat
