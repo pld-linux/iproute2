@@ -21,7 +21,6 @@ License:	GPL v2+
 Group:		Networking/Admin
 Source0:	http://kernel.org/pub/linux/utils/networking/iproute2/%{name}-%{version}.tar.xz
 # Source0-md5:	810cdc0ddc2409a7af7089588c6c9a68
-Source1:	libnetlink.3
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
 Patch3:		%{name}-iptables.patch
@@ -38,7 +37,7 @@ URL:		http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
 BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	flex
-BuildRequires:	iptables-devel >= 0:1.4.3
+BuildRequires:	iptables-devel >= 0:1.4.5
 %if %{with atm}
 BuildRequires:	linux-atm-devel
 %endif
@@ -60,6 +59,7 @@ BuildRequires:	texlive-latex
 BuildRequires:	texlive-tex-babel
 %endif
 %endif
+Requires:	iptables-libs >= 0:1.4.5
 Obsoletes:	ifstat
 Obsoletes:	iproute
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -156,7 +156,7 @@ Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man{3,8},%{_libdir},%{_includedir},%{?with_tc:%{_libdir}/tc}}
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man{3,7,8},%{_libdir},%{_includedir},%{?with_tc:%{_libdir}/tc}}
 
 install -p ip/{ip,rtmon,routel} %{?with_tc:tc/tc} misc/{ifstat,lnstat,nstat,rtacct,ss} $RPM_BUILD_ROOT%{_sbindir}
 cp -a etc/iproute2/rt_protos \
@@ -165,10 +165,13 @@ cp -a etc/iproute2/rt_protos \
 	etc/iproute2/rt_tables \
 	$RPM_BUILD_ROOT%{_sysconfdir}
 
+cp -a man/man3/*	$RPM_BUILD_ROOT%{_mandir}/man3
+cp -a man/man7/*	$RPM_BUILD_ROOT%{_mandir}/man7
 cp -a man/man8/*	$RPM_BUILD_ROOT%{_mandir}/man8
 echo ".so tc-pbfifo.8" > $RPM_BUILD_ROOT%{_mandir}/man8/tc-bfifo.8
 echo ".so tc-pbfifo.8" > $RPM_BUILD_ROOT%{_mandir}/man8/tc-pfifo.8
-cp -a %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/man3
+# arpd is not packaged here
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man8/arpd.8
 
 cp -a lib/libnetlink.a $RPM_BUILD_ROOT%{_libdir}
 cp -a include/libnetlink.h $RPM_BUILD_ROOT%{_includedir}
@@ -198,7 +201,6 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_realms
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_scopes
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_tables
-%{_mandir}/man8/arpd.8*
 %{_mandir}/man8/ip.8*
 %{_mandir}/man8/lnstat.8*
 %{_mandir}/man8/routel.8*
@@ -209,6 +211,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/tc
 %dir %{_libdir}/tc
 %attr(755,root,root) %{_libdir}/tc/*.so
+%{_mandir}/man7/tc-hfsc.7*
 %{_mandir}/man8/tc.8*
 %{_mandir}/man8/tc-*.8*
 %endif
