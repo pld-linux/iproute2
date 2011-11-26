@@ -16,10 +16,10 @@ Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	3.1.0
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Networking/Admin
-Source0:	http://kernel.org/pub/linux/utils/networking/iproute2/%{name}-%{version}.tar.xz
+Source0:	http://kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
 # Source0-md5:	810cdc0ddc2409a7af7089588c6c9a68
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
@@ -159,6 +159,8 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},%{_mandir}/man{3,7,8},%{_libdir},%{_includedir},%{?with_tc:%{_libdir}/tc}}
 
 install -p ip/{ip,rtmon,routel} %{?with_tc:tc/tc} misc/{ifstat,lnstat,nstat,rtacct,ss} $RPM_BUILD_ROOT%{_sbindir}
+ln -s lnstat $RPM_BUILD_ROOT%{_sbindir}/ctstat
+ln -s lnstat $RPM_BUILD_ROOT%{_sbindir}/rtstat
 cp -a etc/iproute2/rt_protos \
 	etc/iproute2/rt_realms \
 	etc/iproute2/rt_scopes \
@@ -168,6 +170,8 @@ cp -a etc/iproute2/rt_protos \
 cp -a man/man3/*	$RPM_BUILD_ROOT%{_mandir}/man3
 cp -a man/man7/*	$RPM_BUILD_ROOT%{_mandir}/man7
 cp -a man/man8/*	$RPM_BUILD_ROOT%{_mandir}/man8
+echo ".so lnstat.8" > $RPM_BUILD_ROOT%{_mandir}/man8/ctstat.8
+echo ".so lnstat.8" > $RPM_BUILD_ROOT%{_mandir}/man8/rtstat.8
 echo ".so tc-pbfifo.8" > $RPM_BUILD_ROOT%{_mandir}/man8/tc-bfifo.8
 echo ".so tc-pbfifo.8" > $RPM_BUILD_ROOT%{_mandir}/man8/tc-pfifo.8
 # arpd is not packaged here
@@ -188,6 +192,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README README.decnet README.iproute2+tc README.distribution README.lnstat
+%attr(755,root,root) %{_sbindir}/ctstat
 %attr(755,root,root) %{_sbindir}/ifstat
 %attr(755,root,root) %{_sbindir}/ip
 %attr(755,root,root) %{_sbindir}/lnstat
@@ -195,6 +200,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/routel
 %attr(755,root,root) %{_sbindir}/rtacct
 %attr(755,root,root) %{_sbindir}/rtmon
+%attr(755,root,root) %{_sbindir}/rtstat
 %attr(755,root,root) %{_sbindir}/ss
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_protos
@@ -202,10 +208,12 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_scopes
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_tables
 %{_mandir}/man8/ip.8*
+%{_mandir}/man8/ctstat.8*
 %{_mandir}/man8/lnstat.8*
 %{_mandir}/man8/routel.8*
 %{_mandir}/man8/rtacct.8*
 %{_mandir}/man8/rtmon.8*
+%{_mandir}/man8/rtstat.8*
 %{_mandir}/man8/ss.8*
 %if %{with tc}
 %attr(755,root,root) %{_sbindir}/tc
