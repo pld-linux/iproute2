@@ -38,6 +38,7 @@ BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	flex
 BuildRequires:	iptables-devel >= 0:1.4.5
+# for netlink/* headers used in ip
 BuildRequires:	libnl1-devel
 %if %{with atm}
 BuildRequires:	linux-atm-devel
