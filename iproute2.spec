@@ -15,12 +15,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	3.2.0
+Version:	3.3.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	http://kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	6f814291cc3d7f4312cf8c2c052da5f1
+# Source0-md5:	39a7ff2c5149475c710365954e2ce49b
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
 Patch3:		%{name}-iptables.patch

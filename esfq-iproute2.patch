@@ -1,13 +1,9 @@
 diff -Naur iproute2-2.6.19-061214.orig/include/linux/pkt_sched.h iproute2-2.6.19-061214/include/linux/pkt_sched.h
 --- iproute2-2.6.19-061214.orig/include/linux/pkt_sched.h	2006-12-14 15:04:12.000000000 -0800
 +++ iproute2-2.6.19-061214/include/linux/pkt_sched.h	2007-02-13 23:18:29.000000000 -0800
-@@ -146,8 +146,40 @@
-  *
-  *	The only reason for this is efficiency, it is possible
-  *	to change these parameters in compile time.
-+ *
-+ *	If you need to play with these values use esfq instead.
-  */
+@@ -193,6 +193,36 @@ struct tc_sfq_xstats {
+ 	__s32		allot;
+ };
  
 +/* ESFQ section */
 +
@@ -31,17 +27,17 @@ diff -Naur iproute2-2.6.19-061214.orig/include/linux/pkt_sched.h iproute2-2.6.19
 +
 +struct tc_esfq_qopt
 +{
-+	unsigned	quantum;	/* Bytes per round allocated to flow */
-+	int		perturb_period;	/* Period of hash perturbation */
-+	__u32		limit;		/* Maximal packets in queue */
-+	unsigned	divisor;	/* Hash divisor  */
-+	unsigned	flows;		/* Maximal number of flows  */
++	unsigned        quantum;        /* Bytes per round allocated to flow */
++	int             perturb_period; /* Period of hash perturbation */
++	__u32           limit;          /* Maximal packets in queue */
++	unsigned        divisor;        /* Hash divisor  */
++	unsigned        flows;          /* Maximal number of flows  */
 +	unsigned        hash_kind;      /* Hash function to use for flow identification */
 +};
 +
  /* RED section */
  
- enum
+ enum {
 diff -Naur iproute2-2.6.19-061214.orig/tc/Makefile iproute2-2.6.19-061214/tc/Makefile
 --- iproute2-2.6.19-061214.orig/tc/Makefile	2006-12-14 15:04:12.000000000 -0800
 +++ iproute2-2.6.19-061214/tc/Makefile	2007-02-11 11:56:13.000000000 -0800
