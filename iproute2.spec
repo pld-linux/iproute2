@@ -15,12 +15,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	3.3.0
+Version:	3.4.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	http://kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	39a7ff2c5149475c710365954e2ce49b
+# Source0-md5:	879d3fac4e90809598b2864ec4a0cbf8
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-arp.patch
 Patch3:		%{name}-iptables.patch
@@ -146,7 +146,7 @@ Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
 	LD="%{__cc}" \
 %endif
 	HOSTCC="%{__cc}" \
-	OPT="%{rpmcflags} %{rpmcppflags}" \
+	CCOPTS="%{rpmcflags} %{rpmcppflags}" \
 	LDFLAGS="%{rpmldflags} -Wl,-export-dynamic" \
 	LIBDIR=%{_libdir} \
 	%{!?with_tc:SUBDIRS="lib ip misc"}
@@ -213,6 +213,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/ip-*.8*
 %{_mandir}/man8/ctstat.8*
 %{_mandir}/man8/lnstat.8*
+%{_mandir}/man8/nstat.8*
+%{_mandir}/man8/routef.8*
 %{_mandir}/man8/routel.8*
 %{_mandir}/man8/rtacct.8*
 %{_mandir}/man8/rtmon.8*
