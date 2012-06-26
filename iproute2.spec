@@ -47,19 +47,11 @@ BuildRequires:	linux-libc-headers >= 7:2.6.12.0-15
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
-%if "%{pld_release}" != "th"
-BuildRequires:	tetex-dvips
-BuildRequires:	tetex-fonts-jknappen
-BuildRequires:	tetex-format-latex
-BuildRequires:	tetex-metafont
-BuildRequires:	tetex-tex-babel
-%else
 BuildRequires:	texlive-dvips
 BuildRequires:	texlive-fonts-cmsuper
 BuildRequires:	texlive-fonts-jknappen
 BuildRequires:	texlive-latex
 BuildRequires:	texlive-tex-babel
-%endif
 %endif
 Requires:	iptables-libs >= 0:1.4.5
 Obsoletes:	ifstat
