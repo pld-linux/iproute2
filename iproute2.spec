@@ -150,7 +150,6 @@ Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT%{_includedir}
 
 %{__make} install \
@@ -167,6 +166,8 @@ cp -a include/libnetlink.h $RPM_BUILD_ROOT%{_includedir}
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 %endif
+
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/iproute2
 
 %clean
 rm -rf $RPM_BUILD_ROOT
