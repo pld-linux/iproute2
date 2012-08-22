@@ -156,6 +156,9 @@ install -d $RPM_BUILD_ROOT%{_includedir}
 	LIBDIR=%{_libdir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# omitted by make install
+install -Dp man/man7/tc-hfsc.7 $RPM_BUILD_ROOT%{_mandir}/man7/tc-hfsc.7
+
 # arpd is not packaged here
 %{__rm} $RPM_BUILD_ROOT%{_sbindir}/arpd $RPM_BUILD_ROOT%{_mandir}/man8/arpd.8
 
@@ -215,6 +218,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/tc
 %attr(755,root,root) %{_libdir}/tc/*.so
 %{_libdir}/tc/*.dist
+%{_mandir}/man7/tc-hfsc.7*
 %{_mandir}/man8/tc.8*
 %{_mandir}/man8/tc-*.8*
 %endif
