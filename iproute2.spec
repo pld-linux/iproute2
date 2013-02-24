@@ -15,12 +15,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	3.7.0
+Version:	3.8.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	http://kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	bea92f26c8cc04e79f4db02dc1d258d3
+# Source0-md5:	951622fd770428116dc165acba375414
 Patch0:		%{name}-arp.patch
 Patch1:		%{name}-iptables.patch
 Patch2:		%{name}-iptables64.patch
@@ -107,7 +107,7 @@ The iproute documentation contains howtos and examples of settings.
 Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
 
 %prep
-%setup -q -n iproute-%{version}
+%setup -q
 
 # conflict with atm-vbr patched linux-libc-headers
 %{__rm} include/linux/atm.h
@@ -139,7 +139,7 @@ Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
 	LD="%{__cc}" \
 %endif
 	HOSTCC="%{__cc}" \
-	CCOPTS="%{rpmcflags} %{rpmcppflags}" \
+	CCOPTS="%{rpmcflags} %{rpmcppflags} -Wno-unused-result" \
 	LDFLAGS="%{rpmldflags} -Wl,-export-dynamic" \
 	LIBDIR=%{_libdir} \
 	%{!?with_tc:SUBDIRS="lib ip misc"}
