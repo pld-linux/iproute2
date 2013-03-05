@@ -32,6 +32,7 @@ Patch12:	001-net-dev-iface-descr-0.1.diff
 Patch13:	%{name}-q_atm_c.patch
 Patch14:	%{name}-q_srr.v0.4.patch
 Patch15:	%{name}-ip_route_get.patch
+Patch16:	%{name}-build.patch
 URL:		http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
 BuildRequires:	bison
 BuildRequires:	db-devel
@@ -128,6 +129,7 @@ Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
 %patch13 -p0
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 
 %build
 %{__make} \
