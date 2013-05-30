@@ -9,3 +9,14 @@
  
  			NEXT_ARG();
  			if (get_float(&sp, *argv))
+--- iproute2-3.9.0/misc/lnstat.c~	2013-04-30 16:47:54.000000000 +0200
++++ iproute2-3.9.0/misc/lnstat.c	2013-05-30 22:45:08.501795069 +0200
+@@ -166,7 +166,7 @@
+ 
+ 	for (i = 0; i < HDR_LINES; i++) {
+ 		th.hdr[i] = malloc(HDR_LINE_LENGTH);
+-		memset(th.hdr[i], 0, sizeof(th.hdr[i]));
++		memset(th.hdr[i], 0, HDR_LINE_LENGTH);
+ 	}
+ 
+ 	for (i = 0; i < fps->num; i++) {
