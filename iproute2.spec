@@ -2,6 +2,9 @@
 # TODO:
 # - fix build @ uClibc
 # - fix iface_descr patch
+# - iproute2-3.11.0-2.x86_64 marks bash-4.2.45-2.x86_64 (cap /bin/bash)
+#   - /sbin/ifcfg
+#   - /sbin/rtpr
 #
 # Conditional build
 %bcond_without	doc		# don't build documentation
