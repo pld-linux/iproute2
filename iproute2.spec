@@ -2,9 +2,6 @@
 # TODO:
 # - fix build @ uClibc
 # - fix iface_descr patch
-# - iproute2-3.11.0-2.x86_64 marks bash-4.2.45-2.x86_64 (cap /bin/bash)
-#   - /sbin/ifcfg
-#   - /sbin/rtpr
 #
 # Conditional build
 %bcond_without	doc		# don't build documentation
@@ -19,7 +16,7 @@ Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	3.12.0
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
@@ -28,6 +25,8 @@ Patch0:		%{name}-arp.patch
 Patch1:		%{name}-iptables.patch
 Patch2:		%{name}-iptables64.patch
 Patch3:		%{name}-LDFLAGS.patch
+Patch4:		fix-bashisms.patch
+Patch16:	%{name}-build.patch
 # extensions
 Patch10:	%{name}-2.2.4-wrr.patch
 Patch11:	esfq-%{name}.patch
@@ -35,7 +34,6 @@ Patch12:	001-net-dev-iface-descr-0.1.diff
 Patch13:	%{name}-q_atm_c.patch
 Patch14:	%{name}-q_srr.v0.4.patch
 Patch15:	%{name}-ip_route_get.patch
-Patch16:	%{name}-build.patch
 URL:		http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
 BuildRequires:	bison
 BuildRequires:	db-devel
@@ -124,6 +122,7 @@ Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
 %patch1 -p1
 %endif
 %patch3 -p1
+%patch4 -p1
 # extensions:
 %patch10 -p1
 %patch11 -p1
