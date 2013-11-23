@@ -14,8 +14,8 @@ diff -urN iproute-2.6.20-070313-orig/include/linux/pkt_sched.h iproute-2.6.20-07
 --- iproute-2.6.20-070313-orig/include/linux/pkt_sched.h	2007-03-13 22:50:56.000000000 +0100
 +++ iproute-2.6.20-070313/include/linux/pkt_sched.h	2007-04-15 20:52:33.000000000 +0200
 @@ -466,4 +498,116 @@
- 
  #define NETEM_DIST_SCALE	8192
+ #define NETEM_DIST_MAX		16384
  
 +/* WRR section */
 +
@@ -129,7 +129,7 @@ diff -urN iproute-2.6.20-070313-orig/include/linux/pkt_sched.h iproute-2.6.20-07
 +	long changes[0];
 +};
 +
- #endif
+ /* DRR */
 
 diff -urN iproute-2.6.20-070313-orig/tc/q_wrr.c iproute-2.6.20-070313/tc/q_wrr.c
 --- iproute-2.6.20-070313-orig/tc/q_wrr.c	1970-01-01 01:00:00.000000000 +0100
