@@ -16,11 +16,12 @@ Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	3.12.0
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
 # Source0-md5:	f87386aaaecafab95607fd10e8152c68
+Source1:	iproute2.tmpfiles
 Patch0:		%{name}-arp.patch
 Patch1:		%{name}-iptables.patch
 Patch2:		%{name}-iptables64.patch
@@ -154,7 +155,7 @@ Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_includedir}
+install -d $RPM_BUILD_ROOT{%{_includedir},/var/run/netns,%{systemdtmpfilesdir}}
 
 %{__make} install \
 	LIBDIR=%{_libdir} \
@@ -166,8 +167,10 @@ install -Dp man/man7/tc-hfsc.7 $RPM_BUILD_ROOT%{_mandir}/man7/tc-hfsc.7
 # arpd is not packaged here
 %{__rm} $RPM_BUILD_ROOT%{_sbindir}/arpd $RPM_BUILD_ROOT%{_mandir}/man8/arpd.8
 
-cp -a lib/libnetlink.a $RPM_BUILD_ROOT%{_libdir}
-cp -a include/libnetlink.h $RPM_BUILD_ROOT%{_includedir}
+cp -p lib/libnetlink.a $RPM_BUILD_ROOT%{_libdir}
+cp -p include/libnetlink.h $RPM_BUILD_ROOT%{_includedir}
+
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{systemdtmpfilesdir}/%{name}.conf
 
 %if %{with doc}
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
@@ -226,6 +229,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/tc.8*
 %{_mandir}/man8/tc-*.8*
 %endif
+%{systemdtmpfilesdir}/%{name}.conf
+%dir %attr(750,root,root) /var/run/netns
 
 %files -n libnetlink-devel
 %defattr(644,root,root,755)
