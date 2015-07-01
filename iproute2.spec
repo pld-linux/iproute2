@@ -15,12 +15,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	4.0.0
+Version:	4.1.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	3adc263ade4ee76c35032e8f50b54108
+# Source0-md5:	37efb479b3943b60c449ea02362b5ffc
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-arp.patch
 Patch1:		%{name}-iptables.patch
@@ -200,6 +200,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/rtpr
 %attr(755,root,root) %{_sbindir}/rtstat
 %attr(755,root,root) %{_sbindir}/ss
+%attr(755,root,root) %{_sbindir}/tipc
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/ematch_map
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/group
