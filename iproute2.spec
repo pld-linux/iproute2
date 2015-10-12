@@ -27,7 +27,7 @@ Patch1:		%{name}-iptables.patch
 Patch2:		%{name}-iptables64.patch
 Patch3:		%{name}-LDFLAGS.patch
 Patch4:		fix-bashisms.patch
-Patch16:	%{name}-build.patch
+Patch5:		%{name}-build.patch
 # extensions
 Patch10:	%{name}-2.2.4-wrr.patch
 Patch11:	esfq-%{name}.patch
@@ -124,6 +124,7 @@ Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
 %endif
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 # extensions:
 %patch10 -p1
 %patch11 -p1
@@ -131,7 +132,6 @@ Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
 %patch13 -p0
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
 
 %build
 %{__make} \
