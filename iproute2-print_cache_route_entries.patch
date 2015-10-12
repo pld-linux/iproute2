@@ -1,0 +1,13 @@
+diff -ruNp iproute2-4.2.0.orig/ip/iproute.c iproute2-4.2.0/ip/iproute.c
+--- iproute2-4.2.0.orig/ip/iproute.c	2015-09-01 01:31:15.000000000 +0200
++++ iproute2-4.2.0/ip/iproute.c	2015-10-12 12:06:37.710674199 +0200
+@@ -331,6 +331,9 @@ int print_route(const struct sockaddr_nl
+ 	if (!filter_nlmsg(n, tb, host_len))
+ 		return 0;
+ 
++	if ((r->rtm_flags & RTM_F_CLONED && !filter.cloned) || (!(r->rtm_flags & RTM_F_CLONED) && filter.cloned))
++		return 0;
++
+ 	if (filter.flushb) {
+ 		struct nlmsghdr *fn;
+ 		if (NLMSG_ALIGN(filter.flushp) + n->nlmsg_len > filter.flushe) {

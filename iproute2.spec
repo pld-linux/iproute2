@@ -16,7 +16,7 @@ Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	4.2.0
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
@@ -28,6 +28,7 @@ Patch2:		%{name}-iptables64.patch
 Patch3:		%{name}-LDFLAGS.patch
 Patch4:		fix-bashisms.patch
 Patch5:		%{name}-build.patch
+Patch6:		%{name}-print_cache_route_entries.patch
 # extensions
 Patch10:	%{name}-2.2.4-wrr.patch
 Patch11:	esfq-%{name}.patch
@@ -125,6 +126,7 @@ Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 # extensions:
 %patch10 -p1
 %patch11 -p1
