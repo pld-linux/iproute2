@@ -15,16 +15,15 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	4.4.0
+Version:	4.5.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	d762653ec3e1ab0d4a9689e169ca184f
+# Source0-md5:	b9ee1cbba7e20e04dfdd4b3055181955
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-arp.patch
-Patch1:		%{name}-iptables.patch
-Patch2:		%{name}-iptables64.patch
+Patch1:		%{name}-old-hyperref.patch
 Patch3:		%{name}-LDFLAGS.patch
 Patch4:		fix-bashisms.patch
 Patch5:		%{name}-build.patch
@@ -54,6 +53,7 @@ BuildRequires:	texlive-dvips
 BuildRequires:	texlive-fonts-cmsuper
 BuildRequires:	texlive-fonts-jknappen
 BuildRequires:	texlive-latex
+BuildRequires:	texlive-latex-booktabs
 BuildRequires:	texlive-tex-babel
 %endif
 Requires:	iptables-libs >= 0:1.4.5
@@ -118,11 +118,7 @@ Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
 #%{__rm} -r include/linux
 
 %patch0 -p1
-%if "%{_lib}" == "lib64"
-%patch2 -p1
-%else
 %patch1 -p1
-%endif
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
@@ -145,7 +141,7 @@ Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
 	LD="%{__cc}" \
 %endif
 	HOSTCC="%{__cc}" \
-	CCOPTS="%{rpmcflags} %{rpmcppflags} -Wno-unused-result" \
+	CCOPTS="%{rpmcflags} %{rpmcppflags} -Wno-unused-result -DXT_LIB_DIR=\\\"%{_libdir}/xtables\\\"" \
 	LDFLAGS="%{rpmldflags} -Wl,-export-dynamic" \
 	LIBDIR=%{_libdir} \
 	%{!?with_tc:SUBDIRS="lib ip misc"}
@@ -204,6 +200,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/ss
 %attr(755,root,root) %{_sbindir}/tipc
 %dir %{_sysconfdir}
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bpf_pinning
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/ematch_map
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/group
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nl_protos
