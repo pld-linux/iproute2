@@ -15,12 +15,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	4.5.0
-Release:	2
+Version:	4.6.0
+Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	b9ee1cbba7e20e04dfdd4b3055181955
+# Source0-md5:	d015e437e4f744d51d3a1a53341826d5
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-arp.patch
 Patch1:		%{name}-old-hyperref.patch
@@ -38,14 +38,18 @@ Patch15:	%{name}-ip_route_get.patch
 URL:		http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
 BuildRequires:	bison
 BuildRequires:	db-devel
+# libelf
+BuildRequires:	elfutils-devel
 BuildRequires:	flex
 BuildRequires:	iptables-devel >= 0:1.4.5
-# for netlink/* headers used in ip
-BuildRequires:	libnl1-devel
+BuildRequires:	libmnl-devel
+BuildRequires:	libselinux-devel
 %if %{with atm}
 BuildRequires:	linux-atm-devel
 %endif
 BuildRequires:	linux-libc-headers >= 7:2.6.12.0-15
+BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 1.673
 %if %{with doc}
 BuildRequires:	psutils
 BuildRequires:	sgml-tools
@@ -109,6 +113,19 @@ The iproute documentation contains howtos and examples of settings.
 
 %description doc -l pl.UTF-8
 Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
+
+%package -n bash-completion-iproute2
+Summary:	Bash completion for iproute2 commands
+Summary(pl.UTF-8):	Bashowe dopełnianie parametrów poleceń iproute2
+Group:		Applications/Shells
+Requires:	%{name} = %{version}-%{release}
+Requires:	bash-completion >= 2.0
+
+%description -n bash-completion-iproute2
+Bash completion for iproute2 commands (currently only tc).
+
+%description -n bash-completion-iproute2 -l pl.UTF-8
+Bashowe dopełnianie parametrów poleceń iproute2 (obecnie tylko tc).
 
 %prep
 %setup -q
@@ -185,6 +202,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc README README.decnet README.iproute2+tc README.distribution README.lnstat
 %attr(755,root,root) %{_sbindir}/bridge
 %attr(755,root,root) %{_sbindir}/ctstat
+%attr(755,root,root) %{_sbindir}/devlink
 %attr(755,root,root) %{_sbindir}/genl
 %attr(755,root,root) %{_sbindir}/ifcfg
 %attr(755,root,root) %{_sbindir}/ifstat
@@ -248,3 +266,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc/*.ps
 %{_examplesdir}/%{name}-%{version}
 %endif
+
+%files -n bash-completion-iproute2
+%defattr(644,root,root,755)
+%{bash_compdir}/tc
