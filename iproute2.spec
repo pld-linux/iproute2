@@ -15,12 +15,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	4.6.0
+Version:	4.7.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	d015e437e4f744d51d3a1a53341826d5
+# Source0-md5:	d4b205830cdc2702f8a0cbd6232129cd
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-arp.patch
 Patch1:		%{name}-old-hyperref.patch
@@ -161,7 +161,8 @@ Bashowe dopełnianie parametrów poleceń iproute2 (obecnie tylko tc).
 	CCOPTS="%{rpmcflags} %{rpmcppflags} -Wno-unused-result -DXT_LIB_DIR=\\\"%{_libdir}/xtables\\\"" \
 	LDFLAGS="%{rpmldflags} -Wl,-export-dynamic" \
 	LIBDIR=%{_libdir} \
-	%{!?with_tc:SUBDIRS="lib ip misc"}
+	%{!?with_tc:SUBDIRS="lib ip misc"} \
+	V=1
 
 %{?with_doc:%{__make} -C doc}
 
@@ -231,6 +232,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/ip.8*
 %{_mandir}/man8/ip-*.8*
 %{_mandir}/man8/ctstat.8*
+%{_mandir}/man8/devlink.8*
+%{_mandir}/man8/devlink-dev.8*
+%{_mandir}/man8/devlink-monitor.8*
+%{_mandir}/man8/devlink-port.8*
+%{_mandir}/man8/devlink-sb.8*
 %{_mandir}/man8/lnstat.8*
 %{_mandir}/man8/nstat.8*
 %{_mandir}/man8/routef.8*
