@@ -15,12 +15,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	4.9.0
+Version:	4.10.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	44a8371a4b2c40e48e4c9f98cbd41391
+# Source0-md5:	b94a2b0edefaeac124dc8f5d006931b9
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-arp.patch
 Patch1:		%{name}-old-hyperref.patch
@@ -89,6 +89,18 @@ O Linux mantém compatibilidade com os utilitários padrão de
 configuração da rede, mas novos utilitários são necessários para fazer
 uso das características e recursos da nova kernel. This package
 includes the new utilities.
+
+%package devel
+Summary:	Header file for tc plugins development
+Summary(pl.UTF-8):	Plik nagłówkowy do tworzenia wtyczek programu tc
+Group:		Development/Libraries
+# doesn't require base
+
+%description devel
+Header file for tc plugins development.
+
+%description devel -l pl.UTF-8
+Plik nagłówkowy do tworzenia wtyczek programu tc.
 
 %package -n libnetlink-devel
 Summary:	Library for the netlink interface
@@ -237,6 +249,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/devlink-monitor.8*
 %{_mandir}/man8/devlink-port.8*
 %{_mandir}/man8/devlink-sb.8*
+%{_mandir}/man8/ifstat.8*
 %{_mandir}/man8/lnstat.8*
 %{_mandir}/man8/nstat.8*
 %{_mandir}/man8/routef.8*
@@ -259,6 +272,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 %{systemdtmpfilesdir}/%{name}.conf
 %dir %attr(750,root,root) /var/run/netns
+
+%files devel
+%defattr(644,root,root,755)
+%{_includedir}/iproute2
 
 %files -n libnetlink-devel
 %defattr(644,root,root,755)
