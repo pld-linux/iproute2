@@ -15,12 +15,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	4.12.0
+Version:	4.13.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	e6fecdf46a1542a26044e756fbbabe3b
+# Source0-md5:	69dc9e3ece3296890278f0de478330c8
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-arp.patch
 Patch1:		%{name}-old-hyperref.patch
@@ -222,6 +222,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/ip
 %attr(755,root,root) %{_sbindir}/lnstat
 %attr(755,root,root) %{_sbindir}/nstat
+%attr(755,root,root) %{_sbindir}/rdma
 %attr(755,root,root) %{_sbindir}/routef
 %attr(755,root,root) %{_sbindir}/routel
 %attr(755,root,root) %{_sbindir}/rtacct
@@ -254,6 +255,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/ifstat.8*
 %{_mandir}/man8/lnstat.8*
 %{_mandir}/man8/nstat.8*
+%{_mandir}/man8/rdma-dev.8*
+%{_mandir}/man8/rdma-link.8*
+%{_mandir}/man8/rdma.8*
 %{_mandir}/man8/routef.8*
 %{_mandir}/man8/routel.8*
 %{_mandir}/man8/rtacct.8*
