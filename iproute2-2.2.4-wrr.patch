@@ -10,9 +10,9 @@ diff -urN iproute-2.6.20-070313-orig/tc/Makefile iproute-2.6.20-070313/tc/Makefi
  TCMODULES += q_sfb.o
  TCMODULES += f_rsvp.o
  TCMODULES += f_u32.o
-diff -urN iproute-2.6.20-070313-orig/include/linux/pkt_sched.h iproute-2.6.20-070313/include/linux/pkt_sched.h
---- iproute-2.6.20-070313-orig/include/linux/pkt_sched.h	2007-03-13 22:50:56.000000000 +0100
-+++ iproute-2.6.20-070313/include/linux/pkt_sched.h	2007-04-15 20:52:33.000000000 +0200
+diff -urN iproute-2.6.20-070313-orig/include/uapi/linux/pkt_sched.h iproute-2.6.20-070313/include/uapi/linux/pkt_sched.h
+--- iproute-2.6.20-070313-orig/include/uapi/linux/pkt_sched.h	2007-03-13 22:50:56.000000000 +0100
++++ iproute-2.6.20-070313/include/uapi/linux/pkt_sched.h	2007-04-15 20:52:33.000000000 +0200
 @@ -466,4 +498,116 @@
  #define NETEM_DIST_SCALE	8192
  #define NETEM_DIST_MAX		16384

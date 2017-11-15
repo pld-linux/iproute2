@@ -1,6 +1,6 @@
-diff -ruN iproute-20041019/include/linux/pkt_sched.h iproute-20041019.srr.patched.v0.4/include/linux/pkt_sched.h
---- iproute-20041019/include/linux/pkt_sched.h	2006-07-27 13:04:00.000000000 +0300
-+++ iproute-20041019.srr.patched.v0.4/include/linux/pkt_sched.h	2006-07-27 13:11:36.000000000 +0300
+diff -ruN iproute-20041019/include/uapi/linux/pkt_sched.h iproute-20041019.srr.patched.v0.4/include/uapi/linux/pkt_sched.h
+--- iproute-20041019/include/uapi/linux/pkt_sched.h	2006-07-27 13:04:00.000000000 +0300
++++ iproute-20041019.srr.patched.v0.4/include/uapi/linux/pkt_sched.h	2006-07-27 13:11:36.000000000 +0300
 @@ -550,6 +550,14 @@
   *	to change these parameters in compile time.
   */

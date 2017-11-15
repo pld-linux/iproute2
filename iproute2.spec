@@ -4,7 +4,6 @@
 # - fix iface_descr patch
 #
 # Conditional build
-%bcond_without	doc		# don't build documentation
 %bcond_without	tc		# don't build tc program (it breaks static linkage)
 %bcond_without	atm		# disable ATM support for tc
 %bcond_with	uClibc		# do some hacks to build with uClibc
@@ -15,15 +14,15 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	4.13.0
+Version:	4.14.1
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	69dc9e3ece3296890278f0de478330c8
+# Source0-md5:	1075423d7029e02a8f23ed4f42b7e372
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-arp.patch
-Patch1:		%{name}-old-hyperref.patch
+
 Patch3:		%{name}-LDFLAGS.patch
 Patch4:		fix-bashisms.patch
 Patch5:		%{name}-build.patch
@@ -50,19 +49,10 @@ BuildRequires:	linux-atm-devel
 BuildRequires:	linux-libc-headers >= 7:2.6.12.0-15
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.673
-%if %{with doc}
-BuildRequires:	psutils
-BuildRequires:	sgml-tools
-BuildRequires:	texlive-dvips
-BuildRequires:	texlive-fonts-cmsuper
-BuildRequires:	texlive-fonts-jknappen
-BuildRequires:	texlive-latex
-BuildRequires:	texlive-latex-booktabs
-BuildRequires:	texlive-tex-babel
-%endif
 Requires:	iptables-libs >= 0:1.4.5
 Obsoletes:	ifstat
 Obsoletes:	iproute
+Obsoletes:	iproute2-doc < 4.14.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
@@ -114,18 +104,6 @@ This library provides an interface for kernel-user netlink interface.
 Ta biblioteka udostępnia interfejs do interfejsu netlink między jądrem
 a przestrzenią użytkownika.
 
-%package doc
-Summary:	ip and tc documentation with examples
-Summary(pl.UTF-8):	Dokumentacja do ip i tc z przykładami
-License:	GPL v2+
-Group:		Applications/System
-
-%description doc
-The iproute documentation contains howtos and examples of settings.
-
-%description doc -l pl.UTF-8
-Dokumentacja do iproute zawiera "howto" oraz przykłady ustawień.
-
 %package -n bash-completion-iproute2
 Summary:	Bash completion for iproute2 commands
 Summary(pl.UTF-8):	Bashowe dopełnianie parametrów poleceń iproute2
@@ -143,11 +121,11 @@ Bashowe dopełnianie parametrów poleceń iproute2 (obecnie tylko tc).
 %setup -q
 
 # conflict with atm-vbr patched linux-libc-headers
-%{__rm} include/linux/atm.h
+%{__rm} include/uapi/linux/atm.h
 #%{__rm} -r include/linux
 
 %patch0 -p1
-%patch1 -p1
+
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
@@ -176,8 +154,6 @@ Bashowe dopełnianie parametrów poleceń iproute2 (obecnie tylko tc).
 	%{!?with_tc:SUBDIRS="lib ip misc"} \
 	V=1
 
-%{?with_doc:%{__make} -C doc}
-
 # make sure we don't produce broken ip binary
 ./ip/ip link add type vlan help 2>&1 | grep -q "VLANID :=" || exit 1
 
@@ -200,11 +176,6 @@ cp -p include/libnetlink.h $RPM_BUILD_ROOT%{_includedir}
 
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{systemdtmpfilesdir}/%{name}.conf
 
-%if %{with doc}
-install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-%endif
-
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/iproute2
 
 %clean
@@ -212,7 +183,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README README.decnet README.iproute2+tc README.distribution README.lnstat
+%doc README README.decnet README.iproute2+tc README.distribution README.lnstat examples
 %attr(755,root,root) %{_sbindir}/bridge
 %attr(755,root,root) %{_sbindir}/ctstat
 %attr(755,root,root) %{_sbindir}/devlink
@@ -288,13 +259,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libnetlink.a
 %{_includedir}/libnetlink.h
 %{_mandir}/man3/libnetlink.3*
-
-%if %{with doc}
-%files doc
-%defattr(644,root,root,755)
-%doc doc/*.ps
-%{_examplesdir}/%{name}-%{version}
-%endif
 
 %files -n bash-completion-iproute2
 %defattr(644,root,root,755)
