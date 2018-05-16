@@ -14,17 +14,17 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	4.14.1
-Release:	2
+Version:	4.16.0
+Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	1075423d7029e02a8f23ed4f42b7e372
+# Source0-md5:	1f12a70d767ef77ffa2d1a0c4ce48f1a
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-arp.patch
 
 Patch3:		%{name}-LDFLAGS.patch
-Patch4:		fix-bashisms.patch
+
 Patch5:		%{name}-build.patch
 Patch6:		%{name}-print_cache_route_entries.patch
 # extensions
@@ -34,7 +34,6 @@ Patch12:	001-net-dev-iface-descr-0.1.diff
 Patch13:	%{name}-q_atm_c.patch
 Patch14:	%{name}-q_srr.v0.4.patch
 Patch15:	%{name}-ip_route_get.patch
-Patch16:	%{name}-fou_show.patch
 URL:		http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
 BuildRequires:	bison
 BuildRequires:	db-devel
@@ -128,7 +127,7 @@ Bashowe dopełnianie parametrów poleceń iproute2 (obecnie tylko tc).
 %patch0 -p1
 
 %patch3 -p1
-%patch4 -p1
+
 %patch5 -p1
 %patch6 -p1
 # extensions:
@@ -138,7 +137,6 @@ Bashowe dopełnianie parametrów poleceń iproute2 (obecnie tylko tc).
 %patch13 -p0
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
 
 %build
 %{__make} \
@@ -215,6 +213,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_scopes
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_tables
 %{_mandir}/man8/bridge.8*
+%{_mandir}/man8/devlink-resource.8*
 %{_mandir}/man8/genl.8*
 %{_mandir}/man8/ifcfg.8*
 %{_mandir}/man8/ip.8*
@@ -230,6 +229,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/nstat.8*
 %{_mandir}/man8/rdma-dev.8*
 %{_mandir}/man8/rdma-link.8*
+%{_mandir}/man8/rdma-resource.8*
 %{_mandir}/man8/rdma.8*
 %{_mandir}/man8/routef.8*
 %{_mandir}/man8/routel.8*
