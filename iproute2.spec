@@ -14,15 +14,14 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	4.16.0
+Version:	4.17.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	1f12a70d767ef77ffa2d1a0c4ce48f1a
+# Source0-md5:	6f3a87fe2d97c28214fc2faab2c257d6
 Source1:	%{name}.tmpfiles
-Patch0:		%{name}-arp.patch
-
+Patch0:		%{name}-link.patch
 Patch3:		%{name}-LDFLAGS.patch
 
 Patch5:		%{name}-build.patch
@@ -49,6 +48,8 @@ BuildRequires:	linux-atm-devel
 BuildRequires:	linux-libc-headers >= 7:2.6.12.0-15
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.673
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 Requires:	iptables-libs >= 0:1.4.5
 Obsoletes:	ifstat
 Obsoletes:	iproute
@@ -125,7 +126,6 @@ Bashowe dopełnianie parametrów poleceń iproute2 (obecnie tylko tc).
 #%{__rm} -r include/linux
 
 %patch0 -p1
-
 %patch3 -p1
 
 %patch5 -p1

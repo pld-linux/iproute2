@@ -13,7 +13,7 @@ diff -urN iproute-2.6.20-070313-orig/tc/Makefile iproute-2.6.20-070313/tc/Makefi
 diff -urN iproute-2.6.20-070313-orig/include/uapi/linux/pkt_sched.h iproute-2.6.20-070313/include/uapi/linux/pkt_sched.h
 --- iproute-2.6.20-070313-orig/include/uapi/linux/pkt_sched.h	2007-03-13 22:50:56.000000000 +0100
 +++ iproute-2.6.20-070313/include/uapi/linux/pkt_sched.h	2007-04-15 20:52:33.000000000 +0200
-@@ -466,4 +498,116 @@
+@@ -466,4 +498,117 @@
  #define NETEM_DIST_SCALE	8192
  #define NETEM_DIST_MAX		16384
  
@@ -21,6 +21,7 @@ diff -urN iproute-2.6.20-070313-orig/include/uapi/linux/pkt_sched.h iproute-2.6.
 +
 +/* Other includes */
 +#include <linux/if_ether.h>
++#include <sys/time.h>
 +
 +// A sub weight and of a class
 +// All numbers are represented as parts of (2^64-1).
