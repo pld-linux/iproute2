@@ -40,6 +40,8 @@ BuildRequires:	db-devel
 BuildRequires:	elfutils-devel
 BuildRequires:	flex
 BuildRequires:	iptables-devel >= 0:1.4.5
+BuildRequires:	libbsd-devel
+BuildRequires:	libcap-devel
 BuildRequires:	libmnl-devel
 BuildRequires:	libselinux-devel
 %if %{with atm}
