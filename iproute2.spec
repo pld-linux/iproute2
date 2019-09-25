@@ -14,12 +14,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	5.2.0
+Version:	5.3.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	0cb2736e7bc2f56254a363d3d23703b7
+# Source0-md5:	227404413c8d6db649d6188ead1e5a6e
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-link.patch
 Patch3:		%{name}-LDFLAGS.patch
@@ -33,7 +33,7 @@ Patch12:	001-net-dev-iface-descr-0.1.diff
 Patch13:	%{name}-q_atm_c.patch
 Patch14:	%{name}-q_srr.v0.4.patch
 Patch15:	%{name}-ip_route_get.patch
-URL:		http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
+URL:		https://wiki.linuxfoundation.org/networking/iproute2
 BuildRequires:	bison
 BuildRequires:	db-devel
 # libelf
@@ -231,10 +231,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/ifstat.8*
 %{_mandir}/man8/lnstat.8*
 %{_mandir}/man8/nstat.8*
+%{_mandir}/man8/rdma.8*
 %{_mandir}/man8/rdma-dev.8*
 %{_mandir}/man8/rdma-link.8*
 %{_mandir}/man8/rdma-resource.8*
-%{_mandir}/man8/rdma.8*
+%{_mandir}/man8/rdma-statistic.8*
+%{_mandir}/man8/rdma-system.8*
 %{_mandir}/man8/routef.8*
 %{_mandir}/man8/routel.8*
 %{_mandir}/man8/rtacct.8*
