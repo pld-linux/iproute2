@@ -14,12 +14,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	5.3.0
+Version:	5.4.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	227404413c8d6db649d6188ead1e5a6e
+# Source0-md5:	54d86cadb4cd1d19fd7114b4e53adf51
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-link.patch
 Patch3:		%{name}-LDFLAGS.patch
@@ -178,14 +178,12 @@ cp -p include/libnetlink.h $RPM_BUILD_ROOT%{_includedir}
 
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{systemdtmpfilesdir}/%{name}.conf
 
-%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/iproute2
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README README.iproute2+tc README.distribution README.lnstat examples
+%doc README doc/actions examples
 %attr(755,root,root) %{_sbindir}/bridge
 %attr(755,root,root) %{_sbindir}/ctstat
 %attr(755,root,root) %{_sbindir}/devlink
@@ -228,6 +226,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/devlink-port.8*
 %{_mandir}/man8/devlink-region.8*
 %{_mandir}/man8/devlink-sb.8*
+%{_mandir}/man8/devlink-trap.8*
 %{_mandir}/man8/ifstat.8*
 %{_mandir}/man8/lnstat.8*
 %{_mandir}/man8/nstat.8*
