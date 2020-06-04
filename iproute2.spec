@@ -14,12 +14,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	5.6.0
+Version:	5.7.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	9da0c352707c34b8b1fec3bf42fcfd09
+# Source0-md5:	da22ab8562eda56ae232872fa72e4870
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-link.patch
 Patch3:		%{name}-LDFLAGS.patch
@@ -115,10 +115,11 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	bash-completion >= 2.0
 
 %description -n bash-completion-iproute2
-Bash completion for iproute2 commands (currently only tc).
+Bash completion for iproute2 commands (currently devlink and tc).
 
 %description -n bash-completion-iproute2 -l pl.UTF-8
-Bashowe dopełnianie parametrów poleceń iproute2 (obecnie tylko tc).
+Bashowe dopełnianie parametrów poleceń iproute2 (obecnie devlink i
+tc).
 
 %prep
 %setup -q
@@ -213,21 +214,22 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_scopes
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_tables
 %{_mandir}/man8/bridge.8*
-%{_mandir}/man8/devlink-resource.8*
-%{_mandir}/man8/genl.8*
-%{_mandir}/man8/ifcfg.8*
-%{_mandir}/man8/ip.8*
-%{_mandir}/man8/ip-*.8*
 %{_mandir}/man8/ctstat.8*
 %{_mandir}/man8/devlink.8*
 %{_mandir}/man8/devlink-dev.8*
+%{_mandir}/man8/devlink-dpipe.8*
 %{_mandir}/man8/devlink-health.8*
 %{_mandir}/man8/devlink-monitor.8*
 %{_mandir}/man8/devlink-port.8*
 %{_mandir}/man8/devlink-region.8*
+%{_mandir}/man8/devlink-resource.8*
 %{_mandir}/man8/devlink-sb.8*
 %{_mandir}/man8/devlink-trap.8*
+%{_mandir}/man8/genl.8*
+%{_mandir}/man8/ifcfg.8*
 %{_mandir}/man8/ifstat.8*
+%{_mandir}/man8/ip.8*
+%{_mandir}/man8/ip-*.8*
 %{_mandir}/man8/lnstat.8*
 %{_mandir}/man8/nstat.8*
 %{_mandir}/man8/rdma.8*
@@ -269,4 +271,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n bash-completion-iproute2
 %defattr(644,root,root,755)
+%{bash_compdir}/devlink
 %{bash_compdir}/tc
