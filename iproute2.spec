@@ -30,7 +30,6 @@ Patch6:		%{name}-print_cache_route_entries.patch
 Patch10:	%{name}-2.2.4-wrr.patch
 Patch11:	esfq-%{name}.patch
 Patch12:	001-net-dev-iface-descr-0.1.diff
-Patch13:	%{name}-q_atm_c.patch
 Patch14:	%{name}-q_srr.v0.4.patch
 Patch15:	%{name}-ip_route_get.patch
 URL:		https://wiki.linuxfoundation.org/networking/iproute2
@@ -126,7 +125,6 @@ tc).
 
 # conflict with atm-vbr patched linux-libc-headers
 %{__rm} include/uapi/linux/atm.h
-#%{__rm} -r include/linux
 
 %patch0 -p1
 %patch3 -p1
@@ -137,7 +135,6 @@ tc).
 %patch10 -p1
 %patch11 -p1
 %{?with_iface_descr:%patch12 -p1}
-%patch13 -p0
 %patch14 -p1
 %patch15 -p1
 
