@@ -1,19 +1,16 @@
-diff -urN iproute-2.6.20-070313-orig/tc/Makefile iproute-2.6.20-070313/tc/Makefile
---- iproute-2.6.20-070313-orig/tc/Makefile	2007-03-13 22:50:56.000000000 +0100
-+++ iproute-2.6.20-070313/tc/Makefile	2007-04-15 20:52:33.000000000 +0200
-@@ -11,6 +11,7 @@
- TCMODULES += q_tbf.o
- TCMODULES += q_cbq.o
+--- iproute2-5.10.0/tc/Makefile.orig	2021-02-24 19:25:55.137480328 +0100
++++ iproute2-5.10.0/tc/Makefile	2021-02-24 19:26:32.562746684 +0100
+@@ -20,6 +20,7 @@
  TCMODULES += q_netem.o
-+TCMODULES += q_wrr.o
  TCMODULES += q_choke.o
  TCMODULES += q_sfb.o
++TCMODULES += q_wrr.o
  TCMODULES += f_rsvp.o
  TCMODULES += f_u32.o
-diff -urN iproute-2.6.20-070313-orig/include/uapi/linux/pkt_sched.h iproute-2.6.20-070313/include/uapi/linux/pkt_sched.h
---- iproute-2.6.20-070313-orig/include/uapi/linux/pkt_sched.h	2007-03-13 22:50:56.000000000 +0100
-+++ iproute-2.6.20-070313/include/uapi/linux/pkt_sched.h	2007-04-15 20:52:33.000000000 +0200
-@@ -466,4 +498,117 @@
+ TCMODULES += f_route.o
+--- iproute2-5.10.0/include/uapi/linux/pkt_sched.h.orig	2021-02-24 19:26:51.060368757 +0100
++++ iproute2-5.10.0/include/uapi/linux/pkt_sched.h	2021-02-24 19:28:08.234354809 +0100
+@@ -676,6 +676,119 @@
  #define NETEM_DIST_SCALE	8192
  #define NETEM_DIST_MAX		16384
  
@@ -131,7 +128,8 @@ diff -urN iproute-2.6.20-070313-orig/include/uapi/linux/pkt_sched.h iproute-2.6.
 +};
 +
  /* DRR */
-
+ 
+ enum {
 diff -urN iproute-2.6.20-070313-orig/tc/q_wrr.c iproute-2.6.20-070313/tc/q_wrr.c
 --- iproute-2.6.20-070313-orig/tc/q_wrr.c	1970-01-01 01:00:00.000000000 +0100
 +++ iproute-2.6.20-070313/tc/q_wrr.c	2007-04-15 20:52:33.000000000 +0200

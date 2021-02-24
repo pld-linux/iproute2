@@ -1,9 +1,8 @@
-diff -ruN iproute-20041019/include/uapi/linux/pkt_sched.h iproute-20041019.srr.patched.v0.4/include/uapi/linux/pkt_sched.h
---- iproute-20041019/include/uapi/linux/pkt_sched.h	2006-07-27 13:04:00.000000000 +0300
-+++ iproute-20041019.srr.patched.v0.4/include/uapi/linux/pkt_sched.h	2006-07-27 13:11:36.000000000 +0300
-@@ -550,6 +550,14 @@
-  *	to change these parameters in compile time.
-  */
+--- iproute2-5.10.0/include/uapi/linux/pkt_sched.h.orig	2021-02-24 19:32:20.974075535 +0100
++++ iproute2-5.10.0/include/uapi/linux/pkt_sched.h	2021-02-24 19:33:12.273391823 +0100
+@@ -279,6 +279,14 @@
+ 	unsigned        hash_kind;      /* Hash function to use for flow identification */
+ };
  
 +/* SRR section */
 +struct tc_srr_qopt {
@@ -15,7 +14,7 @@ diff -ruN iproute-20041019/include/uapi/linux/pkt_sched.h iproute-20041019.srr.p
 +
  /* RED section */
  
- enum
+ enum {
 diff -ruN iproute-20041019/tc/q_srr.c iproute-20041019.srr.patched.v0.4/tc/q_srr.c
 --- iproute-20041019/tc/q_srr.c	1970-01-01 03:00:00.000000000 +0300
 +++ iproute-20041019.srr.patched.v0.4/tc/q_srr.c	2006-07-27 12:59:27.000000000 +0300
@@ -138,13 +137,13 @@ diff -ruN iproute-20041019/tc/q_srr.c iproute-20041019.srr.patched.v0.4/tc/q_srr
 +	.parse_qopt	= srr_parse_opt,
 +	.print_qopt	= srr_print_opt,
 +};
---- iproute-2.6.22-070710/tc/Makefile.orig	2007-07-18 18:15:46.749073720 +0200
-+++ iproute-2.6.22-070710/tc/Makefile	2007-07-18 18:17:19.296663578 +0200
-@@ -8,6 +8,7 @@
- TCMODULES += q_fifo.o
- TCMODULES += q_sfq.o
- TCMODULES += q_esfq.o
+--- iproute2-5.10.0/tc/Makefile.orig	2021-02-24 19:32:21.377429702 +0100
++++ iproute2-5.10.0/tc/Makefile	2021-02-24 19:33:44.238376154 +0100
+@@ -21,6 +21,7 @@
+ TCMODULES += q_netem.o
+ TCMODULES += q_choke.o
+ TCMODULES += q_sfb.o
 +TCMODULES += q_srr.o
- TCMODULES += q_red.o
- TCMODULES += q_prio.o
- TCMODULES += q_tbf.o
+ TCMODULES += q_wrr.o
+ TCMODULES += f_rsvp.o
+ TCMODULES += f_u32.o

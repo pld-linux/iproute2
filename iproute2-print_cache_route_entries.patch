@@ -1,7 +1,6 @@
-diff -ruNp iproute2-4.2.0.orig/ip/iproute.c iproute2-4.2.0/ip/iproute.c
---- iproute2-4.2.0.orig/ip/iproute.c	2015-09-01 01:31:15.000000000 +0200
-+++ iproute2-4.2.0/ip/iproute.c	2015-10-12 12:06:37.710674199 +0200
-@@ -331,6 +331,9 @@ int print_route(const struct sockaddr_nl
+--- iproute2-5.10.0/ip/iproute.c.orig	2021-02-24 19:23:37.743717387 +0100
++++ iproute2-5.10.0/ip/iproute.c	2021-02-24 19:25:20.642365315 +0100
+@@ -754,6 +754,9 @@
  	if (!filter_nlmsg(n, tb, host_len))
  		return 0;
  
@@ -10,4 +9,4 @@ diff -ruNp iproute2-4.2.0.orig/ip/iproute.c iproute2-4.2.0/ip/iproute.c
 +
  	if (filter.flushb) {
  		struct nlmsghdr *fn;
- 		if (NLMSG_ALIGN(filter.flushp) + n->nlmsg_len > filter.flushe) {
+ 
