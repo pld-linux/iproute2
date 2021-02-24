@@ -52,7 +52,7 @@ BuildRequires:	rpmbuild(macros) >= 1.673
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	iptables-libs >= 0:1.4.5
-Obsoletes:	ifstat
+Obsoletes:	ifstat < 1.2
 Obsoletes:	iproute
 Obsoletes:	iproute2-doc < 4.14.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
