@@ -14,12 +14,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	5.10.0
-Release:	2
+Version:	5.12.0
+Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	19ffea480a21e600453776b7225f3319
+# Source0-md5:	bbebacdabd4628ff86453ef4771a242a
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-link.patch
 Patch3:		%{name}-LDFLAGS.patch
@@ -39,6 +39,7 @@ BuildRequires:	db-devel
 BuildRequires:	elfutils-devel
 BuildRequires:	flex
 BuildRequires:	iptables-devel >= 0:1.4.5
+BuildRequires:	libbpf-devel
 BuildRequires:	libbsd-devel
 BuildRequires:	libcap-devel
 BuildRequires:	libmnl-devel
@@ -48,6 +49,7 @@ BuildRequires:	linux-atm-devel
 %endif
 BuildRequires:	linux-libc-headers >= 7:2.6.12.0-15
 BuildRequires:	pkgconfig
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.673
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
@@ -112,6 +114,7 @@ Summary(pl.UTF-8):	Bashowe dopełnianie parametrów poleceń iproute2
 Group:		Applications/Shells
 Requires:	%{name} = %{version}-%{release}
 Requires:	bash-completion >= 2.0
+BuildArch:	noarch
 
 %description -n bash-completion-iproute2
 Bash completion for iproute2 commands (currently devlink and tc).
@@ -184,6 +187,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc README doc/actions examples
 %attr(755,root,root) %{_sbindir}/bridge
 %attr(755,root,root) %{_sbindir}/ctstat
+%attr(755,root,root) %{_sbindir}/dcb
 %attr(755,root,root) %{_sbindir}/devlink
 %attr(755,root,root) %{_sbindir}/genl
 %attr(755,root,root) %{_sbindir}/ifcfg
@@ -200,6 +204,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/rtstat
 %attr(755,root,root) %{_sbindir}/ss
 %attr(755,root,root) %{_sbindir}/tipc
+%attr(755,root,root) %{_sbindir}/vdpa
 %dir %{_sysconfdir}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bpf_pinning
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/ematch_map
@@ -212,6 +217,13 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_tables
 %{_mandir}/man8/bridge.8*
 %{_mandir}/man8/ctstat.8*
+%{_mandir}/man8/dcb.8*
+%{_mandir}/man8/dcb-app.8*
+%{_mandir}/man8/dcb-buffer.8*
+%{_mandir}/man8/dcb-dcbx.8*
+%{_mandir}/man8/dcb-ets.8*
+%{_mandir}/man8/dcb-maxrate.8*
+%{_mandir}/man8/dcb-pfc.8*
 %{_mandir}/man8/devlink.8*
 %{_mandir}/man8/devlink-dev.8*
 %{_mandir}/man8/devlink-dpipe.8*
@@ -244,6 +256,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/ss.8*
 %{_mandir}/man8/tipc.8*
 %{_mandir}/man8/tipc-*.8*
+%{_mandir}/man8/vdpa.8*
+%{_mandir}/man8/vdpa-dev.8*
+%{_mandir}/man8/vdpa-mgmtdev.8*
 %if %{with tc}
 %attr(755,root,root) %{_sbindir}/tc
 %dir %{_libdir}/tc
