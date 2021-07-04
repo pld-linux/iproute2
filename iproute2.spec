@@ -14,12 +14,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	5.12.0
+Version:	5.13.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	bbebacdabd4628ff86453ef4771a242a
+# Source0-md5:	15fc3786303a173a14e180afe4cd2ecd
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-link.patch
 Patch3:		%{name}-LDFLAGS.patch
@@ -39,7 +39,7 @@ BuildRequires:	db-devel
 BuildRequires:	elfutils-devel
 BuildRequires:	flex
 BuildRequires:	iptables-devel >= 0:1.4.5
-BuildRequires:	libbpf-devel
+BuildRequires:	libbpf-devel >= 0.1.0
 BuildRequires:	libbsd-devel
 BuildRequires:	libcap-devel
 BuildRequires:	libmnl-devel
