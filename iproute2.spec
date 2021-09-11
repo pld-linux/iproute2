@@ -14,12 +14,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	5.13.0
+Version:	5.14.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	15fc3786303a173a14e180afe4cd2ecd
+# Source0-md5:	da53966eb3b08ac264f3e9df02e06bfa
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-link.patch
 Patch3:		%{name}-LDFLAGS.patch
@@ -230,6 +230,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/devlink-health.8*
 %{_mandir}/man8/devlink-monitor.8*
 %{_mandir}/man8/devlink-port.8*
+%{_mandir}/man8/devlink-rate.8*
 %{_mandir}/man8/devlink-region.8*
 %{_mandir}/man8/devlink-resource.8*
 %{_mandir}/man8/devlink-sb.8*
