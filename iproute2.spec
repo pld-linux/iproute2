@@ -14,12 +14,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	5.15.0
+Version:	5.16.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	8a598a61c054a3ce538b47c40b010552
+# Source0-md5:	994c1bad2a24aa9d70e89670c5b5dfcb
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-link.patch
 Patch3:		%{name}-LDFLAGS.patch
@@ -51,6 +51,7 @@ BuildRequires:	linux-libc-headers >= 7:2.6.12.0-15
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.673
+BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	iptables-libs >= 0:1.4.5
@@ -141,6 +142,8 @@ tc).
 %patch14 -p1
 %patch15 -p1
 
+%{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' ip/routel
+
 %build
 %{__make} \
 %if %{with uClibc}
@@ -190,17 +193,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/dcb
 %attr(755,root,root) %{_sbindir}/devlink
 %attr(755,root,root) %{_sbindir}/genl
-%attr(755,root,root) %{_sbindir}/ifcfg
 %attr(755,root,root) %{_sbindir}/ifstat
 %attr(755,root,root) %{_sbindir}/ip
 %attr(755,root,root) %{_sbindir}/lnstat
 %attr(755,root,root) %{_sbindir}/nstat
 %attr(755,root,root) %{_sbindir}/rdma
-%attr(755,root,root) %{_sbindir}/routef
 %attr(755,root,root) %{_sbindir}/routel
 %attr(755,root,root) %{_sbindir}/rtacct
 %attr(755,root,root) %{_sbindir}/rtmon
-%attr(755,root,root) %{_sbindir}/rtpr
 %attr(755,root,root) %{_sbindir}/rtstat
 %attr(755,root,root) %{_sbindir}/ss
 %attr(755,root,root) %{_sbindir}/tipc
@@ -236,7 +236,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/devlink-sb.8*
 %{_mandir}/man8/devlink-trap.8*
 %{_mandir}/man8/genl.8*
-%{_mandir}/man8/ifcfg.8*
 %{_mandir}/man8/ifstat.8*
 %{_mandir}/man8/ip.8*
 %{_mandir}/man8/ip-*.8*
@@ -248,11 +247,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/rdma-resource.8*
 %{_mandir}/man8/rdma-statistic.8*
 %{_mandir}/man8/rdma-system.8*
-%{_mandir}/man8/routef.8*
 %{_mandir}/man8/routel.8*
 %{_mandir}/man8/rtacct.8*
 %{_mandir}/man8/rtmon.8*
-%{_mandir}/man8/rtpr.8*
 %{_mandir}/man8/rtstat.8*
 %{_mandir}/man8/ss.8*
 %{_mandir}/man8/tipc.8*
