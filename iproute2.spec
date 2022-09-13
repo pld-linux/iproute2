@@ -55,7 +55,9 @@ BuildRequires:	rpmbuild(macros) >= 1.673
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
-Requires:	iptables-libs >= 0:1.4.5
+Suggests:	%{name}-routel = %{version}-%{release}
+Suggests:	%{name}-ss = %{version}-%{release}
+Suggests:	%{name}-tc = %{version}-%{release}
 Obsoletes:	ifstat < 1.2
 Obsoletes:	iproute
 Obsoletes:	iproute2-doc < 4.14.1
@@ -85,6 +87,31 @@ O Linux mantém compatibilidade com os utilitários padrão de
 configuração da rede, mas novos utilitários são necessários para fazer
 uso das características e recursos da nova kernel. This package
 includes the new utilities.
+
+%package routel
+Summary:	routel - list routes with pretty output format
+Requires:	%{name} = %{version}-%{release}
+Requires:	python3
+Requires:	python3-modules
+
+%description routel
+The routel script will list routes in a format that some might
+consider easier to interpret then the ip route list equivalent.
+
+%package ss
+Summary:	ss - another utility to investigate sockets
+
+%description ss
+ss is used to dump socket statistics. It allows showing information
+similar to netstat. It can display more TCP and state information than
+other tools.
+
+%package tc
+Summary:	tc - show / manipulate traffic control settings
+Requires:	iptables-libs >= 0:1.4.5
+
+%description tc
+Tc is used to configure Traffic Control in the Linux kernel.
 
 %package devel
 Summary:	Header file for tc plugins development
@@ -199,11 +226,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/lnstat
 %attr(755,root,root) %{_sbindir}/nstat
 %attr(755,root,root) %{_sbindir}/rdma
-%attr(755,root,root) %{_sbindir}/routel
 %attr(755,root,root) %{_sbindir}/rtacct
 %attr(755,root,root) %{_sbindir}/rtmon
 %attr(755,root,root) %{_sbindir}/rtstat
-%attr(755,root,root) %{_sbindir}/ss
 %attr(755,root,root) %{_sbindir}/tipc
 %attr(755,root,root) %{_sbindir}/vdpa
 %dir %{_sysconfdir}
@@ -248,17 +273,30 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/rdma-resource.8*
 %{_mandir}/man8/rdma-statistic.8*
 %{_mandir}/man8/rdma-system.8*
-%{_mandir}/man8/routel.8*
 %{_mandir}/man8/rtacct.8*
 %{_mandir}/man8/rtmon.8*
 %{_mandir}/man8/rtstat.8*
-%{_mandir}/man8/ss.8*
 %{_mandir}/man8/tipc.8*
 %{_mandir}/man8/tipc-*.8*
 %{_mandir}/man8/vdpa.8*
 %{_mandir}/man8/vdpa-dev.8*
 %{_mandir}/man8/vdpa-mgmtdev.8*
+%{systemdtmpfilesdir}/%{name}.conf
+%dir %attr(750,root,root) /var/run/netns
+
+%files routel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_sbindir}/routel
+%{_mandir}/man8/routel.8*
+
+%files ss
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_sbindir}/ss
+%{_mandir}/man8/ss.8*
+
 %if %{with tc}
+%files tc
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/tc
 %dir %{_libdir}/tc
 %attr(755,root,root) %{_libdir}/tc/*.so
@@ -267,8 +305,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/tc.8*
 %{_mandir}/man8/tc-*.8*
 %endif
-%{systemdtmpfilesdir}/%{name}.conf
-%dir %attr(750,root,root) /var/run/netns
 
 %files devel
 %defattr(644,root,root,755)
