@@ -14,12 +14,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	5.19.0
+Version:	6.0.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	415bd9eeb8515a585e245809d2fe45a6
+# Source0-md5:	5da6cb3154ee09b9a8b4004d1c2df4cd
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-link.patch
 Patch3:		%{name}-LDFLAGS.patch
@@ -254,6 +254,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/devlink-dev.8*
 %{_mandir}/man8/devlink-dpipe.8*
 %{_mandir}/man8/devlink-health.8*
+%{_mandir}/man8/devlink-lc.8*
 %{_mandir}/man8/devlink-monitor.8*
 %{_mandir}/man8/devlink-port.8*
 %{_mandir}/man8/devlink-rate.8*
