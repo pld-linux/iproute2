@@ -14,12 +14,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	6.4.0
+Version:	6.5.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	90ce0eb84a8f1e2b14ffa77e8eb3f5ed
+# Source0-md5:	ae811fc51b3a2c9c7701be308152c45a
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-link.patch
 Patch3:		%{name}-LDFLAGS.patch
@@ -64,7 +64,7 @@ Obsoletes:	iproute2-doc < 4.14.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
-%define		_sysconfdir	/etc/iproute2
+%define		_sysconfdir	%{_prefix}/lib/iproute2
 
 %description
 The iproute package contains networking utilities (ip, tc and rtmon,
@@ -232,15 +232,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/tipc
 %attr(755,root,root) %{_sbindir}/vdpa
 %dir %{_sysconfdir}
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bpf_pinning
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/ematch_map
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/group
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nl_protos
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_dsfield
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_protos
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_realms
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_scopes
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rt_tables
+%{_sysconfdir}/bpf_pinning
+%{_sysconfdir}/ematch_map
+%{_sysconfdir}/group
+%{_sysconfdir}/nl_protos
+%{_sysconfdir}/rt_dsfield
+%{_sysconfdir}/rt_protos
+%{_sysconfdir}/rt_realms
+%{_sysconfdir}/rt_scopes
+%{_sysconfdir}/rt_tables
 %{_mandir}/man8/bridge.8*
 %{_mandir}/man8/ctstat.8*
 %{_mandir}/man8/dcb.8*
@@ -251,6 +251,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/dcb-ets.8*
 %{_mandir}/man8/dcb-maxrate.8*
 %{_mandir}/man8/dcb-pfc.8*
+%{_mandir}/man8/dcb-rewr.8*
 %{_mandir}/man8/devlink.8*
 %{_mandir}/man8/devlink-dev.8*
 %{_mandir}/man8/devlink-dpipe.8*
