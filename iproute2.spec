@@ -64,7 +64,6 @@ Obsoletes:	iproute2-doc < 4.14.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
-%define		_sysconfdir	%{_prefix}/lib/iproute2
 
 %description
 The iproute package contains networking utilities (ip, tc and rtmon,
@@ -193,7 +192,7 @@ tc).
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_includedir},/var/run/netns,%{systemdtmpfilesdir}}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}/iproute2,%{_includedir},/var/run/netns,%{systemdtmpfilesdir}}
 
 %{__make} install \
 	LIBDIR=%{_libdir} \
@@ -231,16 +230,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/rtstat
 %attr(755,root,root) %{_sbindir}/tipc
 %attr(755,root,root) %{_sbindir}/vdpa
-%dir %{_sysconfdir}
-%{_sysconfdir}/bpf_pinning
-%{_sysconfdir}/ematch_map
-%{_sysconfdir}/group
-%{_sysconfdir}/nl_protos
-%{_sysconfdir}/rt_dsfield
-%{_sysconfdir}/rt_protos
-%{_sysconfdir}/rt_realms
-%{_sysconfdir}/rt_scopes
-%{_sysconfdir}/rt_tables
+# default configs
+%{_prefix}/lib/iproute2
+# config overrides
+%dir %{_sysconfdir}/iproute2
 %{_mandir}/man8/bridge.8*
 %{_mandir}/man8/ctstat.8*
 %{_mandir}/man8/dcb.8*
