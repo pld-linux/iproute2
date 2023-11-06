@@ -5,9 +5,9 @@
  TCMODULES += q_choke.o
  TCMODULES += q_sfb.o
 +TCMODULES += q_wrr.o
- TCMODULES += f_rsvp.o
  TCMODULES += f_u32.o
  TCMODULES += f_route.o
+ TCMODULES += f_fw.o
 --- iproute2-5.10.0/include/uapi/linux/pkt_sched.h.orig	2021-02-24 19:26:51.060368757 +0100
 +++ iproute2-5.10.0/include/uapi/linux/pkt_sched.h	2021-02-24 19:28:08.234354809 +0100
 @@ -676,6 +676,119 @@

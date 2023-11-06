@@ -145,5 +145,5 @@ diff -ruN iproute-20041019/tc/q_srr.c iproute-20041019.srr.patched.v0.4/tc/q_srr
  TCMODULES += q_sfb.o
 +TCMODULES += q_srr.o
  TCMODULES += q_wrr.o
- TCMODULES += f_rsvp.o
  TCMODULES += f_u32.o
+ TCMODULES += f_route.o
