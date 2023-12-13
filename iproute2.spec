@@ -15,7 +15,7 @@ Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
 Version:	6.6.0
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
@@ -211,6 +211,13 @@ cp -p %{SOURCE1} $RPM_BUILD_ROOT%{systemdtmpfilesdir}/%{name}.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%triggerpostun -- iproute2 < 6.6.0-2
+for c in bpf_pinning ematch_map group nl_protos rt_dsfield rt_protos rt_realms rt_scopes rt_tables; do
+	if [ -f /etc/iproute2/$c.rpmsave ] && [ ! -e /etc/iproute2/$c ]; then
+		%{__mv} -f /etc/iproute2/$c.rpmsave /etc/iproute2/$c
+	fi
+done
 
 %files
 %defattr(644,root,root,755)
