@@ -192,7 +192,9 @@ tc).
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir}/iproute2,%{_includedir},/var/run/netns,%{systemdtmpfilesdir}}
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/iproute2/{protodown_reasons,rt_protos,rt_tables}.d \
+	$RPM_BUILD_ROOT%{_libdir}/iproute2/{protodown_reasons,rt_protos,rt_tables}.d \
+	$RPM_BUILD_ROOT{%{_includedir},/var/run/netns,%{systemdtmpfilesdir}}
 
 %{__make} install \
 	LIBDIR=%{_libdir} \
@@ -241,6 +243,9 @@ done
 %{_libdir}/iproute2
 # config overrides
 %dir %{_sysconfdir}/iproute2
+%dir %{_sysconfdir}/iproute2/protodown_reasons.d
+%dir %{_sysconfdir}/iproute2/rt_protos.d
+%dir %{_sysconfdir}/iproute2/rt_tables.d
 %{_mandir}/man8/bridge.8*
 %{_mandir}/man8/ctstat.8*
 %{_mandir}/man8/dcb.8*
