@@ -64,6 +64,7 @@ Obsoletes:	iproute2-doc < 4.14.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
+%define		_defaultconfdir	%{_libdir}/iproute2
 
 %description
 The iproute package contains networking utilities (ip, tc and rtmon,
@@ -193,7 +194,7 @@ tc).
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/iproute2/{protodown_reasons,rt_protos,rt_tables}.d \
-	$RPM_BUILD_ROOT%{_libdir}/iproute2/{protodown_reasons,rt_protos,rt_tables}.d \
+	$RPM_BUILD_ROOT%{_defaultconfdir}/{protodown_reasons,rt_protos,rt_tables}.d \
 	$RPM_BUILD_ROOT{%{_includedir},/var/run/netns,%{systemdtmpfilesdir}}
 
 %{__make} install \
@@ -240,7 +241,19 @@ done
 %attr(755,root,root) %{_sbindir}/tipc
 %attr(755,root,root) %{_sbindir}/vdpa
 # default configs
-%{_libdir}/iproute2
+%dir %{_defaultconfdir}
+%{_defaultconfdir}/bpf_pinning
+%{_defaultconfdir}/ematch_map
+%{_defaultconfdir}/group
+%{_defaultconfdir}/nl_protos
+%{_defaultconfdir}/rt_dsfield
+%{_defaultconfdir}/rt_protos
+%{_defaultconfdir}/rt_realms
+%{_defaultconfdir}/rt_scopes
+%{_defaultconfdir}/rt_tables
+%dir %{_defaultconfdir}/protodown_reasons.d
+%dir %{_defaultconfdir}/rt_protos.d
+%dir %{_defaultconfdir}/rt_tables.d
 # config overrides
 %dir %{_sysconfdir}/iproute2
 %dir %{_sysconfdir}/iproute2/protodown_reasons.d
