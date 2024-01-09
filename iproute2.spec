@@ -5,7 +5,6 @@
 #
 # Conditional build
 %bcond_without	tc		# don't build tc program (it breaks static linkage)
-%bcond_without	atm		# disable ATM support for tc
 %bcond_with	uClibc		# do some hacks to build with uClibc
 %bcond_with	iface_descr	# build with interface description support
 
@@ -14,12 +13,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	6.6.0
-Release:	2
+Version:	6.7.0
+Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	6716fc3188dbea226997fa2478a190d7
+# Source0-md5:	35d8277d1469596b7edc07a51470a033
 Source1:	%{name}.tmpfiles
 Patch0:		%{name}-link.patch
 Patch3:		%{name}-LDFLAGS.patch
@@ -45,9 +44,6 @@ BuildRequires:	libcap-devel
 BuildRequires:	libmnl-devel
 BuildRequires:	libselinux-devel
 BuildRequires:	libtirpc-devel
-%if %{with atm}
-BuildRequires:	linux-atm-devel
-%endif
 BuildRequires:	linux-libc-headers >= 7:2.6.12.0-15
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
@@ -64,7 +60,7 @@ Obsoletes:	iproute2-doc < 4.14.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
-%define		_defaultconfdir	%{_libdir}/iproute2
+%define		_defaultconfdir	%{_datadir}/iproute2
 
 %description
 The iproute package contains networking utilities (ip, tc and rtmon,
