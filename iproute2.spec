@@ -20,7 +20,6 @@ Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
 # Source0-md5:	35d8277d1469596b7edc07a51470a033
 Source1:	%{name}.tmpfiles
-Patch0:		%{name}-link.patch
 Patch3:		%{name}-LDFLAGS.patch
 
 Patch5:		%{name}-build.patch
@@ -154,7 +153,6 @@ tc).
 # conflict with atm-vbr patched linux-libc-headers
 %{__rm} include/uapi/linux/atm.h
 
-%patch0 -p1
 %patch3 -p1
 
 %patch5 -p1
