@@ -91,7 +91,7 @@ diff -Naur iproute2-2.6.19-061214.orig/tc/q_esfq.c iproute2-2.6.19-061214/tc/q_e
 +
 +#define usage() return(-1)
 +
-+static int esfq_parse_opt(struct qdisc_util *qu, int argc, char **argv, struct nlmsghdr *n)
++static int esfq_parse_opt(const struct qdisc_util *qu, int argc, char **argv, struct nlmsghdr *n, const char *dev)
 +{
 +	int ok=0;
 +	struct tc_esfq_qopt opt;
@@ -203,7 +203,7 @@ diff -Naur iproute2-2.6.19-061214.orig/tc/q_esfq.c iproute2-2.6.19-061214/tc/q_e
 +	return 0;
 +}
 +
-+static int esfq_print_opt(struct qdisc_util *qu, FILE *f, struct rtattr *opt)
++static int esfq_print_opt(const struct qdisc_util *qu, FILE *f, struct rtattr *opt)
 +{
 +	struct tc_esfq_qopt *qopt;
 +	SPRINT_BUF(b1);
@@ -264,7 +264,7 @@ diff -Naur iproute2-2.6.19-061214.orig/tc/q_esfq.c iproute2-2.6.19-061214/tc/q_e
 +	return 0;
 +}
 +
-+static int esfq_print_xstats(struct qdisc_util *qu, FILE *f, struct rtattr *xstats)
++static int esfq_print_xstats(const struct qdisc_util *qu, FILE *f, struct rtattr *xstats)
 +{
 +	return 0;
 +}

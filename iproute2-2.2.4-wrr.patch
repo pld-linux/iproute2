@@ -246,7 +246,7 @@ diff -urN iproute-2.6.20-070313-orig/tc/q_wrr.c iproute-2.6.20-070313/tc/q_wrr.c
 +  return 0;
 +}
 +
-+static int wrr_parse_opt(struct qdisc_util *qu, int argc, char **argv, struct nlmsghdr *n)
++static int wrr_parse_opt(const struct qdisc_util *qu, int argc, char **argv, struct nlmsghdr *n, const char *dev)
 +{
 +  if(n->nlmsg_flags & NLM_F_CREATE) {
 +    // This is a create request:
@@ -346,7 +346,7 @@ diff -urN iproute-2.6.20-070313-orig/tc/q_wrr.c iproute-2.6.20-070313/tc/q_wrr.c
 +  return 0;
 +}
 +
-+static int wrr_parse_copt(struct qdisc_util *qu, int argc, char **argv, struct nlmsghdr *n) {
++static int wrr_parse_copt(const struct qdisc_util *qu, int argc, char **argv, struct nlmsghdr *n, const char *dev) {
 +  struct tc_wrr_class_modf opt;
 +  
 +  memset(&opt,0,sizeof(opt));
@@ -356,7 +356,7 @@ diff -urN iproute-2.6.20-070313-orig/tc/q_wrr.c iproute-2.6.20-070313/tc/q_wrr.c
 +  return 0;  
 +}  
 +
-+static int wrr_print_opt(struct qdisc_util *qu, FILE *f, struct rtattr *opt)
++static int wrr_print_opt(const struct qdisc_util *qu, FILE *f, struct rtattr *opt)
 +{
 +	struct tc_wrr_qdisc_stats *qopt;
 +
@@ -393,7 +393,7 @@ diff -urN iproute-2.6.20-070313-orig/tc/q_wrr.c iproute-2.6.20-070313/tc/q_wrr.c
 +	return 0;
 +}
 +
-+static int wrr_print_copt(struct qdisc_util *qu, FILE *f, struct rtattr *opt) {
++static int wrr_print_copt(const struct qdisc_util *qu, FILE *f, struct rtattr *opt) {
 +  struct tc_wrr_class_stats *copt;
 +  long double d=(__u64)-1;
 +
@@ -442,7 +442,7 @@ diff -urN iproute-2.6.20-070313-orig/tc/q_wrr.c iproute-2.6.20-070313/tc/q_wrr.c
 +  return 0;
 +}
 +
-+static int wrr_print_xstats(struct qdisc_util *qu, FILE *f, struct rtattr *xstats)
++static int wrr_print_xstats(const struct qdisc_util *qu, FILE *f, struct rtattr *xstats)
 +{
 +	return 0;
 +}
