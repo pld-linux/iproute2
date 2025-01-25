@@ -2,7 +2,7 @@
 +++ iproute2-3.8.0/ip/iplink_can.c	2013-03-05 22:03:13.578484638 +0100
 @@ -107,7 +107,7 @@
  			if (get_u32(&bt.bitrate, *argv, 0))
- 				invarg("invalid \"bitrate\" value\n", *argv);
+ 				invarg("invalid \"bitrate\" value", *argv);
  		} else if (matches(*argv, "sample-point") == 0) {
 -			float sp;
 +			float sp = 0;
