@@ -153,16 +153,16 @@ tc).
 # conflict with atm-vbr patched linux-libc-headers
 %{__rm} include/uapi/linux/atm.h
 
-%patch3 -p1
+%patch -P3 -p1
 
-%patch5 -p1
-%patch6 -p1
+%patch -P5 -p1
+%patch -P6 -p1
 # extensions:
-%patch10 -p1
-%patch11 -p1
-%{?with_iface_descr:%patch12 -p1}
-%patch14 -p1
-%patch15 -p1
+%patch -P10 -p1
+%patch -P11 -p1
+%{?with_iface_descr:%patch -P12 -p1}
+%patch -P14 -p1
+%patch -P15 -p1
 
 %{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' ip/routel
 
