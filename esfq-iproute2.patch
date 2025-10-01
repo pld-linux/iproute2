@@ -41,8 +41,8 @@ diff -Naur iproute2-2.6.19-061214.orig/include/uapi/linux/pkt_sched.h iproute2-2
 --- iproute2-5.10.0/tc/Makefile.orig	2021-02-24 19:28:31.498889761 +0100
 +++ iproute2-5.10.0/tc/Makefile	2021-02-24 19:29:13.547728259 +0100
 @@ -10,6 +10,7 @@
- TCMODULES :=
  TCMODULES += q_fifo.o
+ TCMODULES += q_dualpi2.o
  TCMODULES += q_sfq.o
 +TCMODULES += q_esfq.o
  TCMODULES += q_red.o
