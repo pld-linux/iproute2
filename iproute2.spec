@@ -13,12 +13,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	6.18.0
+Version:	6.19.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
 Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
-# Source0-md5:	9e3f70620db43fe0ecab29b36a47914d
+# Source0-md5:	90590c3c593a33d7d8eca997c2c18d1c
 Source1:	%{name}.tmpfiles
 Patch3:		%{name}-LDFLAGS.patch
 
@@ -223,6 +223,7 @@ done
 %attr(755,root,root) %{_sbindir}/ctstat
 %attr(755,root,root) %{_sbindir}/dcb
 %attr(755,root,root) %{_sbindir}/devlink
+%attr(755,root,root) %{_sbindir}/dpll
 %attr(755,root,root) %{_sbindir}/genl
 %attr(755,root,root) %{_sbindir}/ifstat
 %attr(755,root,root) %{_sbindir}/ip
@@ -277,6 +278,7 @@ done
 %{_mandir}/man8/devlink-resource.8*
 %{_mandir}/man8/devlink-sb.8*
 %{_mandir}/man8/devlink-trap.8*
+%{_mandir}/man8/dpll.8*
 %{_mandir}/man8/genl.8*
 %{_mandir}/man8/ifstat.8*
 %{_mandir}/man8/ip.8*
@@ -336,4 +338,5 @@ done
 %files -n bash-completion-iproute2
 %defattr(644,root,root,755)
 %{bash_compdir}/devlink
+%{bash_compdir}/dpll
 %{bash_compdir}/tc
