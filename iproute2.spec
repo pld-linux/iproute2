@@ -13,12 +13,12 @@ Summary(es.UTF-8):	Herramientas para encaminamiento avanzado y configuración de
 Summary(pl.UTF-8):	Narzędzie do konfigurowania sieci
 Summary(pt_BR.UTF-8):	Ferramentas para roteamento avançado e configuração de interfaces de rede
 Name:		iproute2
-Version:	7.0.0
+Version:	7.1.0
 Release:	1
 License:	GPL v2+
 Group:		Networking/Admin
-Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-v%{version}.tar.xz
-# Source0-md5:	f9f3d3770f332466bc15c7e5298efb84
+Source0:	https://www.kernel.org/pub/linux/utils/net/iproute2/%{name}-%{version}.tar.xz
+# Source0-md5:	4f322144fb9a0877c5f9ef71b2f11180
 Source1:	%{name}.tmpfiles
 Patch3:		%{name}-LDFLAGS.patch
 
@@ -148,7 +148,7 @@ Bashowe dopełnianie parametrów poleceń iproute2 (obecnie devlink i
 tc).
 
 %prep
-%setup -q -n %{name}-v%{version}
+%setup -q
 
 # conflict with atm-vbr patched linux-libc-headers
 %{__rm} include/uapi/linux/atm.h
